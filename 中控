@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中控台｜房產好夥伴雅慈</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F5F1E8;
+    --cream-deep:#ECE4D2;
+    --paper:#FBF9F4;
+    --ink:#2B2621;
+    --ink-soft:#5C554A;
+    --ink-faint:#8A8171;
+    --pine:#2F4B3C;
+    --pine-dark:#203528;
+    --brass:#A67C42;
+    --brass-light:#C9A971;
+    --line:#06C755;
+    --border:#DED2B7;
+    --red:#B4543D;
+    --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--cream); color:var(--ink);
+    font-family:'Noto Sans TC', sans-serif; -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    padding-bottom:64px; /* mobile bottom nav space */
+  }
+  h1,h2,h3{ font-family:'Noto Serif TC', serif; color:var(--ink); }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  a{ color:inherit; text-decoration:none; }
+  .badge-home{ clip-path: polygon(50% 0%, 100% 38%, 100% 100%, 0% 100%, 0% 38%); }
+
+  /* ---------- Layout shell ---------- */
+  .shell{ display:flex; min-height:100vh; }
+
+  /* Sidebar (desktop) */
+  .sidebar{
+    display:none;
+    width:236px; flex-shrink:0; background:var(--pine-dark); color:rgba(255,255,255,.82);
+    flex-direction:column; padding:22px 16px;
+  }
+  .sidebar .brand{ display:flex; flex-direction:column; padding:6px 10px 26px; border-bottom:1px solid rgba(255,255,255,.12); margin-bottom:18px; }
+  .sidebar .brand .zh{ font-family:'Noto Serif TC',serif; font-weight:900; font-size:18px; color:#fff; }
+  .sidebar .brand .en{ font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.16em; color:var(--brass-light); text-transform:uppercase; margin-top:4px;}
+  .side-nav{ display:flex; flex-direction:column; gap:2px; flex:1; }
+  .side-nav a{ display:flex; align-items:center; gap:12px; padding:11px 12px; border-radius:10px; font-size:14.5px; font-weight:500; color:rgba(255,255,255,.75); }
+  .side-nav a svg{ flex-shrink:0; opacity:.85; }
+  .side-nav a:hover{ background:rgba(255,255,255,.06); color:#fff; }
+  .side-nav a.active{ background:var(--brass); color:#fff; font-weight:700; }
+  .sidebar-foot{ padding-top:16px; border-top:1px solid rgba(255,255,255,.12); display:flex; align-items:center; gap:10px; }
+  .avatar{ width:36px; height:36px; border-radius:50%; background:var(--brass); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-family:'Noto Serif TC',serif; flex-shrink:0; }
+  .sidebar-foot .name{ font-size:13.5px; font-weight:700; color:#fff; }
+  .sidebar-foot .role{ font-size:11.5px; color:rgba(255,255,255,.55); }
+
+  /* Main column */
+  .main-col{ flex:1; min-width:0; }
+  .topbar{
+    position:sticky; top:0; z-index:20;
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:14px 18px; background:rgba(245,241,232,.92); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  .topbar .page-title{ font-size:19px; font-weight:900; }
+  .topbar .page-sub{ font-size:12px; color:var(--ink-faint); margin-top:2px; }
+  .search-box{ display:none; align-items:center; gap:8px; background:var(--paper); border:1px solid var(--border); border-radius:99px; padding:9px 14px; flex:1; max-width:320px; }
+  .search-box input{ border:none; background:transparent; outline:none; font-size:14px; width:100%; font-family:inherit; }
+  .icon-btn{ width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:1px solid var(--border); background:var(--paper); flex-shrink:0; }
+
+  .content{ padding:20px 16px 40px; }
+
+  /* KPI cards */
+  .kpi-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:24px; }
+  .kpi-card{ background:var(--paper); border:1px solid var(--border); border-radius:var(--radius); padding:16px; }
+  .kpi-card .top{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .kpi-icon{ width:34px; height:34px; background:var(--pine); display:flex; align-items:center; justify-content:center; }
+  .kpi-trend{ font-size:11.5px; font-weight:700; padding:3px 8px; border-radius:99px; }
+  .kpi-trend.up{ background:#E7F3EA; color:#2F6B44; }
+  .kpi-trend.down{ background:#F6E9E5; color:var(--red); }
+  .kpi-num{ font-family:'JetBrains Mono',monospace; font-size:26px; font-weight:700; color:var(--pine-dark); }
+  .kpi-label{ font-size:12.5px; color:var(--ink-soft); margin-top:4px; }
+
+  /* Panel */
+  .panel{ background:var(--paper); border:1px solid var(--border); border-radius:var(--radius); margin-bottom:22px; overflow:hidden; }
+  .panel-head{ display:flex; align-items:center; justify-content:space-between; padding:16px 18px; border-bottom:1px solid var(--border); }
+  .panel-head h2{ font-size:16.5px; }
+  .panel-head .link{ font-size:12.5px; color:var(--brass); font-weight:700; }
+  .panel-body{ padding:6px 0; }
+
+  /* Trend bars (簡易月成交趨勢) */
+  .trend-wrap{ padding:18px; }
+  .trend-bars{ display:flex; align-items:flex-end; gap:8px; height:120px; }
+  .trend-bars .bar{ flex:1; background:linear-gradient(180deg, var(--brass-light), var(--pine)); border-radius:6px 6px 0 0; position:relative; }
+  .trend-bars .bar span{ position:absolute; bottom:-20px; left:0; right:0; text-align:center; font-size:10.5px; color:var(--ink-faint); }
+
+  /* Lists (mobile-first card rows instead of wide tables) */
+  .row-list{ display:flex; flex-direction:column; }
+  .row-item{ display:flex; align-items:center; gap:12px; padding:13px 18px; border-bottom:1px solid var(--border); }
+  .row-item:last-child{ border-bottom:none; }
+  .row-avatar{ width:38px; height:38px; border-radius:50%; background:var(--cream-deep); color:var(--pine-dark); display:flex; align-items:center; justify-content:center; font-weight:700; font-family:'Noto Serif TC',serif; flex-shrink:0; font-size:14px;}
+  .row-main{ flex:1; min-width:0; }
+  .row-main .t1{ font-size:14px; font-weight:700; }
+  .row-main .t2{ font-size:12.5px; color:var(--ink-faint); margin-top:2px; }
+  .tag{ font-size:11px; font-weight:700; padding:4px 9px; border-radius:99px; white-space:nowrap; }
+  .tag.new{ background:#E7F0FA; color:#2C5A8C; }
+  .tag.progress{ background:#FBF0DD; color:#8C6A2C; }
+  .tag.done{ background:#E7F3EA; color:#2F6B44; }
+  .tag.hold{ background:#F1EAE0; color:var(--ink-soft); }
+
+  /* Listings management table (mobile cards) */
+  .listing-row{ padding:14px 18px; border-bottom:1px solid var(--border); display:flex; gap:12px; align-items:center; }
+  .listing-row:last-child{ border-bottom:none; }
+  .listing-thumb{ width:56px; height:44px; border-radius:8px; background:linear-gradient(135deg,var(--brass-light),var(--brass)); flex-shrink:0; }
+  .listing-info{ flex:1; min-width:0; }
+  .listing-info .t1{ font-size:14px; font-weight:700; }
+  .listing-info .t2{ font-size:12px; color:var(--ink-faint); margin-top:2px; }
+  .listing-price{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:13.5px; color:var(--pine-dark); white-space:nowrap; }
+  .row-actions{ display:flex; gap:6px; }
+  .row-actions button{ width:30px; height:30px; border-radius:8px; border:1px solid var(--border); background:var(--cream); display:flex; align-items:center; justify-content:center; }
+
+  .btn{ display:inline-flex; align-items:center; gap:6px; padding:10px 16px; border-radius:99px; font-size:13.5px; font-weight:700; border:1.5px solid var(--pine); color:var(--pine); background:transparent; cursor:pointer; }
+  .btn.solid{ background:var(--pine); color:#fff; }
+
+  /* ---------- Mobile bottom nav ---------- */
+  .mobile-nav-bar{
+    position:fixed; left:0; right:0; bottom:0; z-index:40;
+    display:flex; background:var(--paper); border-top:1px solid var(--border);
+    padding:6px 4px calc(6px + env(safe-area-inset-bottom));
+  }
+  .mobile-nav-bar a{
+    flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;
+    padding:6px 2px; font-size:10.5px; color:var(--ink-faint); font-weight:600; border-radius:10px;
+  }
+  .mobile-nav-bar a.active{ color:var(--pine-dark); }
+  .mobile-nav-bar a.active svg{ stroke:var(--pine-dark); }
+
+  @media (min-width:900px){
+    body{ padding-bottom:0; }
+    .mobile-nav-bar{ display:none; }
+    .sidebar{ display:flex; }
+    .search-box{ display:flex; }
+    .content{ padding:26px 28px 50px; }
+    .kpi-grid{ grid-template-columns:repeat(4,1fr); }
+    .two-col{ display:grid; grid-template-columns:1.3fr .9fr; gap:20px; align-items:start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ============ Sidebar (desktop) ============ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="zh">房產好夥伴雅慈</span>
+      <span class="en">Control Center</span>
+    </div>
+    <nav class="side-nav">
+      <a href="#" class="active">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        儀表板
+      </a>
+      <a href="#listings-panel">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10l9-7 9 7"/><path d="M5 9v11h14V9"/></svg>
+        物件管理
+      </a>
+      <a href="#">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+        成交案例
+      </a>
+      <a href="#">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg>
+        影音管理
+      </a>
