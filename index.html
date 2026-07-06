@@ -157,6 +157,9 @@
 
   /* ---------- Case studies (horizontal snap) ---------- */
   .case-scroll{ display:flex; gap:16px; overflow-x:auto; padding:6px 20px 20px; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;}
+  @media (min-width:900px){
+    .case-scroll{ max-width:1120px; margin:0 auto; }
+  }
   .case-scroll::-webkit-scrollbar{ height:6px; }
   .case-scroll::-webkit-scrollbar-thumb{ background:var(--border); border-radius:99px; }
   .case-card{ flex:0 0 82%; scroll-snap-align:start; background:var(--paper); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); }
