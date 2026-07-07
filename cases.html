@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>成交案例｜房產好夥伴雅慈</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F5F1E8;
+    --cream-deep:#ECE4D2;
+    --paper:#FBF9F4;
+    --ink:#2B2621;
+    --ink-soft:#5C554A;
+    --ink-faint:#8A8171;
+    --pine:#2F4B3C;
+    --pine-dark:#203528;
+    --brass:#A67C42;
+    --brass-light:#C9A971;
+    --line:#06C755;
+    --line-dark:#05a648;
+    --border:#DED2B7;
+    --radius:14px;
+    --shadow:0 10px 30px -12px rgba(43,38,33,0.18);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth; overflow-x:hidden;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important;}
+  }
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Noto Sans TC', sans-serif;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:66px; /* space for sticky mobile bar */
+    overflow-x:hidden;
+    width:100%;
+  }
+  h1,h2,h3{ font-family:'Noto Serif TC', serif; color:var(--ink); line-height:1.35; }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  a{ color:inherit; text-decoration:none; }
+  img{max-width:100%; display:block;}
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 20px; }
+  .visually-hidden{ position:absolute; width:1px;height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+
+  /* ---------- Home-plate signature shape ---------- */
+  .badge-home{
+    clip-path: polygon(50% 0%, 100% 38%, 100% 100%, 0% 100%, 0% 38%);
+  }
+
+  /* ---------- Roofline divider (signature motif) ---------- */
+  .roofline{
+    width:100%; height:34px;
+    background-repeat: repeat-x;
+    background-size: 120px 34px;
+    background-image: linear-gradient(135deg, transparent 49%, currentColor 49%, currentColor 51%, transparent 51%),
+                       linear-gradient(-135deg, transparent 49%, currentColor 49%, currentColor 51%, transparent 51%);
+    background-position: 0 0, 60px 0;
+    color: var(--brass-light);
+    opacity:.55;
+  }
+  .roofline.flip{ transform: scaleY(-1); }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:14px 22px; border-radius:999px; font-weight:700; font-size:15px;
+    border:1.5px solid transparent; cursor:pointer; white-space:nowrap;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn:active{ transform:scale(.97); }
+  .btn-line{ background:var(--line); color:#fff; box-shadow:0 8px 20px -8px rgba(6,199,85,.55); }
+  .btn-line:hover{ background:var(--line-dark); }
+  .btn-solid{ background:var(--pine); color:#fff; border-color:var(--pine); }
+  .btn-solid:hover{ background:var(--pine-dark); }
+  .btn-outline{ background:transparent; border-color:var(--pine); color:var(--pine); }
+  .btn-outline:hover{ background:var(--pine); color:var(--paper); }
+  .btn-ghost{ background:var(--paper); color:var(--ink); border-color:var(--border); }
+  .btn-block{ width:100%; }
+
+  /* ---------- Header ---------- */
+  header.site{
+    position:sticky; top:0; z-index:50;
+    background:rgba(245,241,232,.92); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  header.site.menu-open{
+    background:var(--cream); backdrop-filter:none;
+  }
+  .header-inner{ display:flex; align-items:center; justify-content:space-between; padding:14px 20px; max-width:1120px; margin:0 auto; }
+  .brand{ display:flex; flex-direction:column; line-height:1.1; }
+  .brand .zh{ font-family:'Noto Serif TC',serif; font-weight:900; font-size:22px; color:var(--pine-dark); letter-spacing:.04em; }
+  .brand .en{ font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.18em; color:var(--brass); text-transform:uppercase; margin-top:2px;}
+  nav.desktop{ display:none; gap:28px; font-weight:500; font-size:15px; }
+  .header-actions{ display:flex; align-items:center; gap:10px; }
+  .icon-btn{ width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:1px solid var(--border); background:var(--paper); }
+  .menu-toggle{ display:flex; }
+  .menu-toggle span, .menu-toggle span::before, .menu-toggle span::after{
+    content:''; display:block; width:18px; height:2px; background:var(--ink); position:relative; transition:.2s;
+  }
+  .menu-toggle span::before{ position:absolute; top:-6px; }
+  .menu-toggle span::after{ position:absolute; top:6px; }
+  .menu-toggle.open span{ background:transparent; }
+  .menu-toggle.open span::before{ top:0; transform:rotate(45deg); background:var(--ink); }
+  .menu-toggle.open span::after{ top:0; transform:rotate(-45deg); background:var(--ink); }
+
+  .mobile-nav{
+    position:fixed; inset:0; top:65px; background:var(--cream);
+    display:flex; flex-direction:column; padding:30px 24px; gap:6px;
+    transform:translateX(100%); transition:transform .28s ease; z-index:40;
+  }
+  .mobile-nav.open{ transform:translateX(0); }
+  .mobile-nav a{ font-family:'Noto Serif TC',serif; font-size:22px; font-weight:700; padding:14px 0; border-bottom:1px solid var(--border); }
+  .mobile-nav .line-cta{ margin-top:20px; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background: radial-gradient(ellipse at 20% 0%, var(--cream-deep), var(--cream) 60%);
+    padding:36px 0 0;
+    position:relative;
+  }
+  .hero-inner{ padding:10px 20px 40px; }
+  .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-size:12px; letter-spacing:.14em; color:var(--pine); font-weight:700; text-transform:uppercase; margin-bottom:18px; }
+  .eyebrow .dot{ width:9px; height:9px; background:var(--brass); }
+  .hero h1{ font-size:26px; font-weight:900; letter-spacing:.02em; margin-bottom:18px; }
+  .hero h1 em{ font-style:normal; color:var(--pine); border-bottom:4px solid var(--brass-light); }
+  .hero p.lead{ color:var(--ink-soft); font-size:16px; max-width:46ch; margin-bottom:28px; }
+  .hero-ctas{ display:flex; flex-direction:column; gap:12px; margin-bottom:34px; }
+  .stat-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  .stat-chip{ background:var(--paper); border:1px solid var(--border); border-radius:12px; padding:14px 10px; text-align:center; }
+  .stat-chip .num{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:20px; color:var(--pine-dark); }
+  .stat-chip .label{ font-size:11px; color:var(--ink-faint); margin-top:4px; }
+
+  /* ---------- Sections generic ---------- */
+  section{ padding:56px 0; }
+  .section-head{ margin-bottom:32px; }
+  .section-head .eyebrow{ margin-bottom:10px; }
+  .section-head h2{ font-size:26px; font-weight:900; }
+  .section-head p{ color:var(--ink-soft); margin-top:10px; max-width:56ch; }
+  .alt-bg{ background:var(--cream-deep); }
+
+  /* reveal on scroll */
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* ---------- Services ---------- */
+  .service-grid{ display:grid; grid-template-columns:1fr; gap:16px; }
+  .service-card{ background:var(--paper); border:1px solid var(--border); border-radius:var(--radius); padding:24px; }
+  .service-icon{ width:52px; height:52px; background:var(--pine); color:#fff; display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+  .service-card h3{ font-size:18px; margin-bottom:8px; }
+  .service-card p{ color:var(--ink-soft); font-size:14.5px; }
+
+  /* ---------- Case studies (horizontal snap) ---------- */
+  .case-scroll{ display:flex; gap:16px; overflow-x:auto; padding:6px 20px 20px; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;}
+  @media (min-width:900px){
+    .case-scroll{ max-width:1120px; margin:0 auto; }
+  }
+  .case-scroll::-webkit-scrollbar{ height:6px; }
+  .case-scroll::-webkit-scrollbar-thumb{ background:var(--border); border-radius:99px; }
+  .case-card{ flex:0 0 82%; scroll-snap-align:start; background:var(--paper); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); }
+  .case-media{ height:150px; background:linear-gradient(135deg, var(--pine) 0%, var(--pine-dark) 100%); position:relative; }
+  .case-media .tag{ position:absolute; top:12px; left:12px; background:rgba(255,255,255,.16); color:#fff; font-size:11px; font-weight:700; padding:5px 10px; border-radius:99px; border:1px solid rgba(255,255,255,.3); }
+  .case-media svg{ position:absolute; bottom:0; left:0; width:100%; opacity:.5; }
+  .case-body{ padding:18px 20px 22px; }
+  .case-body .region{ font-size:12px; color:var(--brass); font-weight:700; letter-spacing:.06em; margin-bottom:6px; }
+  .case-body h3{ font-size:17px; margin-bottom:10px; }
+  .case-body p{ font-size:14px; color:var(--ink-soft); }
+
+  /* ---------- Video ---------- */
+  .video-feature{ position:relative; border-radius:var(--radius); overflow:hidden; background:linear-gradient(135deg,#3a3128,#20180f); aspect-ratio:16/10; margin-bottom:16px; display:flex; align-items:flex-end; }
+  .video-feature .play{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:64px; height:64px; background:var(--paper); display:flex; align-items:center; justify-content:center; box-shadow:0 10px 25px rgba(0,0,0,.35); }
+  .video-feature .meta{ position:relative; z-index:2; padding:20px; color:#fff; }
+  .video-feature .meta .dur{ font-family:'JetBrains Mono',monospace; font-size:12px; background:rgba(0,0,0,.5); padding:3px 8px; border-radius:6px; margin-bottom:8px; display:inline-block; }
+  .video-feature .meta h3{ color:#fff; font-size:19px; }
+  .video-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .video-thumb{ border-radius:12px; overflow:hidden; background:linear-gradient(135deg,#4b5d4f,#2f4b3c); aspect-ratio:16/10; position:relative; }
+  .video-thumb .play-sm{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:36px; height:36px; background:rgba(255,255,255,.92); display:flex; align-items:center; justify-content:center; }
+  .video-thumb span.label{ position:absolute; bottom:8px; left:8px; right:8px; color:#fff; font-size:12.5px; font-weight:700; text-shadow:0 1px 4px rgba(0,0,0,.5); }
+
+  /* ---------- Listings ---------- */
+  .listing-grid{ display:grid; grid-template-columns:1fr; gap:18px; }
+  .listing-card{ background:var(--paper); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+  .listing-media{ height:170px; background:linear-gradient(135deg, var(--pine) 0%, var(--pine-dark) 100%); position:relative; }
+  .listing-media svg{ position:absolute; inset:0; width:100%; height:100%; opacity:.35; }
+  .listing-status{ position:absolute; top:12px; right:12px; font-size:11px; font-weight:700; padding:5px 10px; color:#fff; background:var(--brass); }
+  .listing-body{ padding:18px 20px 22px; }
+  .listing-region{ font-size:12px; color:var(--ink-faint); margin-bottom:6px; letter-spacing:.04em;}
+  .listing-title{ font-size:17px; font-weight:700; margin-bottom:10px; font-family:'Noto Serif TC',serif; }
+  .listing-price{ font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:700; color:var(--pine-dark); margin-bottom:12px; }
+  .listing-tags{ display:flex; gap:8px; flex-wrap:wrap; }
+  .listing-tags span{ font-size:12px; background:var(--cream-deep); border:1px solid var(--border); padding:4px 10px; border-radius:99px; color:var(--ink-soft); }
+  .listing-more{ text-align:center; margin-top:28px; }
+
+  /* ---------- Contact ---------- */
+  .contact-grid{ display:grid; grid-template-columns:1fr; gap:32px; }
+  .contact-info{ background:var(--pine-dark); color:var(--cream); border-radius:var(--radius); padding:28px; }
+  .contact-info h3{ color:#fff; font-size:20px; margin-bottom:18px; }
+  .contact-row{ display:flex; gap:12px; padding:12px 0; border-bottom:1px solid rgba(255,255,255,.14); }
+  .contact-row:last-child{ border-bottom:none; }
+  .contact-row .k{ width:78px; flex-shrink:0; font-size:13px; color:var(--brass-light); font-weight:700; }
+  .contact-row .v{ font-size:14.5px; color:rgba(255,255,255,.92); }
+  .map-block{ margin-top:20px; border-radius:10px; overflow:hidden; height:120px; background:repeating-linear-gradient(45deg, rgba(255,255,255,.06) 0 10px, transparent 10px 20px); position:relative; display:flex; align-items:center; justify-content:center; }
+  .map-block .pin{ width:30px; height:30px; background:var(--brass); }
+
+  form.contact-form{ display:flex; flex-direction:column; gap:14px; }
+  .field label{ display:block; font-size:13px; font-weight:700; margin-bottom:6px; color:var(--ink-soft); }
+  .field input, .field textarea{
+    width:100%; padding:13px 14px; border-radius:10px; border:1.5px solid var(--border);
+    background:var(--paper); font-family:inherit; font-size:15px; color:var(--ink);
+  }
+  .field input:focus, .field textarea:focus{ outline:3px solid var(--brass-light); outline-offset:1px; border-color:var(--pine); }
+  .field textarea{ resize:vertical; min-height:100px; }
+  .form-note{ font-size:12.5px; color:var(--ink-faint); }
+  .form-success{ display:none; background:#E7F3EA; border:1px solid #BFDFC7; color:var(--pine-dark); padding:12px 16px; border-radius:10px; font-size:14px; font-weight:700; }
+  .form-success.show{ display:block; }
+
+  /* ---------- Footer ---------- */
+  footer{ background:var(--pine-dark); color:rgba(255,255,255,.78); padding:44px 0 24px; }
+  .footer-top{ display:flex; flex-direction:column; gap:26px; margin-bottom:26px; }
+  .footer-brand .zh{ font-family:'Noto Serif TC',serif; font-weight:900; font-size:22px; color:#fff; }
+  .footer-brand p{ font-size:13.5px; margin-top:8px; max-width:40ch; }
+  .footer-links{ display:flex; flex-wrap:wrap; gap:16px; font-size:14px; }
+  .footer-social{ display:flex; gap:10px; }
+  .footer-social a{ width:38px; height:38px; border-radius:50%; border:1px solid rgba(255,255,255,.25); display:flex; align-items:center; justify-content:center; }
+  .footer-legal{ border-top:1px solid rgba(255,255,255,.15); padding-top:18px; font-size:11.5px; color:rgba(255,255,255,.5); line-height:1.8; }
+
+  /* ---------- Sticky mobile action bar ---------- */
+  .mobile-bar{
+    position:fixed; left:0; right:0; bottom:0; z-index:60;
+    display:flex; border-top:1px solid var(--border);
+    background:var(--paper);
+    padding:8px 10px calc(8px + env(safe-area-inset-bottom));
+    gap:10px;
+  }
+  .mobile-bar .btn{ flex:1; padding:12px 10px; font-size:14px; }
+
+  /* ---------- Desktop ---------- */
+  @media (min-width:768px){
+    body{ padding-bottom:0; }
+    .mobile-bar{ display:none; }
+    .menu-toggle{ display:none; }
+    nav.desktop{ display:flex; }
+    .header-actions .call-icon{ display:flex; }
+    .hero-inner{ padding:30px 20px 70px; display:grid; grid-template-columns:1.1fr .9fr; gap:40px; align-items:center; }
+    .hero h1{ font-size:36px; }
+    .hero-ctas{ flex-direction:row; }
+    .stat-row{ max-width:420px; }
+    section{ padding:84px 0; }
+    .service-grid{ grid-template-columns:repeat(4,1fr); }
+    .case-card{ flex:0 0 340px; }
+    .video-grid{ grid-template-columns:1fr 1fr; }
+    .listing-grid{ grid-template-columns:repeat(2,1fr); }
+    .contact-grid{ grid-template-columns:.9fr 1.1fr; }
+    .footer-top{ flex-direction:row; justify-content:space-between; align-items:flex-start; }
+  }
+  @media (min-width:1024px){
+    .hero h1{ font-size:40px; }
+    .listing-grid{ grid-template-columns:repeat(3,1fr); }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="header-inner">
+    <a href="index.html" class="brand">
+      <span class="zh">房產好夥伴雅慈</span>
+    </a>
+    <nav class="desktop">
+      <a href="about.html">關於我</a>
+      <a href="cases.html" style="color:var(--pine);font-weight:800;">成交案例</a>
+      <a href="video.html">影音專區</a>
+      <a href="listings.html">最新物件</a>
+      <a href="index.html#contact">聯絡我</a>
+    </nav>
+    <div class="header-actions">
+      <a href="tel:+886913210557" class="icon-btn call-icon" style="display:none" aria-label="撥打電話">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.34 1.79.65 2.65a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.43-1.27a2 2 0 0 1 2.11-.45c.86.31 1.75.53 2.65.65A2 2 0 0 1 22 16.92z"/></svg>
+      </a>
+      <a href="index.html#contact" class="btn btn-outline" style="display:none" id="desktopLineBtn">加LINE好友</a>
+      <button class="icon-btn menu-toggle" id="menuToggle" aria-label="開啟選單" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="index.html">首頁</a>
+    <a href="about.html">關於我</a>
+    <a href="cases.html" style="color:var(--pine);font-weight:800;">成交案例</a>
+    <a href="video.html">影音專區</a>
+    <a href="listings.html">最新物件</a>
+    <a href="index.html#contact">聯絡我</a>
+    <a href="index.html#contact" class="btn btn-line btn-block line-cta">加 LINE 好友，免費諮詢</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section id="cases" class="alt-bg">
+    <div class="roofline flip" style="color:var(--cream-deep);background-color:var(--cream);"></div>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow"><span class="dot badge-home"></span>Case Studies</p>
+        <h2>成交案例</h2>
+        <p>每一筆交易背後，都是一段被好好處理的過程。以下為部分成交案例分享。</p>
+      </div>
+    </div>
+    <div class="case-scroll">
+      <article class="case-card reveal">
+        <div class="case-media">
+          <span class="tag">45 天成交</span>
+          <svg viewBox="0 0 300 60"><polygon points="0,60 40,20 80,60" fill="#fff" opacity=".15"/><polygon points="90,60 140,10 190,60" fill="#fff" opacity=".15"/><polygon points="200,60 240,25 280,60" fill="#fff" opacity=".15"/></svg>
+        </div>
+        <div class="case-body">
+          <p class="region">桃園區・28坪電梯華廈</p>
+          <h3>自售半年未果，接手後快速成交</h3>
+          <p>屋主原先自行銷售近半年沒有進度，重新規劃行銷與定價策略後，45 天內完成簽約。</p>
+        </div>
+      </article>
+      <article class="case-card reveal">
+        <div class="case-media">
+          <span class="tag">貸款8成</span>
+          <svg viewBox="0 0 300 60"><polygon points="0,60 40,20 80,60" fill="#fff" opacity=".15"/><polygon points="90,60 140,10 190,60" fill="#fff" opacity=".15"/><polygon points="200,60 240,25 280,60" fill="#fff" opacity=".15"/></svg>
+        </div>
+        <div class="case-body">
+          <p class="region">中壢區・3房車位</p>
+          <h3>首購族圓夢，貸款成數拉高至八成</h3>
+          <p>依預算陪同看屋十餘間，協助比較房貸方案，最終取得理想成數，順利首購入住。</p>
+        </div>
+      </article>
+      <article class="case-card reveal">
+        <div class="case-media">
+          <span class="tag">繼承過戶</span>
+          <svg viewBox="0 0 300 60"><polygon points="0,60 40,20 80,60" fill="#fff" opacity=".15"/><polygon points="90,60 140,10 190,60" fill="#fff" opacity=".15"/><polygon points="200,60 240,25 280,60" fill="#fff" opacity=".15"/></svg>
+        </div>
+        <div class="case-body">
+          <p class="region">八德區・老屋翻新透天</p>
+          <h3>協助處理繼承過戶，流程全程透明</h3>
+          <p>涉及多位繼承人的複雜產權，逐步協調並整合地政士資源，讓交易安心落地。</p>
+        </div>
+      </article>
+      <article class="case-card reveal">
+        <div class="case-media">
+          <span class="tag">議價 5%</span>
+          <svg viewBox="0 0 300 60"><polygon points="0,60 40,20 80,60" fill="#fff" opacity=".15"/><polygon points="90,60 140,10 190,60" fill="#fff" opacity=".15"/><polygon points="200,60 240,25 280,60" fill="#fff" opacity=".15"/></svg>
+        </div>
+        <div class="case-body">
+          <p class="region">蘆竹區・科技住宅</p>
+          <h3>議價成功省下總價 5%</h3>
+          <p>掌握區域行情與屋主動機，成功議價並快速交屋，銜接買方原租約到期時間。</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <p class="zh">房產好夥伴雅慈</p>
+        <p>桃園在地經紀團隊，用透明與專業，陪你找到安心落腳的家。</p>
+      </div>
+      <div class="footer-links">
+        <a href="about.html">關於我</a>
+        <a href="cases.html">成交案例</a>
+        <a href="video.html">影音專區</a>
+        <a href="listings.html">最新物件</a>
+        <a href="index.html#contact">聯絡我</a>
+        <a href="dashboard.html">中控台</a>
+      </div>
+      <div class="footer-social">
+        <a href="#" aria-label="LINE"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C6.48 2 2 5.94 2 10.7c0 2.68 1.44 5.07 3.7 6.65-.16.6-1.02 3.62-1.06 3.85 0 0-.02.17.09.24a.3.3 0 0 0 .25.02c.33-.05 3.8-2.5 4.4-2.92.85.13 1.73.2 2.62.2 5.52 0 10-3.94 10-8.7S17.52 2 12 2z"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M13 22v-9h3l1-4h-4V6.5C13 5.4 13.4 4.7 15 4.7h2V1.1C16.6 1 15.4 1 14.1 1 11 1 9 2.9 9 6.1V9H6v4h3v9h4z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-legal">
+      房產好夥伴雅慈<br>
+      有巢氏房屋｜平鎮南勢中豐店<br>
+      經紀業：眾鑫房屋仲介有限公司<br>
+      經紀人：李文儀111宜字第00369號<br>
+      營業員證號：(107)登字第334826號
+    </div>
+  </div>
+</footer>
+
+
+
+<!-- ================= STICKY MOBILE BAR ================= -->
+<div class="mobile-bar">
+  <a href="tel:+886913210557" class="btn btn-ghost">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.34 1.79.65 2.65a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.43-1.27a2 2 0 0 1 2.11-.45c.86.31 1.75.53 2.65.65A2 2 0 0 1 22 16.92z"/></svg>
+    撥打電話
+  </a>
+  <a href="index.html#contact" class="btn btn-line">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.94 2 10.7c0 2.68 1.44 5.07 3.7 6.65-.16.6-1.02 3.62-1.06 3.85 0 0-.02.17.09.24a.3.3 0 0 0 .25.02c.33-.05 3.8-2.5 4.4-2.92.85.13 1.73.2 2.62.2 5.52 0 10-3.94 10-8.7S17.52 2 12 2z"/></svg>
+    加 LINE 好友
+  </a>
+</div>
+
+
+<script>
+  // Mobile menu toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const mobileNav = document.getElementById('mobileNav');
+  const siteHeader = document.querySelector('header.site');
+  menuToggle.addEventListener('click', () => {
+    const isOpen = mobileNav.classList.toggle('open');
+    menuToggle.classList.toggle('open', isOpen);
+    menuToggle.setAttribute('aria-expanded', isOpen);
+    siteHeader.classList.toggle('menu-open', isOpen);
+  });
+  mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileNav.classList.remove('open');
+    menuToggle.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    siteHeader.classList.remove('menu-open');
+  }));
+
+  // Show desktop call/LINE icons only on wider viewports (avoids layout jump)
+  function syncDesktopIcons(){
+    const isDesktop = window.innerWidth >= 768;
+    document.querySelector('.call-icon').style.display = isDesktop ? 'flex' : 'none';
+    document.getElementById('desktopLineBtn').style.display = isDesktop ? 'inline-flex' : 'none';
+  }
+  syncDesktopIcons();
+  window.addEventListener('resize', syncDesktopIcons);
+
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('in'));
+  }
+
+  // Contact form (front-end only demo)
+  const form = document.getElementById('contactForm');
+  const success = document.getElementById('formSuccess');
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      success.classList.add('show');
+      form.reset();
+      success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
+</script>
+
+</body>
+</html>
