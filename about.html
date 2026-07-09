@@ -232,6 +232,7 @@
   nav.desktop{ display:none; align-items:center; gap:22px; font-weight:500; font-size:16px; }
   @media (min-width:768px){
     nav.desktop{ display:flex; }
+    .menu-toggle{ display:none; }
   }
   .nav-item-dropdown{ position:relative; }
   .dropdown-toggle{ display:inline-flex; align-items:center; gap:5px; background:none; border:none; font:inherit; color:inherit; cursor:pointer; padding:0; }
@@ -261,14 +262,13 @@
 
   /* ---------- Footer contact card ---------- */
   .footer-contact-intro{ font-size:16px; color:rgba(255,255,255,.75); margin-bottom:18px; max-width:60ch; }
-  .footer-contact-card{ background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); border-radius:var(--radius); padding:28px; width:100%; max-width:640px; }
+  .footer-contact-card{ background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); border-radius:var(--radius); padding:28px; width:100%; max-width:680px; display:flex; align-items:center; gap:30px; }
+  .footer-contact-main{ flex:1; min-width:0; }
   .footer-contact-card h3{ color:#fff; font-size:20px; margin-bottom:16px; }
   .footer-contact-card .contact-row{ display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,.14); }
   .footer-contact-card .contact-row .k{ width:78px; flex-shrink:0; font-size:14px; color:var(--brass-light); font-weight:700; }
   .footer-contact-card .contact-row .v{ font-size:15px; color:rgba(255,255,255,.92); }
-  .contact-action-row{ display:flex; align-items:center; flex-wrap:wrap; gap:18px; margin-top:20px; }
-  .contact-action-row .btn{ flex:1; min-width:180px; }
-  .footer-line-qr{ background:#fff; border-radius:12px; padding:12px; display:flex; flex-direction:column; align-items:center; gap:8px; flex-shrink:0; margin-left:auto; }
+  .footer-line-qr{ background:#fff; border-radius:12px; padding:12px; display:flex; flex-direction:column; align-items:center; gap:8px; flex-shrink:0; }
   .footer-line-qr img{ width:110px; height:110px; border-radius:8px; }
   .footer-line-qr p{ font-size:12.5px; font-weight:700; color:var(--pine-dark); text-align:center; }
   .footer-admin{ text-align:right; margin-top:10px; }
@@ -278,7 +278,7 @@
     .footer-top{ align-items:flex-start; }
   }
 
-  .hero-photo{ max-width:320px; width:100%; height:auto; display:block; }
+  .hero-photo{ max-width:260px; width:100%; height:auto; display:block; }
 
   @media (max-width:767px){
     .btn{ font-size:15px; }
@@ -331,10 +331,20 @@
     .icon-btn{ width:34px; height:34px; }
     .service-icon{ width:42px; height:42px; }
     .footer-line-qr img{ width:84px; height:84px; }
-    .hero-photo{ max-width:220px; }
-    .stat-chip{ padding:11px 8px; }
-    .contact-action-row{ flex-direction:column; align-items:stretch; }
-    .footer-line-qr{ margin:0 auto; }
+    .hero-photo{ max-width:170px; }
+    .footer-contact-card{ flex-direction:column; align-items:stretch; }
+    .footer-line-qr{ margin:20px auto 0; }
+  }
+
+  /* ---------- Standalone contact page ---------- */
+  .contact-page-card{ background:var(--paper); border:1px solid var(--border); border-radius:var(--radius); padding:28px; display:flex; align-items:center; gap:30px; }
+  .contact-page-main{ flex:1; min-width:0; }
+  .contact-row-light{ display:flex; gap:12px; padding:12px 0; border-bottom:1px solid var(--border); }
+  .contact-row-light .k{ width:78px; flex-shrink:0; font-size:14px; color:var(--brass); font-weight:700; }
+  .contact-row-light .v{ font-size:15px; color:var(--ink); }
+  @media (max-width:767px){
+    .contact-page-card{ flex-direction:column; align-items:stretch; }
+    .contact-page-card .footer-line-qr{ margin:20px auto 0; }
   }
 
 </style>
@@ -350,7 +360,13 @@
     <nav class="desktop">
     <a href="index.html">首頁</a>
     <a href="about.html" style="color:var(--pine);font-weight:800;">關於雅慈</a>
-    <a href="fees.html">買賣交易相關費用</a>
+    <div class="nav-item-dropdown">
+      <button class="dropdown-toggle" type="button" data-dropdown="fees-menu-desktop">買賣交易相關費用 <span class="caret">▾</span></button>
+      <div class="dropdown-menu" id="fees-menu-desktop">
+        <a href="fees-buyer.html">我是買方</a>
+        <a href="fees-seller.html">我是賣方</a>
+      </div>
+    </div>
     <div class="nav-item-dropdown">
       <button class="dropdown-toggle" type="button" data-dropdown="tax-menu-desktop">相關稅費試算 <span class="caret">▾</span></button>
       <div class="dropdown-menu" id="tax-menu-desktop">
@@ -360,7 +376,7 @@
         <a href="tax-house-land-refund.html">房地合一稅（重購退稅）</a>
       </div>
     </div>
-    <a href="index.html#contact">聯絡雅慈</a>
+    <a href="contact.html">聯絡雅慈</a>
     </nav>
     <div class="header-actions">
       <a href="tel:+886913210557" class="icon-btn call-icon" style="display:none" aria-label="撥打電話">
@@ -373,7 +389,13 @@
   <nav class="mobile-nav" id="mobileNav">
     <a href="index.html">首頁</a>
     <a href="about.html" style="color:var(--pine);font-weight:800;">關於雅慈</a>
-    <a href="fees.html">買賣交易相關費用</a>
+    <div class="nav-item-dropdown">
+      <button class="dropdown-toggle" type="button" data-dropdown="fees-menu-mobile">買賣交易相關費用 <span class="caret">▾</span></button>
+      <div class="dropdown-menu" id="fees-menu-mobile">
+      <a href="fees-buyer.html">我是買方</a>
+      <a href="fees-seller.html">我是賣方</a>
+      </div>
+    </div>
     <div class="nav-item-dropdown">
       <button class="dropdown-toggle" type="button" data-dropdown="tax-menu-mobile">相關稅費試算 <span class="caret">▾</span></button>
       <div class="dropdown-menu" id="tax-menu-mobile">
@@ -383,7 +405,7 @@
       <a href="tax-house-land-refund.html">房地合一稅（重購退稅）</a>
       </div>
     </div>
-    <a href="index.html#contact">聯絡雅慈</a>
+    <a href="contact.html">聯絡雅慈</a>
     <a href="https://line.me/ti/p/~yanachang" target="_blank" rel="noopener" class="btn btn-line btn-block line-cta">加 LINE 好友，免費諮詢</a>
   </nav>
 </header>
@@ -436,20 +458,16 @@
   <div class="wrap">
     <div class="footer-top" id="contact">
       <div class="footer-contact-card">
-        <h3>聯絡雅慈</h3>
-        <p class="footer-contact-intro">無論你是想買房還是賣房，歡迎與我聊聊，沒有壓力，我可以協助您試算所有雜費稅費，幫您分析買賣流程，並依照您的需求提供建議，找到最適合您的買賣方式。</p>
-        <div class="contact-row"><div class="k">電話</div><div class="v"><a href="tel:+886913210557">0913-210-557</a></div></div>
-        <div class="contact-row"><div class="k">LINE ID</div><div class="v">yanachang</div></div>
-        <div class="contact-row"><div class="k">FB</div><div class="v"><a href="https://www.facebook.com/PLACEHOLDER_FB_PAGE" target="_blank" rel="noopener">房產好夥伴雅慈</a></div></div>
-        <div class="contact-action-row">
-          <a href="https://line.me/ti/p/~yanachang" target="_blank" rel="noopener" class="btn btn-line">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.94 2 10.7c0 2.68 1.44 5.07 3.7 6.65-.16.6-1.02 3.62-1.06 3.85 0 0-.02.17.09.24a.3.3 0 0 0 .25.02c.33-.05 3.8-2.5 4.4-2.92.85.13 1.73.2 2.62.2 5.52 0 10-3.94 10-8.7S17.52 2 12 2z"/></svg>
-            加 LINE 好友
-          </a>
-          <div class="footer-line-qr">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=8&data=https%3A%2F%2Fline.me%2Fti%2Fp%2F~yanachang" alt="掃描 QR Code 加 LINE 好友" width="110" height="110" loading="lazy">
-            <p>掃描加LINE好友</p>
-          </div>
+        <div class="footer-contact-main">
+          <h3>聯絡雅慈</h3>
+          <p class="footer-contact-intro">你想換屋、買房或是賣房嗎，歡迎與我聊聊，沒有壓力不強迫，若有需要，我也可以協助您試算所有雜費稅費，幫您分析買賣流程，並依照您的需求提供建議，找到最適合您的買賣方式。</p>
+          <div class="contact-row"><div class="k">電話</div><div class="v"><a href="tel:+886913210557">0913-210-557</a></div></div>
+          <div class="contact-row"><div class="k">LINE ID</div><div class="v">yanachang</div></div>
+          <div class="contact-row"><div class="k">FB</div><div class="v"><a href="https://www.facebook.com/profile.php?id=100083687512234" target="_blank" rel="noopener">房產好夥伴雅慈</a></div></div>
+        </div>
+        <div class="footer-line-qr">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=8&data=https%3A%2F%2Fline.me%2Fti%2Fp%2F~yanachang" alt="掃描 QR Code 加 LINE 好友" width="110" height="110" loading="lazy">
+          <p>掃描加LINE好友</p>
         </div>
       </div>
     </div>
