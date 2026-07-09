@@ -199,11 +199,6 @@
 
   footer{ background:var(--pine-dark); color:rgba(255,255,255,.78); padding:44px 0 24px; }
   .footer-top{ display:flex; flex-direction:column; gap:26px; margin-bottom:26px; }
-  .footer-brand{ display:flex; align-items:center; gap:10px; }
-  .footer-brand img.logo{ width:34px; height:34px; object-fit:contain; }
-  .footer-brand .zh{ font-family:'Noto Serif TC',serif; font-weight:900; font-size:27px; color:#fff; }
-  .footer-brand p{ font-size:16.5px; margin-top:8px; max-width:40ch; }
-  .footer-brand-text{ display:flex; flex-direction:column; }
   .footer-legal{ border-top:1px solid rgba(255,255,255,.15); padding-top:18px; font-size:14.5px; color:rgba(255,255,255,.5); line-height:1.8; }
 
   .mobile-bar{
@@ -265,18 +260,15 @@
   .tax-other-list a:hover{ background:var(--cream-deep); }
 
   /* ---------- Footer contact card ---------- */
-  .footer-brand{ display:flex; align-items:flex-start; gap:12px; max-width:360px; }
-  .footer-contact-card{ background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); border-radius:var(--radius); padding:24px; width:100%; max-width:420px; }
+  .footer-contact-intro{ font-size:16px; color:rgba(255,255,255,.75); margin-bottom:18px; max-width:60ch; }
+  .footer-contact-card{ background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); border-radius:var(--radius); padding:28px; width:100%; max-width:640px; }
   .footer-contact-card h3{ color:#fff; font-size:20px; margin-bottom:16px; }
   .footer-contact-card .contact-row{ display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,.14); }
   .footer-contact-card .contact-row .k{ width:78px; flex-shrink:0; font-size:14px; color:var(--brass-light); font-weight:700; }
   .footer-contact-card .contact-row .v{ font-size:15px; color:rgba(255,255,255,.92); }
-  .contact-columns{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:18px; }
-  .contact-col-left{ display:flex; flex-direction:column; }
-  .fb-link{ display:inline-flex; align-items:center; gap:10px; background:#fff; color:#1877F2; border-radius:999px; padding:13px 18px; font-weight:700; font-size:14.5px; }
-  .contact-col-right{ display:flex; flex-direction:column; align-items:center; gap:12px; }
-  .contact-col-right .btn{ width:100%; }
-  .footer-line-qr{ background:#fff; border-radius:12px; padding:12px; display:flex; flex-direction:column; align-items:center; gap:8px; }
+  .contact-action-row{ display:flex; align-items:center; flex-wrap:wrap; gap:18px; margin-top:20px; }
+  .contact-action-row .btn{ flex:1; min-width:180px; }
+  .footer-line-qr{ background:#fff; border-radius:12px; padding:12px; display:flex; flex-direction:column; align-items:center; gap:8px; flex-shrink:0; margin-left:auto; }
   .footer-line-qr img{ width:110px; height:110px; border-radius:8px; }
   .footer-line-qr p{ font-size:12.5px; font-weight:700; color:var(--pine-dark); text-align:center; }
   .footer-admin{ text-align:right; margin-top:10px; }
@@ -284,6 +276,63 @@
 
   @media (min-width:768px){
     .footer-top{ align-items:flex-start; }
+  }
+
+  .hero-photo{ max-width:320px; width:100%; height:auto; display:block; }
+
+  @media (max-width:767px){
+    .btn{ font-size:15px; }
+    .brand .zh{ font-size:28.5px; }
+    .brand .en{ font-size:10px; }
+    .mobile-nav a{ font-size:22px; }
+    .eyebrow{ font-size:12.5px; }
+    .hero h1{ font-size:26px; }
+    .hero p.lead{ font-size:16.5px; }
+    .stat-chip .num{ font-size:20.5px; }
+    .stat-chip .label{ font-size:11.5px; }
+    .section-head h2{ font-size:26px; }
+    .service-card h3{ font-size:18px; }
+    .service-card p{ font-size:14.5px; }
+    .tab-btn{ font-size:15.5px; }
+    .fee-item h3{ font-size:17px; }
+    .fee-item h3 .num{ font-size:14px; }
+    .fee-item p{ font-size:14.5px; }
+    .acc-head{ font-size:17px; }
+    .acc-head .plus{ font-size:18px; }
+    .acc-body-inner{ font-size:14.5px; }
+    .acc-body-inner .note{ font-size:13px; }
+    .tax-disclaimer{ font-size:13px; }
+    .contact-info h3{ font-size:20.5px; }
+    .contact-row .k{ font-size:13px; }
+    .contact-row .v{ font-size:14.5px; }
+    .line-qr p{ font-size:13px; }
+    .field label{ font-size:13px; }
+    .field input, .field textarea{ font-size:15px; }
+    .form-note{ font-size:12.5px; }
+    .form-success{ font-size:14px; }
+    .footer-legal{ font-size:12px; }
+    .mobile-bar .btn{ font-size:14px; }
+    /* ---------- Desktop top nav (restored) ---------- */
+  nav.desktop{ font-size:13px; }
+    .dropdown-toggle .caret{ font-size:8px; }
+    nav.desktop .dropdown-menu a{ font-size:12px; }
+    .mobile-nav .dropdown-menu a{ font-size:15px; }
+    .mobile-nav .dropdown-toggle{ font-size:18px; }
+    .tax-other h3{ font-size:13px; }
+    .tax-other-list a{ font-size:12px; }
+    /* ---------- Footer contact card ---------- */
+  .footer-contact-intro{ font-size:13px; }
+    .footer-contact-card h3{ font-size:16.5px; }
+    .footer-contact-card .contact-row .k{ font-size:11.5px; }
+    .footer-contact-card .contact-row .v{ font-size:12.5px; }
+    .footer-line-qr p{ font-size:10px; }
+    .footer-admin a{ font-size:10px; }
+    .brand img.logo{ width:30px; height:30px; }
+    .icon-btn{ width:34px; height:34px; }
+    .service-icon{ width:42px; height:42px; }
+    .footer-line-qr img{ width:84px; height:84px; }
+    .hero-photo{ max-width:220px; }
+    .stat-chip{ padding:11px 8px; }
   }
 
 </style>
@@ -376,34 +425,21 @@
 
 <footer>
   <div class="wrap">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <img src="logo-footer.png" alt="房產好夥伴雅慈 logo" class="logo">
-        <div class="footer-brand-text">
-          <p class="zh">房產好夥伴雅慈</p>
-          <p>秉持用心經營，真誠服務的態度，陪伴每個客戶　走向新的旅程。</p>
-        </div>
-      </div>
+    <div class="footer-top" id="contact">
       <div class="footer-contact-card">
         <h3>聯絡雅慈</h3>
+        <p class="footer-contact-intro">無論你是想買房還是賣房，歡迎與我聊聊，沒有壓力，我可以協助您試算所有雜費稅費，幫您分析買賣流程，並依照您的需求提供建議，找到最適合您的買賣方式。</p>
         <div class="contact-row"><div class="k">電話</div><div class="v"><a href="tel:+886913210557">0913-210-557</a></div></div>
         <div class="contact-row"><div class="k">LINE ID</div><div class="v">yanachang</div></div>
-        <div class="contact-columns">
-          <div class="contact-col-left">
-            <a href="https://www.facebook.com/PLACEHOLDER_FB_PAGE" target="_blank" rel="noopener" class="fb-link">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2"><path d="M13 22v-9h3l1-4h-4V6.5C13 5.4 13.4 4.7 15 4.7h2V1.1C16.6 1 15.4 1 14.1 1 11 1 9 2.9 9 6.1V9H6v4h3v9h4z"/></svg>
-              FB：房產好夥伴雅慈
-            </a>
-          </div>
-          <div class="contact-col-right">
-            <a href="https://line.me/ti/p/~yanachang" target="_blank" rel="noopener" class="btn btn-line btn-block">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.94 2 10.7c0 2.68 1.44 5.07 3.7 6.65-.16.6-1.02 3.62-1.06 3.85 0 0-.02.17.09.24a.3.3 0 0 0 .25.02c.33-.05 3.8-2.5 4.4-2.92.85.13 1.73.2 2.62.2 5.52 0 10-3.94 10-8.7S17.52 2 12 2z"/></svg>
-              加 LINE 好友
-            </a>
-            <div class="footer-line-qr">
-              <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=8&data=https%3A%2F%2Fline.me%2Fti%2Fp%2F~yanachang" alt="掃描 QR Code 加 LINE 好友" width="110" height="110" loading="lazy">
-              <p>掃描加LINE好友</p>
-            </div>
+        <div class="contact-row"><div class="k">FB</div><div class="v"><a href="https://www.facebook.com/PLACEHOLDER_FB_PAGE" target="_blank" rel="noopener">房產好夥伴雅慈</a></div></div>
+        <div class="contact-action-row">
+          <a href="https://line.me/ti/p/~yanachang" target="_blank" rel="noopener" class="btn btn-line">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.94 2 10.7c0 2.68 1.44 5.07 3.7 6.65-.16.6-1.02 3.62-1.06 3.85 0 0-.02.17.09.24a.3.3 0 0 0 .25.02c.33-.05 3.8-2.5 4.4-2.92.85.13 1.73.2 2.62.2 5.52 0 10-3.94 10-8.7S17.52 2 12 2z"/></svg>
+            加 LINE 好友
+          </a>
+          <div class="footer-line-qr">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=8&data=https%3A%2F%2Fline.me%2Fti%2Fp%2F~yanachang" alt="掃描 QR Code 加 LINE 好友" width="110" height="110" loading="lazy">
+            <p>掃描加LINE好友</p>
           </div>
         </div>
       </div>
