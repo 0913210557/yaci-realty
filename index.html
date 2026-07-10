@@ -282,7 +282,10 @@
 
   @media (max-width:767px){
     .btn{ font-size:15px; }
-    .brand .zh{ font-size:28.5px; }
+    .brand .zh{ font-size:19px; }
+    .brand{ gap:7px; }
+    .brand img.logo{ width:26px; height:26px; }
+    .header-inner{ padding:12px 16px; }
     .brand .en{ font-size:10px; }
     .mobile-nav a{ font-size:22px; }
     .eyebrow{ font-size:12.5px; }
@@ -327,7 +330,6 @@
     .footer-contact-card .contact-row .v{ font-size:12.5px; }
     .footer-line-qr p{ font-size:10px; }
     .footer-admin a{ font-size:10px; }
-    .brand img.logo{ width:30px; height:30px; }
     .icon-btn{ width:34px; height:34px; }
     .service-icon{ width:42px; height:42px; }
     .footer-line-qr img{ width:84px; height:84px; }
@@ -346,6 +348,48 @@
     .contact-page-card{ flex-direction:column; align-items:stretch; }
     .contact-page-card .footer-line-qr{ margin:20px auto 0; }
   }
+
+  /* ---------- Homepage quick nav cards ---------- */
+  #quicknav{ padding-top:0; padding-bottom:40px; }
+  .quicknav-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .quicknav-card{
+    position:relative; background:var(--paper); border:1px solid var(--border); border-radius:var(--radius);
+    display:flex; align-items:center; justify-content:center; text-align:center; min-height:64px;
+    font-family:'Noto Serif TC',serif; font-weight:700; font-size:16px; color:var(--ink); padding:18px 14px;
+  }
+  a.quicknav-card:hover{ background:var(--cream-deep); }
+  .quicknav-trigger{ padding:0; }
+  .quicknav-toggle{ width:100%; height:100%; min-height:64px; padding:18px 14px; justify-content:center;
+    font-family:'Noto Serif TC',serif; font-weight:700; font-size:16px; color:var(--ink); gap:6px; }
+  .quicknav-menu{ position:absolute; top:calc(100% + 8px); left:0; right:0; background:var(--paper);
+    border:1px solid var(--border); border-radius:12px; padding:8px; box-shadow:var(--shadow); z-index:50; }
+  .quicknav-menu a{ display:block; padding:12px 14px; border-radius:8px; font-weight:500; font-size:14.5px; text-align:left; color:var(--ink-soft); }
+  .quicknav-menu a:hover{ background:var(--cream-deep); }
+  @media (min-width:768px){
+    .quicknav-grid{ grid-template-columns:repeat(4,1fr); }
+  }
+  @media (max-width:767px){
+    .quicknav-card, .quicknav-toggle{ font-size:14.5px; min-height:56px; padding:14px 10px; }
+  }
+
+  /* ---------- Tax page: calculator & form CTA ---------- */
+  .tax-form-cta{ background:var(--paper); border:1px solid var(--border); border-radius:var(--radius); padding:22px; margin-top:24px; text-align:center; }
+  .tax-form-cta p{ color:var(--ink-soft); font-size:14.5px; margin-bottom:14px; }
+  .calc-box{ background:var(--paper); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-top:24px; }
+  .calc-box h3{ font-size:18px; margin-bottom:16px; }
+  .calc-field{ margin-bottom:14px; }
+  .calc-field label{ display:block; font-size:13.5px; font-weight:700; color:var(--ink-soft); margin-bottom:6px; }
+  .calc-field input[type="date"], .calc-field input[type="number"]{
+    width:100%; padding:12px 14px; border-radius:10px; border:1.5px solid var(--border);
+    background:var(--cream); font-family:inherit; font-size:15px; color:var(--ink);
+  }
+  .calc-checkbox{ display:flex; align-items:center; gap:8px; font-size:14px; color:var(--ink-soft); margin-bottom:16px; }
+  .calc-checkbox input{ width:18px; height:18px; }
+  .calc-result{ margin-top:18px; background:var(--cream-deep); border-radius:12px; padding:18px; display:none; }
+  .calc-result.show{ display:block; }
+  .calc-result .row{ display:flex; justify-content:space-between; padding:6px 0; font-size:14.5px; color:var(--ink-soft); }
+  .calc-result .row.total{ border-top:1px solid var(--border); margin-top:8px; padding-top:12px; font-weight:800; font-size:17px; color:var(--pine-dark); }
+  .calc-note{ font-size:12.5px; color:var(--ink-faint); margin-top:12px; }
 
 </style>
 </head>
@@ -424,6 +468,39 @@
       </div>
     </div>
     <div class="roofline"></div>
+  </section>
+
+  <section id="quicknav">
+    <div class="wrap">
+      <div class="quicknav-grid">
+        <a href="about.html" class="quicknav-card reveal">
+          <span>關於雅慈</span>
+        </a>
+        <div class="quicknav-card quicknav-trigger reveal">
+          <button class="dropdown-toggle quicknav-toggle" type="button" data-dropdown="quicknav-fees">
+            <span>買賣交易相關費用</span> <span class="caret">▾</span>
+          </button>
+          <div class="dropdown-menu quicknav-menu" id="quicknav-fees">
+            <a href="fees-buyer.html">我是買方</a>
+            <a href="fees-seller.html">我是賣方</a>
+          </div>
+        </div>
+        <div class="quicknav-card quicknav-trigger reveal">
+          <button class="dropdown-toggle quicknav-toggle" type="button" data-dropdown="quicknav-tax">
+            <span>相關稅費試算</span> <span class="caret">▾</span>
+          </button>
+          <div class="dropdown-menu quicknav-menu" id="quicknav-tax">
+            <a href="tax-land-value.html">土地增值稅</a>
+            <a href="tax-house-land.html">房地合一稅</a>
+            <a href="tax-land-value-refund.html">土地增值稅（重購退稅）</a>
+            <a href="tax-house-land-refund.html">房地合一稅（重購退稅）</a>
+          </div>
+        </div>
+        <a href="contact.html" class="quicknav-card reveal">
+          <span>聯絡雅慈</span>
+        </a>
+      </div>
+    </div>
   </section>
 
 
