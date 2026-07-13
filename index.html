@@ -212,8 +212,8 @@
 
   /* ---------- Top nav (always visible, mobile + desktop) ---------- */
   nav.desktop{
-    display:flex; align-items:center; justify-content:center; gap:22px; font-weight:500; font-size:16px;
-    padding:0 16px 12px; overflow-x:auto; -webkit-overflow-scrolling:touch; white-space:nowrap;
+    display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:22px; font-weight:500; font-size:16px;
+    padding:0 16px 12px;
   }
   .nav-item-dropdown{ position:relative; }
   .dropdown-toggle{ display:inline-flex; align-items:center; gap:5px; background:none; border:none; font:inherit; color:inherit; cursor:pointer; padding:0; }
@@ -238,8 +238,9 @@
 
   /* ---------- Footer contact card ---------- */
   .footer-contact-intro{ font-size:16px; color:rgba(255,255,255,.75); margin-bottom:18px; max-width:60ch; }
-  .footer-contact-card{ background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); border-radius:var(--radius); padding:28px; width:100%; max-width:680px; display:flex; align-items:center; gap:30px; }
-  .footer-contact-main{ flex:1; min-width:0; }
+  .footer-contact-card{ background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); border-radius:var(--radius); padding:28px; width:100%; max-width:920px; display:flex; align-items:center; gap:32px; }
+  .footer-contact-left{ flex:1.1; min-width:0; }
+  .footer-contact-mid{ flex:1; min-width:0; }
   .footer-contact-card h3{ color:#fff; font-size:20px; margin-bottom:16px; }
   .footer-contact-card .contact-row{ display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,.14); }
   .footer-contact-card .contact-row .k{ width:78px; flex-shrink:0; font-size:14px; color:var(--brass-light); font-weight:700; }
@@ -472,9 +473,11 @@
   <div class="wrap">
     <div class="footer-top" id="contact">
       <div class="footer-contact-card">
-        <div class="footer-contact-main">
+        <div class="footer-contact-left">
           <h3>聯絡雅慈</h3>
           <p class="footer-contact-intro">你想換屋、買房或是賣房嗎，歡迎與我聊聊，沒有壓力不強迫，若有需要，我也可以協助您試算所有雜費稅費，幫您分析買賣流程，並依照您的需求提供建議，找到最適合您的買賣方式。</p>
+        </div>
+        <div class="footer-contact-mid">
           <div class="contact-row"><div class="k">電話</div><div class="v"><a href="tel:+886913210557">0913-210-557</a></div></div>
           <div class="contact-row"><div class="k">LINE ID</div><div class="v"><a href="https://line.me/ti/p/~yanachang" target="_blank" rel="noopener" class="contact-link">yanachang</a></div></div>
           <div class="contact-row"><div class="k">FB</div><div class="v"><a href="https://www.facebook.com/profile.php?id=100083687512234" target="_blank" rel="noopener" class="contact-link">房產好夥伴雅慈</a></div></div>
