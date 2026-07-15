@@ -412,7 +412,23 @@
   @media (min-width:768px){
     .profile-block{ flex-direction:row; align-items:flex-start; text-align:left; gap:36px; }
     .profile-photo{ flex-shrink:0; }
-    .profile-photo img{ max-width:220px; }
+    .profile-photo img{ max-width:180px; }
+  }
+
+  /* ---------- Detailed fee reference table ---------- */
+  .fee-table-wrap{ margin-top:32px; }
+  .fee-table-wrap h3{ font-size:18px; margin-bottom:6px; }
+  .fee-table-wrap .fee-table-note{ font-size:13px; color:var(--ink-faint); margin-bottom:14px; }
+  .fee-table{ width:100%; border-collapse:collapse; background:var(--paper); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; font-size:13.5px; }
+  .fee-table th, .fee-table td{ padding:12px 14px; text-align:left; border-bottom:1px solid var(--border); vertical-align:top; }
+  .fee-table th{ background:var(--pine); color:#fff; font-weight:700; font-size:13px; }
+  .fee-table td:first-child{ font-weight:700; color:var(--pine-dark); white-space:nowrap; }
+  .fee-table td:nth-child(2){ font-family:'JetBrains Mono',monospace; color:var(--brass); white-space:nowrap; }
+  .fee-table td:last-child{ color:var(--ink-soft); }
+  .fee-table tr:last-child td{ border-bottom:none; }
+  .fee-table tr.total-row td{ font-weight:800; color:var(--pine-dark); background:var(--cream-deep); }
+  @media (max-width:767px){
+    .fee-table{ display:block; overflow-x:auto; white-space:nowrap; }
   }
 
 </style>
@@ -490,6 +506,29 @@
             <h3><span class="num">6</span>登記規費</h3>
             <p>向地政機關辦理所有權移轉登記、抵押權設定登記所需繳納的規費。</p>
           </div>
+      </div>
+
+      <div class="fee-table-wrap reveal">
+        <h3>詳細費用速算表</h3>
+        <p class="fee-table-note">實際金額會依成交價、貸款金額、代書及各地政事務所收費標準而有所不同，此表僅供參考。</p>
+        <table class="fee-table">
+          <thead>
+            <tr><th>項目</th><th>參考金額</th><th>計算方式／備註</th></tr>
+          </thead>
+          <tbody>
+          <tr><td>申請房屋稅籍證明</td><td>1,000</td><td>每件1000</td></tr>
+          <tr><td>潤筆費</td><td>1,000</td><td>每件2000（買賣平均分攤）</td></tr>
+          <tr><td>實價登錄</td><td>2,000</td><td>代書一：每件3000（買賣平均分攤）／代書二：每件4000（買賣平均分攤）</td></tr>
+          <tr><td>產權移轉登記</td><td>—</td><td>一筆一棟14,000，土地每增加一筆加收1,000元</td></tr>
+          <tr><td>抵押權設定（貸款）</td><td>—</td><td>代書一：6,000，每多一棟+500／代書二：一筆一棟5,000元，土地建物每增加一筆或一棟加收1/4</td></tr>
+          <tr><td>仲介費</td><td>—</td><td>成交價的2%</td></tr>
+          <tr><td>履保</td><td>—</td><td>成交價的3/10000</td></tr>
+          <tr><td>契稅</td><td>—</td><td>現值×6%</td></tr>
+          <tr><td>印花稅</td><td>—</td><td>契稅的1/1000</td></tr>
+          <tr><td>土地建物登記規費</td><td>—</td><td>房屋：現值×1/1000／土地：申報地價×平方公尺×持分×1/1000</td></tr>
+          <tr><td>土地建物設定費</td><td>—</td><td>例如貸款400萬×1.2=480+0=4,800+80（多一張土地或建物權狀+80）</td></tr>
+          </tbody>
+        </table>
       </div>
 
       <div class="tax-cta reveal">
