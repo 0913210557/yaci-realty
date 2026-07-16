@@ -126,6 +126,8 @@
 
   .service-grid{ display:grid; grid-template-columns:1fr; gap:16px; }
   .service-card{ background:var(--paper); border:1px solid var(--border); border-radius:var(--radius); padding:24px; }
+  .service-card-link{ display:block; color:inherit; transition:transform .15s ease, box-shadow .15s ease; }
+  .service-card-link:hover{ transform:translateY(-3px); box-shadow:var(--shadow); }
   .service-icon{ width:52px; height:52px; background:var(--pine); color:#fff; display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
   .service-card h3{ font-size:22px; margin-bottom:8px; }
   .service-card p{ color:var(--ink-soft); font-size:17.5px; }
@@ -212,8 +214,8 @@
 
   /* ---------- Top nav (always visible, mobile + desktop) ---------- */
   nav.desktop{
-    display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:22px; font-weight:500; font-size:16px;
-    padding:0 16px 12px;
+    display:flex; align-items:center; justify-content:flex-start; flex-wrap:wrap; gap:22px; font-weight:500; font-size:16px;
+    max-width:1120px; margin:0 auto; padding:0 20px 12px;
   }
   .nav-item-dropdown{ position:relative; }
   .dropdown-toggle{ display:inline-flex; align-items:center; gap:5px; background:none; border:none; font:inherit; color:inherit; cursor:pointer; padding:0; }
@@ -296,7 +298,7 @@
     .footer-legal{ font-size:12px; }
     .mobile-bar .btn{ font-size:14px; }
     /* ---------- Desktop top nav (restored) ---------- */
-  nav.desktop{ font-size:13px; gap:14px; justify-content:flex-start; padding:0 14px 10px; }
+  nav.desktop{ font-size:13px; gap:14px; justify-content:flex-start; padding:0 16px 10px; }
     .dropdown-toggle .caret{ font-size:8px; }
     nav.desktop .dropdown-menu a{ font-size:12px; }
     .tax-other h3{ font-size:13px; }
@@ -431,6 +433,15 @@
     .fee-table{ display:block; overflow-x:auto; white-space:nowrap; }
   }
 
+  /* ---------- Interactive fee table ---------- */
+  .fee-table-interactive td input.fee-input{
+    width:100%; min-width:110px; padding:8px 10px; border-radius:8px; border:1.5px solid var(--border);
+    background:var(--cream); font-family:'JetBrains Mono',monospace; font-size:13.5px; color:var(--ink);
+  }
+  .fee-table-interactive td input.fee-input:focus{ outline:2px solid var(--brass-light); border-color:var(--pine); }
+  .fee-table-interactive tfoot td{ font-weight:800; color:var(--pine-dark); background:var(--cream-deep); font-size:15px; }
+  .fee-price-field{ max-width:360px; margin-bottom:20px; }
+
 </style>
 </head>
 <body>
@@ -449,6 +460,7 @@
     </div>
   </div>
   <nav class="desktop">
+    <a href="index.html">首頁</a>
     <a href="about.html">關於雅慈</a>
     <a href="estimate.html">免費估價</a>
     <div class="nav-item-dropdown">
@@ -459,7 +471,7 @@
       </div>
     </div>
     <div class="nav-item-dropdown">
-      <button class="dropdown-toggle" type="button" data-dropdown="tax-menu-desktop">稅費試算</button>
+      <button class="dropdown-toggle" type="button" data-dropdown="tax-menu-desktop">稅費說明與試算</button>
       <div class="dropdown-menu" id="tax-menu-desktop">
         <a href="tax-land-value.html">土地增值稅</a>
         <a href="tax-house-land.html">房地合一稅</a>
@@ -478,57 +490,37 @@
       <div class="section-head reveal">
         <p class="eyebrow"><span class="dot badge-home"></span>Fees</p>
         <h2>我是賣方</h2>
-        <p>賣方在交易過程中，大致會遇到以下幾種費用，實際金額會依物件與貸款狀況而不同。</p>
+        <p>填寫預計成交價，履保費與仲介費會自動幫您試算，其他項目可依實際狀況自行填入，最下面會自動加總。</p>
       </div>
 
-      <div class="fee-list">
-          <div class="fee-item reveal">
-            <h3><span class="num">1</span>仲介服務費</h3>
-            <p>依實際成交價與雙方約定比例收取，簽委託銷售時會清楚說明計算方式。</p>
-          </div>
-          <div class="fee-item reveal">
-            <h3><span class="num">2</span>土地增值稅</h3>
-            <p>出售土地時，就公告現值上漲部分課徵，是否符合自用住宅優惠稅率會影響金額，詳見「稅費試算」選單。</p>
-          </div>
-          <div class="fee-item reveal">
-            <h3><span class="num">3</span>房地合一稅</h3>
-            <p>就房屋與土地的實際交易所得課稅，稅率依持有期間長短而不同，詳見「稅費試算」選單。</p>
-          </div>
-          <div class="fee-item reveal">
-            <h3><span class="num">4</span>代書費</h3>
-            <p>委託地政士協助辦理過戶、塗銷抵押權等相關手續的服務費用。</p>
-          </div>
-          <div class="fee-item reveal">
-            <h3><span class="num">5</span>塗銷抵押權登記費</h3>
-            <p>若原房屋仍有貸款尚未還清，交屋前須先塗銷原本的抵押權設定登記。</p>
-          </div>
-          <div class="fee-item reveal">
-            <h3><span class="num">6</span>提前清償違約金</h3>
-            <p>若原貸款仍在約定的固定利率或優惠期間內提前還清，部分銀行會收取違約金，可先向貸款銀行確認。</p>
-          </div>
+      <div class="calc-field fee-price-field reveal">
+        <label for="fee-price">預計成交價（元）</label>
+        <input type="number" id="fee-price" placeholder="例如：12000000" oninput="onFeePriceChange()">
       </div>
 
       <div class="fee-table-wrap reveal">
-        <h3>詳細費用速算表</h3>
-        <p class="fee-table-note">實際金額會依成交價、貸款金額、代書及各地政事務所收費標準而有所不同，此表僅供參考。</p>
-        <table class="fee-table">
+        <table class="fee-table fee-table-interactive">
           <thead>
-            <tr><th>項目</th><th>參考金額</th><th>計算方式／備註</th></tr>
+            <tr><th>項目</th><th>金額（元）</th><th>計算方式／備註</th></tr>
           </thead>
           <tbody>
-          <tr><td>潤筆費</td><td>1,000</td><td>每件2000（買賣平均分攤）</td></tr>
-          <tr><td>實價登錄</td><td>1,500~2,000</td><td>每件3000（買賣平均分攤）</td></tr>
-          <tr><td>塗銷</td><td>—</td><td>一筆一棟2,000（土地建物每增加一筆或一棟加收1/4）</td></tr>
-          <tr><td>土地增值稅（一般住宅）</td><td>—</td><td>依公告土地現值累進稅率計算</td></tr>
-          <tr><td>土地增值稅（自用住宅）</td><td>—</td><td>申請自用住宅優惠稅率</td></tr>
-          <tr><td>申報自用住宅增值稅</td><td>—</td><td>每件10,000</td></tr>
-          <tr><td>國宅移轉申請</td><td>—</td><td>每件3,500</td></tr>
-          <tr><td>房地合一稅申報</td><td>—</td><td>每件5,000~6,000</td></tr>
-          <tr><td>房地合一稅</td><td>—</td><td>依持有期間及是否自用計算，詳見「稅費試算」選單</td></tr>
-          <tr><td>履保</td><td>—</td><td>成交價的3/10000</td></tr>
-          <tr><td>仲介費</td><td>—</td><td>成交價的4%</td></tr>
+          <tr><td>潤筆費</td><td><input type="number" class="fee-input" value="1000"></td><td>每件2000（買賣平均分攤）</td></tr>
+          <tr><td>實價登錄</td><td><input type="number" class="fee-input" placeholder="請填入"></td><td>每件3000（買賣平均分攤），約1,500~2,000</td></tr>
+          <tr><td>塗銷</td><td><input type="number" class="fee-input" placeholder="請填入"></td><td>一筆一棟2,000（土地建物每增加一筆或一棟加收1/4）</td></tr>
+          <tr><td>土地增值稅（一般住宅）</td><td><input type="number" class="fee-input" placeholder="請填入"></td><td>依公告土地現值累進稅率計算</td></tr>
+          <tr><td>土地增值稅（自用住宅）</td><td><input type="number" class="fee-input" placeholder="請填入"></td><td>申請自用住宅優惠稅率</td></tr>
+          <tr><td>申報自用住宅增值稅</td><td><input type="number" class="fee-input" value="10000"></td><td>每件10,000</td></tr>
+          <tr><td>國宅移轉申請</td><td><input type="number" class="fee-input" value="3500"></td><td>每件3,500</td></tr>
+          <tr><td>房地合一稅申報</td><td><input type="number" class="fee-input" placeholder="請填入"></td><td>每件5,000~6,000</td></tr>
+          <tr><td>房地合一稅</td><td><input type="number" class="fee-input" placeholder="請填入"></td><td>依持有期間及是否自用計算，詳見「稅費說明與試算」選單</td></tr>
+          <tr><td>履保</td><td><input type="number" class="fee-input" id="fee-guarantee"></td><td>成交價的3/10000</td></tr>
+          <tr><td>仲介費</td><td><input type="number" class="fee-input" id="fee-commission"></td><td>成交價的4%</td></tr>
           </tbody>
+          <tfoot>
+            <tr><td>總計</td><td id="fee-total">0</td><td>以上金額加總</td></tr>
+          </tfoot>
         </table>
+        <p class="fee-table-note">實際金額會依成交價、貸款金額、代書及各地政事務所收費標準而有所不同，此表僅供參考。</p>
       </div>
 
       <div class="tax-cta reveal">
@@ -547,6 +539,28 @@
       </div>
     </div>
   </section>
+
+<script>
+  function onFeePriceChange(){
+    const price = parseFloat(document.getElementById('fee-price').value) || 0;
+    const commissionEl = document.getElementById('fee-commission');
+    const guaranteeEl = document.getElementById('fee-guarantee');
+    if (commissionEl) commissionEl.value = price ? Math.round(price * 0.04) : '';
+    if (guaranteeEl) guaranteeEl.value = price ? Math.round(price * 3 / 10000) : '';
+    updateFeeTotal();
+  }
+  function updateFeeTotal(){
+    let total = 0;
+    document.querySelectorAll('.fee-input').forEach(input => {
+      total += parseFloat(input.value) || 0;
+    });
+    document.getElementById('fee-total').textContent = total.toLocaleString('zh-TW') + ' 元';
+  }
+  document.querySelectorAll('.fee-input').forEach(input => {
+    input.addEventListener('input', updateFeeTotal);
+  });
+  updateFeeTotal();
+</script>
 
 </main>
 
@@ -590,7 +604,7 @@
     revealEls.forEach(el => el.classList.add('in'));
   }
 
-  // Dropdown toggles (稅費試算)
+  // Dropdown toggles (稅費說明與試算)
   document.querySelectorAll('.dropdown-toggle').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
