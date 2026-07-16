@@ -203,7 +203,9 @@
     .hero-ctas{ flex-direction:row; }
     .stat-row{ max-width:420px; }
     section{ padding:84px 0; }
-    .service-grid{ grid-template-columns:repeat(4,1fr); }
+    .service-grid{ grid-template-columns:repeat(6,1fr); }
+    .service-grid > *:nth-child(1), .service-grid > *:nth-child(2){ grid-column: span 3; }
+    .service-grid > *:nth-child(3), .service-grid > *:nth-child(4), .service-grid > *:nth-child(5){ grid-column: span 2; }
     .fee-list{ display:grid; grid-template-columns:1fr 1fr; }
     .contact-grid{ grid-template-columns:.9fr 1.1fr; }
     .footer-top{ flex-direction:row; justify-content:space-between; align-items:flex-start; }
@@ -503,7 +505,7 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="eyebrow"><span class="dot badge-home"></span>Services</p>
-        <h2>雅慈能為您做什麼</h2>
+        <h2>交給雅慈 · 您安心</h2>
       </div>
       <div class="service-grid">
         <a href="about.html" class="service-card service-card-link reveal">
