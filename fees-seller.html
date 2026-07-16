@@ -203,7 +203,9 @@
     .hero-ctas{ flex-direction:row; }
     .stat-row{ max-width:420px; }
     section{ padding:84px 0; }
-    .service-grid{ grid-template-columns:repeat(4,1fr); }
+    .service-grid{ grid-template-columns:repeat(6,1fr); }
+    .service-grid > *:nth-child(1), .service-grid > *:nth-child(2){ grid-column: span 3; }
+    .service-grid > *:nth-child(3), .service-grid > *:nth-child(4), .service-grid > *:nth-child(5){ grid-column: span 2; }
     .fee-list{ display:grid; grid-template-columns:1fr 1fr; }
     .contact-grid{ grid-template-columns:.9fr 1.1fr; }
     .footer-top{ flex-direction:row; justify-content:space-between; align-items:flex-start; }
@@ -443,8 +445,91 @@
   .fee-price-field{ max-width:360px; margin-bottom:20px; }
 
 </style>
+<style>
+  @media (min-width:768px){
+    body.scale-desktop .btn{ font-size:20.5px; }
+    body.scale-desktop .brand .zh{ font-size:38.5px; }
+    body.scale-desktop .brand .en{ font-size:13.5px; }
+    body.scale-desktop .eyebrow{ font-size:17px; }
+    body.scale-desktop .hero h1{ font-size:55.5px; }
+    body.scale-desktop .hero p.lead{ font-size:22.5px; }
+    body.scale-desktop .stat-chip .num{ font-size:28px; }
+    body.scale-desktop .stat-chip .label{ font-size:15.5px; }
+    body.scale-desktop .section-head h2{ font-size:36px; }
+    body.scale-desktop .service-card h3{ font-size:24.5px; }
+    body.scale-desktop .service-card p{ font-size:19.5px; }
+    body.scale-desktop .tab-btn{ font-size:21.5px; }
+    body.scale-desktop .fee-item h3{ font-size:23.5px; }
+    body.scale-desktop .fee-item h3 .num{ font-size:19px; }
+    body.scale-desktop .fee-item p{ font-size:19.5px; }
+    body.scale-desktop .acc-head{ font-size:23.5px; }
+    body.scale-desktop .acc-head .plus{ font-size:24.5px; }
+    body.scale-desktop .acc-body-inner{ font-size:19.5px; }
+    body.scale-desktop .acc-body-inner .note{ font-size:18px; }
+    body.scale-desktop .tax-disclaimer{ font-size:18px; }
+    body.scale-desktop .contact-info h3{ font-size:28px; }
+    body.scale-desktop .contact-row .k{ font-size:18px; }
+    body.scale-desktop .contact-row .v{ font-size:19.5px; }
+    body.scale-desktop .line-qr p{ font-size:18px; }
+    body.scale-desktop .field label{ font-size:18px; }
+    body.scale-desktop .field input, body.scale-desktop .field textarea{ font-size:20.5px; }
+    body.scale-desktop .form-note{ font-size:17.5px; }
+    body.scale-desktop .form-success{ font-size:19px; }
+    body.scale-desktop .footer-legal{ font-size:16px; }
+    body.scale-desktop .mobile-bar .btn{ font-size:19px; }
+    body.scale-desktop /* ---------- Top nav (always visible, body.scale-desktop mobile + desktop) ---------- */
+  nav.desktop{ font-size:18px; }
+    body.scale-desktop .dropdown-toggle .caret{ font-size:11px; }
+    body.scale-desktop nav.desktop .dropdown-menu a{ font-size:16px; }
+    body.scale-desktop .tax-other h3{ font-size:18px; }
+    body.scale-desktop .tax-other-list a{ font-size:16px; }
+    body.scale-desktop /* ---------- Footer contact card ---------- */
+  .footer-contact-intro{ font-size:18px; }
+    body.scale-desktop .footer-contact-card h3{ font-size:22.5px; }
+    body.scale-desktop .footer-contact-card .contact-row .k{ font-size:15.5px; }
+    body.scale-desktop .footer-contact-card .contact-row .v{ font-size:17px; }
+    body.scale-desktop .footer-line-qr p{ font-size:14px; }
+    body.scale-desktop .footer-admin a{ font-size:13.5px; }
+    body.scale-desktop .contact-row-light .k{ font-size:15.5px; }
+    body.scale-desktop .contact-row-light .v{ font-size:17px; }
+    body.scale-desktop .quicknav-card-wide{ font-size:20px; }
+    body.scale-desktop .quicknav-card{ font-size:18px; }
+    body.scale-desktop .quicknav-toggle{ font-size:18px; }
+    body.scale-desktop .quicknav-menu a{ font-size:16px; }
+    body.scale-desktop .tax-form-cta p{ font-size:16px; }
+    body.scale-desktop .calc-box h3{ font-size:20px; }
+    body.scale-desktop .calc-field label{ font-size:15px; }
+    body.scale-desktop .calc-field input[type="date"], body.scale-desktop .calc-field input[type="number"], body.scale-desktop .calc-field input[type="text"], body.scale-desktop .calc-field select{ font-size:17px; }
+    body.scale-desktop .form-error{ font-size:15.5px; }
+    body.scale-desktop .lvr-hint{ font-size:13.5px; }
+    body.scale-desktop .calc-checkbox{ font-size:15.5px; }
+    body.scale-desktop .calc-info-link a{ font-size:14.5px; }
+    body.scale-desktop .calc-result .row{ font-size:16px; }
+    body.scale-desktop .calc-result .row.total{ font-size:19px; }
+    body.scale-desktop .calc-note{ font-size:14px; }
+    body.scale-desktop .tax-content-block h4{ font-size:18px; }
+    body.scale-desktop .tax-content-block p{ font-size:16px; }
+    body.scale-desktop .tax-content-block li{ font-size:16px; }
+    body.scale-desktop .tax-example p{ font-size:15.5px; }
+    body.scale-desktop .tax-example .formula{ font-size:15px; }
+    body.scale-desktop /* ---------- Tax exemption page: warning + pitfalls ---------- */
+  .tax-warning{ font-size:16px; }
+    body.scale-desktop .pitfall-item h4{ font-size:17px; }
+    body.scale-desktop .pitfall-item p{ font-size:15px; }
+    body.scale-desktop .profile-bio h3{ font-size:24.5px; }
+    body.scale-desktop .profile-bio p{ font-size:16px; }
+    body.scale-desktop .fee-table-wrap h3{ font-size:20px; }
+    body.scale-desktop .fee-table-wrap .fee-table-note{ font-size:14.5px; }
+    body.scale-desktop .fee-table{ font-size:15px; }
+    body.scale-desktop .fee-table th{ font-size:14.5px; }
+    body.scale-desktop /* ---------- Interactive fee table ---------- */
+  .fee-table-interactive td input.fee-input{ font-size:15px; }
+    body.scale-desktop .fee-table-interactive tfoot td{ font-size:17px; }
+  }
+
+</style>
 </head>
-<body>
+<body class="scale-desktop">
 
 <header class="site">
   <div class="header-inner">
@@ -494,8 +579,8 @@
       </div>
 
       <div class="calc-field fee-price-field reveal">
-        <label for="fee-price">預計成交價（元）</label>
-        <input type="number" id="fee-price" placeholder="例如：12000000" oninput="onFeePriceChange()">
+        <label for="fee-price">預計成交價（萬元）</label>
+        <input type="number" id="fee-price" placeholder="例如：1200（代表1,200萬）" oninput="onFeePriceChange()">
       </div>
 
       <div class="fee-table-wrap reveal">
@@ -542,7 +627,8 @@
 
 <script>
   function onFeePriceChange(){
-    const price = parseFloat(document.getElementById('fee-price').value) || 0;
+    const priceWan = parseFloat(document.getElementById('fee-price').value) || 0;
+    const price = priceWan * 10000;
     const commissionEl = document.getElementById('fee-commission');
     const guaranteeEl = document.getElementById('fee-guarantee');
     if (commissionEl) commissionEl.value = price ? Math.round(price * 0.04) : '';
