@@ -301,6 +301,7 @@
     .mobile-bar .btn{ font-size:14px; }
     /* ---------- Desktop top nav (restored) ---------- */
   nav.desktop{ font-size:13px; gap:14px; justify-content:flex-start; padding:0 16px 10px; }
+  nav.desktop .dropdown-menu{ left:0; transform:none; min-width:200px; }
     .dropdown-toggle .caret{ font-size:8px; }
     nav.desktop .dropdown-menu a{ font-size:12px; }
     .tax-other h3{ font-size:13px; }
@@ -433,6 +434,18 @@
   .fee-table tr.total-row td{ font-weight:800; color:var(--pine-dark); background:var(--cream-deep); }
   @media (max-width:767px){
     .fee-table{ display:block; overflow-x:auto; white-space:nowrap; }
+    .fee-table-interactive{ display:block; overflow-x:visible; white-space:normal; }
+    .fee-table-interactive thead{ display:none; }
+    .fee-table-interactive, .fee-table-interactive tbody, .fee-table-interactive tfoot,
+    .fee-table-interactive tr, .fee-table-interactive td{ display:block; width:100%; }
+    .fee-table-interactive tr{ padding:12px 14px; border-bottom:1px solid var(--border); }
+    .fee-table-interactive td{ padding:3px 0; border-bottom:none; white-space:normal; }
+    .fee-table-interactive td:first-child{ font-weight:700; color:var(--pine-dark); font-size:14px; }
+    .fee-table-interactive td:nth-child(2){ margin:6px 0; }
+    .fee-table-interactive td:nth-child(2) input{ width:100%; }
+    .fee-table-interactive td:last-child{ font-size:12px; color:var(--ink-faint); }
+    .fee-table-interactive tfoot tr{ background:var(--cream-deep); border-radius:10px; border-bottom:none; }
+    .fee-table-interactive tfoot td:first-child{ font-size:15px; }
   }
 
   /* ---------- Interactive fee table ---------- */
@@ -508,12 +521,12 @@
         <h2>交給雅慈 · 您安心</h2>
       </div>
       <div class="service-grid">
-        <a href="about.html" class="service-card service-card-link reveal">
+        <a href="https://line.me/ti/p/~yanachang" target="_blank" rel="noopener" class="service-card service-card-link reveal">
           <div class="service-icon badge-home"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 10l9-7 9 7"/><path d="M5 9v11h14V9"/></svg></div>
           <h3>委託銷售</h3>
           <p>專業估價、多平台曝光、談判斡旋，掌握市場行情，把房子賣在合適的價格。</p>
         </a>
-        <a href="about.html" class="service-card service-card-link reveal">
+        <a href="https://line.me/ti/p/~yanachang" target="_blank" rel="noopener" class="service-card service-card-link reveal">
           <div class="service-icon badge-home"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
           <h3>買屋媒合</h3>
           <p>依生活需求篩選物件、實地陪同看屋，並協助確認產權與屋況，降低交易風險。</p>
@@ -523,12 +536,12 @@
           <h3>稅費試算</h3>
           <p>土地增值稅、房地合一稅等相關稅費說明與快速試算，掌握買賣稅務負擔。</p>
         </a>
-        <a href="about.html" class="service-card service-card-link reveal">
+        <a href="https://line.me/ti/p/~yanachang" target="_blank" rel="noopener" class="service-card service-card-link reveal">
           <div class="service-icon badge-home"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h4"/></svg></div>
           <h3>貸款試算</h3>
           <p>把關可貸款金額，依個人條件試算負擔，將資金風險降到最低。</p>
         </a>
-        <a href="about.html" class="service-card service-card-link reveal">
+        <a href="https://line.me/ti/p/~yanachang" target="_blank" rel="noopener" class="service-card service-card-link reveal">
           <div class="service-icon badge-home"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
           <h3>驗屋交屋</h3>
           <p>交屋前逐項檢查、保固事項追蹤，交屋後仍持續提供售後諮詢服務。</p>
