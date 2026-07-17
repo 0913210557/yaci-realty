@@ -614,13 +614,32 @@
 
       <div class="calc-box reveal">
         <h3>土地增值稅快速試算</h3>
+        <p class="calc-note" style="margin-top:0; margin-bottom:16px;">採桃園市地方稅務局公告的官方計算方式，需要的數字可在土地謄本、地價證明書上找到。</p>
         <div class="calc-field">
-          <label for="calc-lv-orig">原地價（取得時申報移轉現值，元）</label>
-          <input type="number" id="calc-lv-orig" placeholder="例如：3000000">
+          <label for="calc-lv-orig">原規定地價或前次移轉現值（元／平方公尺）</label>
+          <input type="number" id="calc-lv-orig" placeholder="例如：50000">
         </div>
         <div class="calc-field">
-          <label for="calc-lv-transfer">申報移轉現值（出售時，元）</label>
-          <input type="number" id="calc-lv-transfer" placeholder="例如：4500000">
+          <label for="calc-lv-cpi">消費者物價總指數（%，可於地價證明書查詢，預設100）</label>
+          <input type="number" id="calc-lv-cpi" placeholder="例如：105" value="100">
+        </div>
+        <div class="calc-field-row">
+          <div class="calc-field">
+            <label for="calc-lv-area">土地宗地面積（平方公尺）</label>
+            <input type="number" id="calc-lv-area" placeholder="例如：120">
+          </div>
+          <div class="calc-field">
+            <label for="calc-lv-share">移轉權利範圍（持分，整筆賣出填1）</label>
+            <input type="number" id="calc-lv-share" placeholder="例如：1" value="1" step="0.0001">
+          </div>
+        </div>
+        <div class="calc-field">
+          <label for="calc-lv-transfer">總現值（本次申報移轉現值，元）</label>
+          <input type="number" id="calc-lv-transfer" placeholder="例如：8000000">
+        </div>
+        <div class="calc-field">
+          <label for="calc-lv-improve">土地改良費用＋重劃費用＋工程受益費（可扣除，元）</label>
+          <input type="number" id="calc-lv-improve" placeholder="沒有可留空" value="0">
         </div>
         <div class="calc-checkbox">
           <input type="checkbox" id="calc-lv-selfuse">
@@ -629,12 +648,13 @@
         <p class="calc-info-link"><a href="tax-land-value.html#selfuse" rel="noopener">什麼是一生一次／一生一屋？→</a></p>
         <button type="button" class="btn btn-solid btn-block" onclick="calcLandValueTax()">開始試算</button>
         <div class="calc-result" id="calc-lv-result">
+          <div class="row"><span>調整後前次現值</span><span id="calc-lv-adjusted">-</span></div>
           <div class="row"><span>土地漲價總數額</span><span id="calc-lv-gain">-</span></div>
           <div class="row"><span>漲價倍數</span><span id="calc-lv-multiple">-</span></div>
           <div class="row"><span>適用稅率</span><span id="calc-lv-rate">-</span></div>
           <div class="row total"><span>預估應納稅額</span><span id="calc-lv-tax">-</span></div>
         </div>
-        <p class="calc-note">此試算採簡化公式估算，未涵蓋物價指數調整、土地改良費用、工程受益費等實際可扣除項目，僅供初步參考，正式金額仍需雅慈或地政機關協助核算。</p>
+        <p class="calc-note">此試算未包含長期持有減徵、已繳地價稅抵繳等個別狀況，僅供初步參考，正式金額仍需雅慈或地政機關協助核算。</p>
       </div>
 
       <div class="tax-disclaimer reveal">
@@ -663,17 +683,24 @@
 <script>
 function calcLandValueTax(){
   const orig = parseFloat(document.getElementById('calc-lv-orig').value) || 0;
+  const cpi = parseFloat(document.getElementById('calc-lv-cpi').value) || 100;
+  const area = parseFloat(document.getElementById('calc-lv-area').value) || 0;
+  const share = parseFloat(document.getElementById('calc-lv-share').value) || 1;
   const transfer = parseFloat(document.getElementById('calc-lv-transfer').value) || 0;
+  const improve = parseFloat(document.getElementById('calc-lv-improve').value) || 0;
   const selfUse = document.getElementById('calc-lv-selfuse').checked;
 
-  if (!orig || !transfer) {
-    alert('請填寫原地價與申報移轉現值');
+  if (!orig || !area || !transfer) {
+    alert('請填寫原規定地價、土地面積與總現值');
     return;
   }
 
-  let gain = transfer - orig;
+  const cpiRate = Math.max(cpi, 100) / 100; // 物價指數低於100%時仍以100%計算
+  const adjusted = orig * cpiRate * area * share;
+
+  let gain = transfer - adjusted - improve;
   if (gain < 0) gain = 0;
-  const multiple = orig > 0 ? gain / orig : 0;
+  const multiple = adjusted > 0 ? gain / adjusted : 0;
 
   let tax = 0;
   let rateLabel = '';
@@ -683,12 +710,13 @@ function calcLandValueTax(){
     rateLabel = '自用住宅優惠：10%';
   } else {
     if (multiple <= 1) { tax = gain * 0.20; rateLabel = '漲價未達100%：20%'; }
-    else if (multiple <= 2) { tax = gain * 0.30 - orig * 0.10; rateLabel = '漲價100%~200%：30%（累進差額扣減）'; }
-    else { tax = gain * 0.40 - orig * 0.30; rateLabel = '漲價超過200%：40%（累進差額扣減）'; }
+    else if (multiple <= 2) { tax = gain * 0.30 - adjusted * 0.10; rateLabel = '漲價100%~200%：30%（累進差額扣減）'; }
+    else { tax = gain * 0.40 - adjusted * 0.30; rateLabel = '漲價超過200%：40%（累進差額扣減）'; }
     if (tax < 0) tax = 0;
   }
 
   const fmt = (n) => Math.round(n).toLocaleString('zh-TW');
+  document.getElementById('calc-lv-adjusted').textContent = fmt(adjusted) + ' 元';
   document.getElementById('calc-lv-gain').textContent = fmt(gain) + ' 元';
   document.getElementById('calc-lv-multiple').textContent = (multiple * 100).toFixed(0) + '%';
   document.getElementById('calc-lv-rate').textContent = rateLabel;
