@@ -327,6 +327,8 @@
   .contact-row-light{ display:flex; gap:12px; padding:12px 0; border-bottom:1px solid var(--border); }
   .contact-row-light .k{ width:78px; flex-shrink:0; font-size:14px; color:var(--brass); font-weight:700; }
   .contact-row-light .v{ font-size:15px; color:var(--ink); }
+  .contact-row-light .v a{ color:var(--pine); font-weight:700; text-decoration:underline; text-underline-offset:2px; }
+  .contact-row-light .v a:hover{ color:var(--pine-dark); }
   @media (max-width:767px){
     .contact-page-card{ flex-direction:column; align-items:stretch; }
     .contact-page-card .footer-line-qr{ margin:20px auto 0; }
@@ -463,6 +465,12 @@
     padding:18px 22px; font-size:15px; font-weight:700; line-height:1.6; margin-bottom:24px;
   }
 
+  /* ---------- Mobile-only line break ---------- */
+  .mobile-break{ display:none; }
+  @media (max-width:767px){
+    .mobile-break{ display:inline; }
+  }
+
 </style>
 <style>
   @media (min-width:768px){
@@ -596,57 +604,30 @@
       <div class="section-head reveal">
         <p class="eyebrow"><span class="dot badge-home"></span>Free Estimate</p>
         <h2>免費估價</h2>
-        <p>輸入物件地址或社區名稱，一鍵查詢附近實際成交行情，掌握市場價格趨勢。想知道更精確的市場行情，雅慈可以親自到現場為您評估。</p>
+        <p>點選相關查詢網頁，查詢附近實際成交行情或社區成交行情。</p>
       </div>
 
       <div class="calc-box reveal">
         <h3>查詢成交行情</h3>
-        <div class="calc-field">
-          <label for="est-address">物件地址或社區／建案名稱</label>
-          <input type="text" id="est-address" placeholder="例如：桃園市平鎮區○○路○段○號，或輸入社區名稱">
-        </div>
         <button type="button" class="btn btn-solid btn-block" id="lvrBtn">查詢內政部實價登錄</button>
         <button type="button" class="btn btn-outline btn-block" id="lejuBtn" style="margin-top:12px;">查詢樂居社區行情</button>
-        <p class="lvr-hint" id="lvrHint">會自動複製您填的地址／社區名稱，並開啟查詢網站，貼上即可搜尋</p>
       </div>
 
       <div class="tax-cta reveal">
-        <p style="color:var(--ink-soft); margin-bottom:16px;">想請雅慈幫您進一步分析行情、或安排實地估價嗎？</p>
         <a href="https://line.me/ti/p/~yanachang" target="_blank" rel="noopener" class="btn btn-line">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.94 2 10.7c0 2.68 1.44 5.07 3.7 6.65-.16.6-1.02 3.62-1.06 3.85 0 0-.02.17.09.24a.3.3 0 0 0 .25.02c.33-.05 3.8-2.5 4.4-2.92.85.13 1.73.2 2.62.2 5.52 0 10-3.94 10-8.7S17.52 2 12 2z"/></svg>
-          加 LINE 好友，請雅慈幫我分析
+          加 LINE 好友<br class="mobile-break">，請雅慈幫我查詢分析
         </a>
       </div>
     </div>
   </section>
 
 <script>
-  async function copyAddressAndOpen(url){
-    const address = document.getElementById('est-address').value.trim();
-    const hint = document.getElementById('lvrHint');
-    if (!address) {
-      hint.textContent = '請先填寫地址或社區名稱';
-      hint.classList.remove('copied');
-      window.open(url, '_blank', 'noopener');
-      return;
-    }
-    if (navigator.clipboard) {
-      try {
-        await navigator.clipboard.writeText(address);
-        hint.textContent = '已複製「' + address + '」，貼到查詢頁的搜尋欄搜尋即可';
-        hint.classList.add('copied');
-      } catch (err) {
-        hint.textContent = '複製失敗，請手動複製：' + address;
-      }
-    }
-    window.open(url, '_blank', 'noopener');
-  }
-
   document.getElementById('lvrBtn').addEventListener('click', function(){
-    copyAddressAndOpen('https://lvr.land.moi.gov.tw/');
+    window.open('https://lvr.land.moi.gov.tw/', '_blank', 'noopener');
   });
   document.getElementById('lejuBtn').addEventListener('click', function(){
-    copyAddressAndOpen('https://www.leju.com.tw/');
+    window.open('https://www.leju.com.tw/', '_blank', 'noopener');
   });
 </script>
 
