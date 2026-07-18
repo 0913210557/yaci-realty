@@ -457,6 +457,12 @@
   .fee-table-interactive tfoot td{ font-weight:800; color:var(--pine-dark); background:var(--cream-deep); font-size:15px; }
   .fee-price-field{ max-width:360px; margin-bottom:20px; }
 
+  /* ---------- Fee page intro callout ---------- */
+  .fee-intro-callout{
+    background:var(--pine); color:#fff; border-radius:var(--radius);
+    padding:18px 22px; font-size:15px; font-weight:700; line-height:1.6; margin-bottom:24px;
+  }
+
 </style>
 <style>
   @media (min-width:768px){
@@ -538,6 +544,8 @@
     body.scale-desktop /* ---------- Interactive fee table ---------- */
   .fee-table-interactive td input.fee-input{ font-size:15px; }
     body.scale-desktop .fee-table-interactive tfoot td{ font-size:17px; }
+    body.scale-desktop /* ---------- Fee page intro callout ---------- */
+  .fee-intro-callout{ font-size:17px; }
   }
 
 </style>
@@ -588,8 +596,9 @@
       <div class="section-head reveal">
         <p class="eyebrow"><span class="dot badge-home"></span>Fees</p>
         <h2>我是買方</h2>
-        <p>填寫預計成交價，履保費與仲介費會自動幫您試算，其他項目可依實際狀況自行填入，最下面會自動加總。</p>
       </div>
+
+      <div class="fee-intro-callout reveal">填寫預計成交價，履保費與仲介費會自動幫您試算，其他項目可依實際狀況自行填入，最下面會自動加總。加總金額為買賣所需除頭款之外的所有費用。</div>
 
       <div class="calc-field fee-price-field reveal">
         <label for="fee-price">預計成交價（萬元）</label>
