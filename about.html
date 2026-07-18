@@ -327,6 +327,8 @@
   .contact-row-light{ display:flex; gap:12px; padding:12px 0; border-bottom:1px solid var(--border); }
   .contact-row-light .k{ width:78px; flex-shrink:0; font-size:14px; color:var(--brass); font-weight:700; }
   .contact-row-light .v{ font-size:15px; color:var(--ink); }
+  .contact-row-light .v a{ color:var(--pine); font-weight:700; text-decoration:underline; text-underline-offset:2px; }
+  .contact-row-light .v a:hover{ color:var(--pine-dark); }
   @media (max-width:767px){
     .contact-page-card{ flex-direction:column; align-items:stretch; }
     .contact-page-card .footer-line-qr{ margin:20px auto 0; }
@@ -461,6 +463,12 @@
   .fee-intro-callout{
     background:var(--pine); color:#fff; border-radius:var(--radius);
     padding:18px 22px; font-size:15px; font-weight:700; line-height:1.6; margin-bottom:24px;
+  }
+
+  /* ---------- Mobile-only line break ---------- */
+  .mobile-break{ display:none; }
+  @media (max-width:767px){
+    .mobile-break{ display:inline; }
   }
 
 </style>
