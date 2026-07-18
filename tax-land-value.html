@@ -327,6 +327,8 @@
   .contact-row-light{ display:flex; gap:12px; padding:12px 0; border-bottom:1px solid var(--border); }
   .contact-row-light .k{ width:78px; flex-shrink:0; font-size:14px; color:var(--brass); font-weight:700; }
   .contact-row-light .v{ font-size:15px; color:var(--ink); }
+  .contact-row-light .v a{ color:var(--pine); font-weight:700; text-decoration:underline; text-underline-offset:2px; }
+  .contact-row-light .v a:hover{ color:var(--pine-dark); }
   @media (max-width:767px){
     .contact-page-card{ flex-direction:column; align-items:stretch; }
     .contact-page-card .footer-line-qr{ margin:20px auto 0; }
@@ -457,6 +459,28 @@
   .fee-table-interactive tfoot td{ font-weight:800; color:var(--pine-dark); background:var(--cream-deep); font-size:15px; }
   .fee-price-field{ max-width:360px; margin-bottom:20px; }
 
+  /* ---------- Fee page intro callout ---------- */
+  .fee-intro-callout{
+    background:var(--pine); color:#fff; border-radius:var(--radius);
+    padding:18px 22px; font-size:15px; font-weight:700; line-height:1.6; margin-bottom:24px;
+  }
+
+  /* ---------- Mobile-only line break ---------- */
+  .mobile-break{ display:none; }
+  @media (max-width:767px){
+    .mobile-break{ display:inline; }
+  }
+
+  /* ---------- Input with unit suffix ---------- */
+  .calc-input-unit{ display:flex; align-items:center; gap:8px; }
+  .calc-input-unit input{ flex:1; }
+  .calc-input-unit .unit{ font-size:14px; color:var(--ink-faint); font-weight:700; flex-shrink:0; }
+
+  /* ---------- Jump tabs (說明 / 快速試算) ---------- */
+  .tax-jump-tabs{ display:flex; gap:10px; margin-bottom:24px; }
+  .tax-jump-tabs a{ flex:1; text-align:center; background:var(--paper); border:1.5px solid var(--border); border-radius:999px; padding:11px 16px; font-weight:700; font-size:14.5px; color:var(--pine); }
+  .tax-jump-tabs a:hover{ background:var(--cream-deep); }
+
 </style>
 <style>
   @media (min-width:768px){
@@ -538,6 +562,10 @@
     body.scale-desktop /* ---------- Interactive fee table ---------- */
   .fee-table-interactive td input.fee-input{ font-size:15px; }
     body.scale-desktop .fee-table-interactive tfoot td{ font-size:17px; }
+    body.scale-desktop /* ---------- Fee page intro callout ---------- */
+  .fee-intro-callout{ font-size:17px; }
+    body.scale-desktop .calc-input-unit .unit{ font-size:15.5px; }
+    body.scale-desktop .tax-jump-tabs a{ font-size:16px; }
   }
 
 </style>
@@ -590,6 +618,8 @@
         <h2>土地增值稅</h2>
       </div>
 
+      <div id="tax-explain">
+
       <div class="tax-content-block reveal">
         <p>若要使用自用住宅稅率，可分「一生一次」及「一生一屋」：</p>
 
@@ -611,6 +641,7 @@
         <p>一般試算：<a href="https://www.etax.nat.gov.tw/etwmain/etw158w/51" target="_blank" rel="noopener">財政部稅務入口網</a></p>
       </div>
 
+      </div>
 
       <div class="calc-box reveal">
         <h3>土地增值稅快速試算</h3>
@@ -774,16 +805,29 @@ function calcLandValueTax(){
       e.stopPropagation();
       const menu = document.getElementById(btn.dataset.dropdown);
       const isOpen = menu.classList.contains('open');
-      document.querySelectorAll('.dropdown-menu.open').forEach(m => m.classList.remove('open'));
+      document.querySelectorAll('.dropdown-menu.open').forEach(m => { m.classList.remove('open'); m.style.left=''; m.style.transform=''; });
       document.querySelectorAll('.dropdown-toggle.open').forEach(b => b.classList.remove('open'));
       if (!isOpen) {
         menu.classList.add('open');
         btn.classList.add('open');
+        requestAnimationFrame(() => {
+          const margin = 12;
+          const rect = menu.getBoundingClientRect();
+          if (rect.left < margin) {
+            const shift = margin - rect.left;
+            menu.style.left = (menu.offsetLeft + shift) + 'px';
+            menu.style.transform = 'none';
+          } else if (rect.right > window.innerWidth - margin) {
+            const shift = rect.right - (window.innerWidth - margin);
+            menu.style.left = (menu.offsetLeft - shift) + 'px';
+            menu.style.transform = 'none';
+          }
+        });
       }
     });
   });
   document.addEventListener('click', () => {
-    document.querySelectorAll('.dropdown-menu.open').forEach(m => m.classList.remove('open'));
+    document.querySelectorAll('.dropdown-menu.open').forEach(m => { m.classList.remove('open'); m.style.left=''; m.style.transform=''; });
     document.querySelectorAll('.dropdown-toggle.open').forEach(b => b.classList.remove('open'));
   });
 
