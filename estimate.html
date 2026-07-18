@@ -457,6 +457,12 @@
   .fee-table-interactive tfoot td{ font-weight:800; color:var(--pine-dark); background:var(--cream-deep); font-size:15px; }
   .fee-price-field{ max-width:360px; margin-bottom:20px; }
 
+  /* ---------- Fee page intro callout ---------- */
+  .fee-intro-callout{
+    background:var(--pine); color:#fff; border-radius:var(--radius);
+    padding:18px 22px; font-size:15px; font-weight:700; line-height:1.6; margin-bottom:24px;
+  }
+
 </style>
 <style>
   @media (min-width:768px){
@@ -538,6 +544,8 @@
     body.scale-desktop /* ---------- Interactive fee table ---------- */
   .fee-table-interactive td input.fee-input{ font-size:15px; }
     body.scale-desktop .fee-table-interactive tfoot td{ font-size:17px; }
+    body.scale-desktop /* ---------- Fee page intro callout ---------- */
+  .fee-intro-callout{ font-size:17px; }
   }
 
 </style>
@@ -588,166 +596,57 @@
       <div class="section-head reveal">
         <p class="eyebrow"><span class="dot badge-home"></span>Free Estimate</p>
         <h2>免費估價</h2>
-        <p>填寫物件地址與基本資料，馬上看到初估價格區間。想知道更精確的市場行情，雅慈可以親自到現場為您評估。</p>
+        <p>輸入物件地址或社區名稱，一鍵查詢附近實際成交行情，掌握市場價格趨勢。想知道更精確的市場行情，雅慈可以親自到現場為您評估。</p>
       </div>
 
       <div class="calc-box reveal">
-        <h3>物件資訊</h3>
-        <div class="form-error" id="formError"></div>
-
+        <h3>查詢成交行情</h3>
         <div class="calc-field">
-          <label for="est-address">物件地址</label>
-          <input type="text" id="est-address" placeholder="例如：桃園市平鎮區○○路○段○號">
+          <label for="est-address">物件地址或社區／建案名稱</label>
+          <input type="text" id="est-address" placeholder="例如：桃園市平鎮區○○路○段○號，或輸入社區名稱">
         </div>
-
-        <div class="calc-field">
-          <label for="est-type">房屋類型</label>
-          <select id="est-type">
-            <option value="">請選擇</option>
-            <option value="apartment">公寓（無電梯）</option>
-            <option value="suite">華廈（有電梯，10樓以下）</option>
-            <option value="tower">大樓（電梯，11樓以上）</option>
-            <option value="house">透天厝</option>
-          </select>
-        </div>
-
-        <div class="calc-field-row">
-          <div class="calc-field">
-            <label for="est-ping">建物坪數</label>
-            <input type="number" id="est-ping" min="1" placeholder="例如：32">
-          </div>
-          <div class="calc-field">
-            <label for="est-age">屋齡（年）</label>
-            <input type="number" id="est-age" min="0" placeholder="例如：15">
-          </div>
-        </div>
-
-        <div class="calc-field-row" id="est-land-row" style="display:none;">
-          <div class="calc-field">
-            <label for="est-landping">土地坪數</label>
-            <input type="number" id="est-landping" min="0" placeholder="例如：45">
-          </div>
-          <div class="calc-field">
-            <label for="est-landprice">當地土地每坪行情（萬）</label>
-            <input type="number" id="est-landprice" min="0" placeholder="例如：35">
-          </div>
-        </div>
-
-        <div class="calc-field-row">
-          <div class="calc-field">
-            <label for="est-floor">樓層／總樓層</label>
-            <input type="text" id="est-floor" placeholder="例如：5/12">
-          </div>
-          <div class="calc-field">
-            <label for="est-parking">車位</label>
-            <select id="est-parking">
-              <option value="no">無車位</option>
-              <option value="yes">有車位</option>
-            </select>
-          </div>
-        </div>
-
-        <button type="button" class="btn btn-solid btn-block" onclick="calcEstimate()">開始試算</button>
-
-        <div class="calc-result" id="est-result">
-          <div class="row total"><span>初估總價區間</span><span id="est-range">-</span></div>
-        </div>
-        <p class="calc-note">此區間為系統依房屋類型、坪數、屋齡等基本資料所做的粗略估算，並未參考該地址實際成交行情、周邊比較案例與屋況細節，僅供初步參考，非正式鑑價結果。</p>
+        <button type="button" class="btn btn-solid btn-block" id="lvrBtn">查詢內政部實價登錄</button>
+        <button type="button" class="btn btn-outline btn-block" id="lejuBtn" style="margin-top:12px;">查詢樂居社區行情</button>
+        <p class="lvr-hint" id="lvrHint">會自動複製您填的地址／社區名稱，並開啟查詢網站，貼上即可搜尋</p>
       </div>
 
       <div class="tax-cta reveal">
+        <p style="color:var(--ink-soft); margin-bottom:16px;">想請雅慈幫您進一步分析行情、或安排實地估價嗎？</p>
         <a href="https://line.me/ti/p/~yanachang" target="_blank" rel="noopener" class="btn btn-line">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.94 2 10.7c0 2.68 1.44 5.07 3.7 6.65-.16.6-1.02 3.62-1.06 3.85 0 0-.02.17.09.24a.3.3 0 0 0 .25.02c.33-.05 3.8-2.5 4.4-2.92.85.13 1.73.2 2.62.2 5.52 0 10-3.94 10-8.7S17.52 2 12 2z"/></svg>
-          加 LINE 好友，請雅慈幫我精算
+          加 LINE 好友，請雅慈幫我分析
         </a>
-        <button type="button" class="btn btn-outline btn-block" id="lvrBtn" style="margin-top:12px;">查詢附近實價登錄成交行情</button>
-        <p class="lvr-hint" id="lvrHint">會自動複製您填的地址，並開啟內政部實價登錄查詢網站，貼上地址即可搜尋</p>
       </div>
     </div>
   </section>
 
 <script>
-  const EST_BASE_PRICE = { apartment: 21, suite: 24, tower: 28, house: 19 };
-  const EST_BUILD_COST_PER_PING = 8; // 萬/坪，透天建物造價基準（不含土地）
-  function estAgeFactor(age){
-    if (age <= 5) return 1.05;
-    if (age <= 10) return 1.00;
-    if (age <= 20) return 0.92;
-    if (age <= 30) return 0.85;
-    return 0.75;
-  }
-
-  document.getElementById('est-type').addEventListener('change', function(){
-    const landRow = document.getElementById('est-land-row');
-    landRow.style.display = (this.value === 'house') ? 'grid' : 'none';
-  });
-
-  function calcEstimate(){
-    const errorBox = document.getElementById('formError');
-    const address = document.getElementById('est-address').value.trim();
-    const type = document.getElementById('est-type').value;
-    const pingRaw = document.getElementById('est-ping').value;
-    const ageRaw = document.getElementById('est-age').value;
-    const parking = document.getElementById('est-parking').value;
-    const landPingRaw = document.getElementById('est-landping').value;
-    const landPriceRaw = document.getElementById('est-landprice').value;
-
-    const missing = [];
-    if (!address) missing.push('物件地址');
-    if (!type) missing.push('房屋類型');
-    if (!pingRaw) missing.push('建物坪數');
-    if (!ageRaw) missing.push('屋齡');
-
-    if (missing.length > 0) {
-      errorBox.textContent = '請先填寫：' + missing.join('、');
-      errorBox.classList.add('show');
-      errorBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      return;
-    }
-    errorBox.classList.remove('show');
-
-    const ping = parseFloat(pingRaw) || 0;
-    const age = parseFloat(ageRaw) || 0;
-    const landPing = parseFloat(landPingRaw) || 0;
-    const landPrice = parseFloat(landPriceRaw) || 0;
-
-    let baseTotal;
-    if (type === 'house' && landPing > 0 && landPrice > 0) {
-      // 透天厝：土地與建物分開估算
-      const landValue = landPing * landPrice;
-      const buildValue = ping * EST_BUILD_COST_PER_PING * estAgeFactor(age);
-      baseTotal = landValue + buildValue;
-    } else {
-      const basePrice = EST_BASE_PRICE[type] || 22;
-      baseTotal = basePrice * ping * estAgeFactor(age);
-    }
-
-    let low = baseTotal * 0.9;
-    let high = baseTotal * 1.1;
-    if (parking === 'yes') { low += 120; high += 160; }
-    low = Math.round(low);
-    high = Math.round(high);
-    const fmt = (n) => n.toLocaleString('zh-TW');
-
-    document.getElementById('est-range').textContent = fmt(low) + ' 萬 ～ ' + fmt(high) + ' 萬';
-    const resultBox = document.getElementById('est-result');
-    resultBox.classList.add('show');
-    resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
-
-  document.getElementById('lvrBtn').addEventListener('click', async function(){
+  async function copyAddressAndOpen(url){
     const address = document.getElementById('est-address').value.trim();
     const hint = document.getElementById('lvrHint');
-    if (address && navigator.clipboard) {
+    if (!address) {
+      hint.textContent = '請先填寫地址或社區名稱';
+      hint.classList.remove('copied');
+      window.open(url, '_blank', 'noopener');
+      return;
+    }
+    if (navigator.clipboard) {
       try {
         await navigator.clipboard.writeText(address);
-        hint.textContent = '已複製地址「' + address + '」，貼到查詢頁的地址欄搜尋即可';
+        hint.textContent = '已複製「' + address + '」，貼到查詢頁的搜尋欄搜尋即可';
         hint.classList.add('copied');
       } catch (err) {
-        hint.textContent = '複製失敗，請手動複製地址：' + address;
+        hint.textContent = '複製失敗，請手動複製：' + address;
       }
     }
-    window.open('https://lvr.land.moi.gov.tw/', '_blank', 'noopener');
+    window.open(url, '_blank', 'noopener');
+  }
+
+  document.getElementById('lvrBtn').addEventListener('click', function(){
+    copyAddressAndOpen('https://lvr.land.moi.gov.tw/');
+  });
+  document.getElementById('lejuBtn').addEventListener('click', function(){
+    copyAddressAndOpen('https://www.leju.com.tw/');
   });
 </script>
 
