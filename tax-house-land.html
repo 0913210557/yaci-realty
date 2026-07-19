@@ -378,6 +378,8 @@
   .lvr-hint{ font-size:12px; color:var(--ink-faint); margin-top:10px; text-align:center; }
   .lvr-hint.copied{ color:var(--pine); font-weight:700; }
   .calc-checkbox{ display:flex; align-items:center; gap:8px; font-size:14px; color:var(--ink-soft); margin-bottom:6px; }
+  .calc-checkbox a{ color:var(--pine); font-weight:700; text-decoration:underline; text-underline-offset:2px; }
+  .calc-checkbox a:hover{ color:var(--pine-dark); }
   .calc-info-link{ margin-bottom:16px; }
   .calc-info-link a{ font-size:13px; color:var(--pine); font-weight:700; text-decoration:underline; }
   .calc-checkbox input{ width:18px; height:18px; }
@@ -624,7 +626,7 @@
       <div id="tax-explain">
 
       <div class="tax-content-block reveal">
-        <p>於民國105年1月1日（含）之後取得的房地，出售時皆需繳納房地合一稅。</p>
+        <p>於2016年1月1日（含）之後取得的房地，出售時皆需繳納房地合一稅。</p>
 
         <h4>📖 課稅稅率（依持有期間）</h4>
         <ul>
@@ -650,7 +652,7 @@
         <div class="calc-field">
           <label for="calc-buy-date">取得（買進）日期</label>
           <input type="date" id="calc-buy-date" min="2016-01-01">
-          <p class="calc-note" style="margin-top:6px; margin-bottom:0;">房地合一稅僅適用105年1月1日（含）之後取得的房地，故最早只能選到2016-01-01</p>
+          <p class="calc-note" style="margin-top:6px; margin-bottom:0;">房地合一稅僅適用2016年1月1日（含）之後取得的房地，故最早只能選到2016-01-01</p>
         </div>
         <div class="calc-field">
           <label for="calc-sell-date">出售（賣出）日期</label>
@@ -721,7 +723,7 @@ function calcHouseLandTax(){
 
   const earliestDate = new Date('2016-01-01');
   if (buyDate < earliestDate) {
-    alert('房地合一稅僅適用105年1月1日（含）之後取得的房地，請確認取得日期');
+    alert('房地合一稅僅適用2016年1月1日（含）之後取得的房地，請確認取得日期');
     return;
   }
 
@@ -764,7 +766,6 @@ function calcHouseLandTax(){
       房產好夥伴雅慈<br>
       有巢氏房屋　平鎮南勢中豐店｜經紀業：眾鑫房屋仲介有限公司｜經紀人：李文儀111宜字第00369號｜營業員證號：(107)登字第334826號
     </div>
-    <div class="footer-admin"><a href="dashboard.html">中控台</a></div>
   </div>
 </footer>
 
