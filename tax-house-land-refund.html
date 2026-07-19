@@ -643,6 +643,10 @@
 
       <div class="calc-box reveal">
         <h3>房地合一稅重購退稅試算</h3>
+        <div class="calc-checkbox">
+          <input type="checkbox" id="calc-hlr-eligible">
+          <label for="calc-hlr-eligible">符合重購退稅條件</label>
+        </div>
         <div class="calc-field">
           <label for="calc-hlr-old">原出售房地價額（元）</label>
           <input type="number" id="calc-hlr-old" placeholder="例如：50000000">
@@ -654,10 +658,6 @@
         <div class="calc-field">
           <label for="calc-hlr-new">新購房地價額（元）</label>
           <input type="number" id="calc-hlr-new" placeholder="例如：20000000">
-        </div>
-        <div class="calc-checkbox">
-          <input type="checkbox" id="calc-hlr-eligible">
-          <label for="calc-hlr-eligible">符合重購退稅條件</label>
         </div>
         <button type="button" class="btn btn-solid btn-block" onclick="calcHouseRefund()">開始試算</button>
         <div class="calc-result" id="calc-hlr-result">
