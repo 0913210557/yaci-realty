@@ -649,6 +649,10 @@
 
       <div class="calc-box reveal" id="tax-calc">
         <h3>房地合一稅快速試算</h3>
+        <div class="tabs reveal">
+          <button type="button" class="tab-btn active" data-tab="hl-price-panel">用成交價試算</button>
+          <button type="button" class="tab-btn" data-tab="hl-profit-panel">用獲利試算</button>
+        </div>
         <div class="calc-field">
           <label for="calc-buy-date">取得（買進）日期</label>
           <input type="date" id="calc-buy-date" min="2016-01-01">
@@ -658,18 +662,29 @@
           <label for="calc-sell-date">出售（賣出）日期</label>
           <input type="date" id="calc-sell-date">
         </div>
-        <div class="calc-field">
-          <label for="calc-cost">取得成本（買進金額）</label>
-          <div class="calc-input-unit"><input type="number" id="calc-cost" placeholder="例如：10000000"><span class="unit">元</span></div>
+
+        <div class="tab-panel active" id="hl-price-panel">
+          <div class="calc-field">
+            <label for="calc-cost">取得成本（買進金額）</label>
+            <div class="calc-input-unit"><input type="number" id="calc-cost" placeholder="例如：10000000"><span class="unit">元</span></div>
+          </div>
+          <div class="calc-field">
+            <label for="calc-price">出售金額（賣出金額）</label>
+            <div class="calc-input-unit"><input type="number" id="calc-price" placeholder="例如：14550000"><span class="unit">元</span></div>
+          </div>
+          <div class="calc-field">
+            <label for="calc-deduction">相關費用（仲介費、代書費等）</label>
+            <div class="calc-input-unit"><input type="number" id="calc-deduction" placeholder="例如：450000"><span class="unit">元</span></div>
+          </div>
         </div>
-        <div class="calc-field">
-          <label for="calc-price">出售金額（賣出金額）</label>
-          <div class="calc-input-unit"><input type="number" id="calc-price" placeholder="例如：14550000"><span class="unit">元</span></div>
+
+        <div class="tab-panel" id="hl-profit-panel">
+          <div class="calc-field">
+            <label for="calc-profit-direct">課稅所得（獲利金額，已扣除成本與相關費用）</label>
+            <div class="calc-input-unit"><input type="number" id="calc-profit-direct" placeholder="例如：4050000"><span class="unit">元</span></div>
+          </div>
         </div>
-        <div class="calc-field">
-          <label for="calc-deduction">相關費用（仲介費、代書費等）</label>
-          <div class="calc-input-unit"><input type="number" id="calc-deduction" placeholder="例如：450000"><span class="unit">元</span></div>
-        </div>
+
         <div class="calc-checkbox">
           <input type="checkbox" id="calc-selfuse">
           <a href="tax-house-land-exemption.html" target="_blank" rel="noopener">符合400萬免稅額優惠</a>
@@ -711,13 +726,11 @@
 function calcHouseLandTax(){
   const buyDate = new Date(document.getElementById('calc-buy-date').value);
   const sellDate = new Date(document.getElementById('calc-sell-date').value);
-  const cost = parseFloat(document.getElementById('calc-cost').value) || 0;
-  const price = parseFloat(document.getElementById('calc-price').value) || 0;
-  const deduction = parseFloat(document.getElementById('calc-deduction').value) || 0;
   const selfUse = document.getElementById('calc-selfuse').checked;
+  const useProfitMode = document.getElementById('hl-profit-panel').classList.contains('active');
 
-  if (!document.getElementById('calc-buy-date').value || !document.getElementById('calc-sell-date').value || !price) {
-    alert('請至少填寫取得日期、出售日期與出售金額');
+  if (!document.getElementById('calc-buy-date').value || !document.getElementById('calc-sell-date').value) {
+    alert('請至少填寫取得日期與出售日期');
     return;
   }
 
@@ -727,10 +740,27 @@ function calcHouseLandTax(){
     return;
   }
 
+  let gain;
+  if (useProfitMode) {
+    gain = parseFloat(document.getElementById('calc-profit-direct').value) || 0;
+    if (!document.getElementById('calc-profit-direct').value) {
+      alert('請填寫課稅所得（獲利金額）');
+      return;
+    }
+  } else {
+    const cost = parseFloat(document.getElementById('calc-cost').value) || 0;
+    const price = parseFloat(document.getElementById('calc-price').value) || 0;
+    const deduction = parseFloat(document.getElementById('calc-deduction').value) || 0;
+    if (!document.getElementById('calc-price').value) {
+      alert('請填寫出售金額');
+      return;
+    }
+    gain = price - cost - deduction;
+  }
+  if (gain < 0) gain = 0;
+
   const days = (sellDate - buyDate) / (1000 * 60 * 60 * 24);
   const years = days / 365;
-  let gain = price - cost - deduction;
-  if (gain < 0) gain = 0;
 
   let tax = 0;
   let rateLabel = '';
