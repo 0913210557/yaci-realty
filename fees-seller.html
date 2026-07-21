@@ -327,6 +327,8 @@
   .contact-row-light{ display:flex; gap:12px; padding:12px 0; border-bottom:1px solid var(--border); }
   .contact-row-light .k{ width:78px; flex-shrink:0; font-size:14px; color:var(--brass); font-weight:700; }
   .contact-row-light .v{ font-size:15px; color:var(--ink); }
+  .contact-row-light .v a{ color:var(--pine); font-weight:700; text-decoration:underline; text-underline-offset:2px; }
+  .contact-row-light .v a:hover{ color:var(--pine-dark); }
   @media (max-width:767px){
     .contact-page-card{ flex-direction:column; align-items:stretch; }
     .contact-page-card .footer-line-qr{ margin:20px auto 0; }
@@ -376,6 +378,8 @@
   .lvr-hint{ font-size:12px; color:var(--ink-faint); margin-top:10px; text-align:center; }
   .lvr-hint.copied{ color:var(--pine); font-weight:700; }
   .calc-checkbox{ display:flex; align-items:center; gap:8px; font-size:14px; color:var(--ink-soft); margin-bottom:6px; }
+  .calc-checkbox a{ color:var(--pine); font-weight:700; text-decoration:underline; text-underline-offset:2px; }
+  .calc-checkbox a:hover{ color:var(--pine-dark); }
   .calc-info-link{ margin-bottom:16px; }
   .calc-info-link a{ font-size:13px; color:var(--pine); font-weight:700; text-decoration:underline; }
   .calc-checkbox input{ width:18px; height:18px; }
@@ -430,6 +434,7 @@
   .fee-table td:first-child{ font-weight:700; color:var(--pine-dark); white-space:nowrap; }
   .fee-table td:nth-child(2){ font-family:'JetBrains Mono',monospace; color:var(--brass); white-space:nowrap; }
   .fee-table td:last-child{ color:var(--ink-soft); }
+  .fee-table td:last-child a{ color:var(--pine); font-weight:700; text-decoration:underline; }
   .fee-table tr:last-child td{ border-bottom:none; }
   .fee-table tr.total-row td{ font-weight:800; color:var(--pine-dark); background:var(--cream-deep); }
   @media (max-width:767px){
@@ -462,6 +467,22 @@
     background:var(--pine); color:#fff; border-radius:var(--radius);
     padding:18px 22px; font-size:15px; font-weight:700; line-height:1.6; margin-bottom:24px;
   }
+
+  /* ---------- Mobile-only line break ---------- */
+  .mobile-break{ display:none; }
+  @media (max-width:767px){
+    .mobile-break{ display:inline; }
+  }
+
+  /* ---------- Input with unit suffix ---------- */
+  .calc-input-unit{ display:flex; align-items:center; gap:8px; }
+  .calc-input-unit input{ flex:1; }
+  .calc-input-unit .unit{ font-size:14px; color:var(--ink-faint); font-weight:700; flex-shrink:0; }
+
+  /* ---------- Jump tabs (說明 / 快速試算) ---------- */
+  .tax-jump-tabs{ display:flex; gap:10px; margin-bottom:24px; }
+  .tax-jump-tabs a{ flex:1; text-align:center; background:var(--paper); border:1.5px solid var(--border); border-radius:999px; padding:11px 16px; font-weight:700; font-size:14.5px; color:var(--pine); }
+  .tax-jump-tabs a:hover{ background:var(--cream-deep); }
 
 </style>
 <style>
@@ -546,6 +567,8 @@
     body.scale-desktop .fee-table-interactive tfoot td{ font-size:17px; }
     body.scale-desktop /* ---------- Fee page intro callout ---------- */
   .fee-intro-callout{ font-size:17px; }
+    body.scale-desktop .calc-input-unit .unit{ font-size:15.5px; }
+    body.scale-desktop .tax-jump-tabs a{ font-size:16px; }
   }
 
 </style>
@@ -574,6 +597,13 @@
       <div class="dropdown-menu" id="fees-menu-desktop">
         <a href="fees-buyer.html">我是買方</a>
         <a href="fees-seller.html" style="color:var(--pine);font-weight:800;">我是賣方</a>
+      </div>
+    </div>
+    <div class="nav-item-dropdown">
+      <button class="dropdown-toggle" type="button" data-dropdown="afford-menu-desktop">購屋能力試算</button>
+      <div class="dropdown-menu" id="afford-menu-desktop">
+        <a href="afford-budget.html">試算我可以買多少錢的房子</a>
+        <a href="afford-payment.html">試算我的月負擔</a>
       </div>
     </div>
     <div class="nav-item-dropdown">
@@ -612,14 +642,13 @@
           </thead>
           <tbody>
           <tr><td>潤筆費</td><td><input type="number" class="fee-input" value="1000"></td><td>每件2000（買賣平均分攤）</td></tr>
-          <tr><td>實價登錄</td><td><input type="number" class="fee-input" placeholder="請填入"></td><td>每件3000（買賣平均分攤），約1,500~2,000</td></tr>
+          <tr><td>實價登錄</td><td><input type="number" class="fee-input" value="2000"></td><td>代書一：每件3000（買賣平均分攤）／代書二：每件4000（買賣平均分攤）</td></tr>
           <tr><td>塗銷</td><td><input type="number" class="fee-input" placeholder="請填入"></td><td>一筆一棟2,000（土地建物每增加一筆或一棟加收1/4）</td></tr>
-          <tr><td>土地增值稅（一般住宅）</td><td><input type="number" class="fee-input" placeholder="請填入"></td><td>依公告土地現值累進稅率計算</td></tr>
-          <tr><td>土地增值稅（自用住宅）</td><td><input type="number" class="fee-input" placeholder="請填入"></td><td>申請自用住宅優惠稅率</td></tr>
-          <tr><td>申報自用住宅增值稅</td><td><input type="number" class="fee-input" value="10000"></td><td>每件10,000</td></tr>
-          <tr><td>國宅移轉申請</td><td><input type="number" class="fee-input" value="3500"></td><td>每件3,500</td></tr>
+          <tr><td>土地增值稅</td><td><input type="number" class="fee-input" placeholder="請填入"></td><td>依公告土地現值累進稅率計算，一般／自用住宅稅率不同，詳見<a href="tax-land-value.html">土地增值稅</a>頁面</td></tr>
+          <tr><td>申報自用住宅增值稅</td><td><input type="number" class="fee-input" placeholder="請填入"></td><td>每件10,000</td></tr>
+          <tr><td>國宅移轉申請</td><td><input type="number" class="fee-input" placeholder="請填入"></td><td>每件3,500</td></tr>
           <tr><td>房地合一稅申報</td><td><input type="number" class="fee-input" placeholder="請填入"></td><td>每件5,000~6,000</td></tr>
-          <tr><td>房地合一稅</td><td><input type="number" class="fee-input" placeholder="請填入"></td><td>依持有期間及是否自用計算，詳見「稅費說明與試算」選單</td></tr>
+          <tr><td>房地合一稅</td><td><input type="number" class="fee-input" placeholder="請填入"></td><td>依持有期間及是否自用計算，詳見<a href="tax-house-land.html">房地合一稅</a>頁面</td></tr>
           <tr><td>履保</td><td><input type="number" class="fee-input" id="fee-guarantee"></td><td>成交價的3/10000</td></tr>
           <tr><td>仲介費</td><td><input type="number" class="fee-input" id="fee-commission"></td><td>成交價的4%</td></tr>
           </tbody>
@@ -678,7 +707,6 @@
       房產好夥伴雅慈<br>
       有巢氏房屋　平鎮南勢中豐店｜經紀業：眾鑫房屋仲介有限公司｜經紀人：李文儀111宜字第00369號｜營業員證號：(107)登字第334826號
     </div>
-    <div class="footer-admin"><a href="dashboard.html">中控台</a></div>
   </div>
 </footer>
 
@@ -718,16 +746,29 @@
       e.stopPropagation();
       const menu = document.getElementById(btn.dataset.dropdown);
       const isOpen = menu.classList.contains('open');
-      document.querySelectorAll('.dropdown-menu.open').forEach(m => m.classList.remove('open'));
+      document.querySelectorAll('.dropdown-menu.open').forEach(m => { m.classList.remove('open'); m.style.left=''; m.style.transform=''; });
       document.querySelectorAll('.dropdown-toggle.open').forEach(b => b.classList.remove('open'));
       if (!isOpen) {
         menu.classList.add('open');
         btn.classList.add('open');
+        requestAnimationFrame(() => {
+          const margin = 12;
+          const rect = menu.getBoundingClientRect();
+          if (rect.left < margin) {
+            const shift = margin - rect.left;
+            menu.style.left = (menu.offsetLeft + shift) + 'px';
+            menu.style.transform = 'none';
+          } else if (rect.right > window.innerWidth - margin) {
+            const shift = rect.right - (window.innerWidth - margin);
+            menu.style.left = (menu.offsetLeft - shift) + 'px';
+            menu.style.transform = 'none';
+          }
+        });
       }
     });
   });
   document.addEventListener('click', () => {
-    document.querySelectorAll('.dropdown-menu.open').forEach(m => m.classList.remove('open'));
+    document.querySelectorAll('.dropdown-menu.open').forEach(m => { m.classList.remove('open'); m.style.left=''; m.style.transform=''; });
     document.querySelectorAll('.dropdown-toggle.open').forEach(b => b.classList.remove('open'));
   });
 
