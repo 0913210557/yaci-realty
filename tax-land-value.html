@@ -378,6 +378,8 @@
   .lvr-hint{ font-size:12px; color:var(--ink-faint); margin-top:10px; text-align:center; }
   .lvr-hint.copied{ color:var(--pine); font-weight:700; }
   .calc-checkbox{ display:flex; align-items:center; gap:8px; font-size:14px; color:var(--ink-soft); margin-bottom:6px; }
+  .calc-checkbox a{ color:var(--pine); font-weight:700; text-decoration:underline; text-underline-offset:2px; }
+  .calc-checkbox a:hover{ color:var(--pine-dark); }
   .calc-info-link{ margin-bottom:16px; }
   .calc-info-link a{ font-size:13px; color:var(--pine); font-weight:700; text-decoration:underline; }
   .calc-checkbox input{ width:18px; height:18px; }
@@ -432,6 +434,7 @@
   .fee-table td:first-child{ font-weight:700; color:var(--pine-dark); white-space:nowrap; }
   .fee-table td:nth-child(2){ font-family:'JetBrains Mono',monospace; color:var(--brass); white-space:nowrap; }
   .fee-table td:last-child{ color:var(--ink-soft); }
+  .fee-table td:last-child a{ color:var(--pine); font-weight:700; text-decoration:underline; }
   .fee-table tr:last-child td{ border-bottom:none; }
   .fee-table tr.total-row td{ font-weight:800; color:var(--pine-dark); background:var(--cream-deep); }
   @media (max-width:767px){
@@ -594,6 +597,13 @@
       <div class="dropdown-menu" id="fees-menu-desktop">
         <a href="fees-buyer.html">我是買方</a>
         <a href="fees-seller.html">我是賣方</a>
+      </div>
+    </div>
+    <div class="nav-item-dropdown">
+      <button class="dropdown-toggle" type="button" data-dropdown="afford-menu-desktop">購屋能力試算</button>
+      <div class="dropdown-menu" id="afford-menu-desktop">
+        <a href="afford-budget.html">試算我可以買多少錢的房子</a>
+        <a href="afford-payment.html">試算我的月負擔</a>
       </div>
     </div>
     <div class="nav-item-dropdown">
@@ -765,7 +775,6 @@ function calcLandValueTax(){
       房產好夥伴雅慈<br>
       有巢氏房屋　平鎮南勢中豐店｜經紀業：眾鑫房屋仲介有限公司｜經紀人：李文儀111宜字第00369號｜營業員證號：(107)登字第334826號
     </div>
-    <div class="footer-admin"><a href="dashboard.html">中控台</a></div>
   </div>
 </footer>
 
