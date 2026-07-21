@@ -434,6 +434,7 @@
   .fee-table td:first-child{ font-weight:700; color:var(--pine-dark); white-space:nowrap; }
   .fee-table td:nth-child(2){ font-family:'JetBrains Mono',monospace; color:var(--brass); white-space:nowrap; }
   .fee-table td:last-child{ color:var(--ink-soft); }
+  .fee-table td:last-child a{ color:var(--pine); font-weight:700; text-decoration:underline; }
   .fee-table tr:last-child td{ border-bottom:none; }
   .fee-table tr.total-row td{ font-weight:800; color:var(--pine-dark); background:var(--cream-deep); }
   @media (max-width:767px){
@@ -599,6 +600,13 @@
       </div>
     </div>
     <div class="nav-item-dropdown">
+      <button class="dropdown-toggle" type="button" data-dropdown="afford-menu-desktop">購屋能力試算</button>
+      <div class="dropdown-menu" id="afford-menu-desktop">
+        <a href="afford-budget.html">試算我可以買多少錢的房子</a>
+        <a href="afford-payment.html">試算我的月負擔</a>
+      </div>
+    </div>
+    <div class="nav-item-dropdown">
       <button class="dropdown-toggle" type="button" data-dropdown="tax-menu-desktop" style="color:var(--pine);font-weight:800;">稅費說明與試算</button>
       <div class="dropdown-menu" id="tax-menu-desktop">
         <a href="tax-land-value.html">土地增值稅</a>
@@ -651,7 +659,7 @@
         <h3>房地合一稅快速試算</h3>
         <div class="tabs reveal">
           <button type="button" class="tab-btn active" data-tab="hl-price-panel">用成交價試算</button>
-          <button type="button" class="tab-btn" data-tab="hl-profit-panel">用獲利試算</button>
+          <button type="button" class="tab-btn" data-tab="hl-profit-panel">用獲利反推應售價試算</button>
         </div>
         <div class="calc-field">
           <label for="calc-buy-date">取得（買進）日期</label>
@@ -661,6 +669,10 @@
         <div class="calc-field">
           <label for="calc-sell-date">出售（賣出）日期</label>
           <input type="date" id="calc-sell-date">
+        </div>
+        <div class="calc-checkbox">
+          <input type="checkbox" id="calc-selfuse">
+          <a href="tax-house-land-exemption.html" target="_blank" rel="noopener">符合400萬免稅額優惠</a>
         </div>
 
         <div class="tab-panel active" id="hl-price-panel">
@@ -676,26 +688,39 @@
             <label for="calc-deduction">相關費用（仲介費、代書費等）</label>
             <div class="calc-input-unit"><input type="number" id="calc-deduction" placeholder="例如：450000"><span class="unit">元</span></div>
           </div>
+          <button type="button" class="btn btn-solid btn-block" onclick="calcHouseLandByPrice()">開始試算</button>
+          <div class="calc-result" id="calc-result">
+            <div class="row"><span>課稅所得（獲利）</span><span id="calc-gain">-</span></div>
+            <div class="row"><span>持有期間</span><span id="calc-years">-</span></div>
+            <div class="row"><span>適用稅率</span><span id="calc-rate">-</span></div>
+            <div class="row total"><span>預估應納稅額</span><span id="calc-tax">-</span></div>
+          </div>
         </div>
 
         <div class="tab-panel" id="hl-profit-panel">
           <div class="calc-field">
-            <label for="calc-profit-direct">課稅所得（獲利金額，已扣除成本與相關費用）</label>
-            <div class="calc-input-unit"><input type="number" id="calc-profit-direct" placeholder="例如：4050000"><span class="unit">元</span></div>
+            <label for="calc-target-profit" style="color:#9C3B3B;">屋主期望實拿利潤（扣除仲介費與稅金後）</label>
+            <div class="calc-input-unit"><input type="number" id="calc-target-profit" placeholder="例如：3000000"><span class="unit">元</span></div>
+          </div>
+          <div class="calc-field">
+            <label for="calc-cost-2">取得成本（買進金額）</label>
+            <div class="calc-input-unit"><input type="number" id="calc-cost-2" placeholder="例如：10000000"><span class="unit">元</span></div>
+          </div>
+          <div class="calc-field">
+            <label for="calc-commission-rate">仲介服務費率（預設4%，可自行調整）</label>
+            <div class="calc-input-unit"><input type="number" id="calc-commission-rate" value="4" step="0.1"><span class="unit">%</span></div>
+          </div>
+          <button type="button" class="btn btn-solid btn-block" onclick="calcHouseLandByProfit()">開始試算</button>
+          <div class="calc-result" id="calc-profit-result">
+            <div class="row total" style="background:var(--pine); color:#fff; border-radius:10px; padding:14px 16px; margin-bottom:10px;"><span>建議銷售總價</span><span id="cp-price">-</span></div>
+            <div class="row"><span>持有期間</span><span id="cp-years">-</span></div>
+            <div class="row"><span>適用稅率</span><span id="cp-rate">-</span></div>
+            <div class="row"><span>仲介服務費</span><span id="cp-commission">-</span></div>
+            <div class="row"><span>應繳房地合一稅</span><span id="cp-tax">-</span></div>
+            <div class="row"><span>屋主指定要求實拿</span><span id="cp-target">-</span></div>
           </div>
         </div>
 
-        <div class="calc-checkbox">
-          <input type="checkbox" id="calc-selfuse">
-          <a href="tax-house-land-exemption.html" target="_blank" rel="noopener">符合400萬免稅額優惠</a>
-        </div>
-        <button type="button" class="btn btn-solid btn-block" onclick="calcHouseLandTax()">開始試算</button>
-        <div class="calc-result" id="calc-result">
-          <div class="row"><span>課稅所得（獲利）</span><span id="calc-gain">-</span></div>
-          <div class="row"><span>持有期間</span><span id="calc-years">-</span></div>
-          <div class="row"><span>適用稅率</span><span id="calc-rate">-</span></div>
-          <div class="row total"><span>預估應納稅額</span><span id="calc-tax">-</span></div>
-        </div>
         <p class="calc-note">此試算採一般性公式估算，未涵蓋所有個別狀況（如繼承取得、預售屋等），僅供初步參考，正式金額仍需雅慈或稅捐機關協助核算。</p>
       </div>
 
@@ -723,68 +748,123 @@
   </section>
 
 <script>
-function calcHouseLandTax(){
-  const buyDate = new Date(document.getElementById('calc-buy-date').value);
-  const sellDate = new Date(document.getElementById('calc-sell-date').value);
-  const selfUse = document.getElementById('calc-selfuse').checked;
-  const useProfitMode = document.getElementById('hl-profit-panel').classList.contains('active');
+function houseLandRateInfo(years){
+  if (years <= 2) return { rate: 0.45, label: '持有2年以內：45%' };
+  if (years <= 5) return { rate: 0.35, label: '持有2年~5年：35%' };
+  if (years <= 10) return { rate: 0.20, label: '持有5年~10年：20%' };
+  return { rate: 0.15, label: '持有超過10年：15%' };
+}
 
-  if (!document.getElementById('calc-buy-date').value || !document.getElementById('calc-sell-date').value) {
+function checkHouseLandDates(){
+  const buyDateVal = document.getElementById('calc-buy-date').value;
+  const sellDateVal = document.getElementById('calc-sell-date').value;
+  if (!buyDateVal || !sellDateVal) {
     alert('請至少填寫取得日期與出售日期');
-    return;
+    return null;
   }
-
+  const buyDate = new Date(buyDateVal);
+  const sellDate = new Date(sellDateVal);
   const earliestDate = new Date('2016-01-01');
   if (buyDate < earliestDate) {
     alert('房地合一稅僅適用2016年1月1日（含）之後取得的房地，請確認取得日期');
+    return null;
+  }
+  const days = (sellDate - buyDate) / (1000 * 60 * 60 * 24);
+  return days / 365;
+}
+
+function calcHouseLandByPrice(){
+  const years = checkHouseLandDates();
+  if (years === null) return;
+  const selfUse = document.getElementById('calc-selfuse').checked;
+
+  const cost = parseFloat(document.getElementById('calc-cost').value) || 0;
+  const price = parseFloat(document.getElementById('calc-price').value) || 0;
+  const deduction = parseFloat(document.getElementById('calc-deduction').value) || 0;
+  if (!document.getElementById('calc-price').value) {
+    alert('請填寫出售金額');
     return;
   }
-
-  let gain;
-  if (useProfitMode) {
-    gain = parseFloat(document.getElementById('calc-profit-direct').value) || 0;
-    if (!document.getElementById('calc-profit-direct').value) {
-      alert('請填寫課稅所得（獲利金額）');
-      return;
-    }
-  } else {
-    const cost = parseFloat(document.getElementById('calc-cost').value) || 0;
-    const price = parseFloat(document.getElementById('calc-price').value) || 0;
-    const deduction = parseFloat(document.getElementById('calc-deduction').value) || 0;
-    if (!document.getElementById('calc-price').value) {
-      alert('請填寫出售金額');
-      return;
-    }
-    gain = price - cost - deduction;
-  }
+  let gain = price - cost - deduction;
   if (gain < 0) gain = 0;
-
-  const days = (sellDate - buyDate) / (1000 * 60 * 60 * 24);
-  const years = days / 365;
 
   let tax = 0;
   let rateLabel = '';
-
   if (selfUse) {
     const exemptGain = Math.max(gain - 4000000, 0);
     tax = exemptGain * 0.10;
     rateLabel = '自用優惠：400萬以下免稅，超過部分10%';
   } else {
-    let rate;
-    if (years <= 2) { rate = 0.45; rateLabel = '持有2年以內：45%'; }
-    else if (years <= 5) { rate = 0.35; rateLabel = '持有2年~5年：35%'; }
-    else if (years <= 10) { rate = 0.20; rateLabel = '持有5年~10年：20%'; }
-    else { rate = 0.15; rateLabel = '持有超過10年：15%'; }
-    tax = gain * rate;
+    const info = houseLandRateInfo(years);
+    tax = gain * info.rate;
+    rateLabel = info.label;
   }
 
   const fmt = (n) => Math.round(n).toLocaleString('zh-TW');
   document.getElementById('calc-gain').textContent = fmt(gain) + ' 元';
-  document.getElementById('calc-years').textContent = years.toFixed(1) + ' 年';
+  document.getElementById('calc-years').textContent = years.toFixed(2) + ' 年';
   document.getElementById('calc-rate').textContent = rateLabel;
   document.getElementById('calc-tax').textContent = fmt(tax) + ' 元';
   document.getElementById('calc-result').classList.add('show');
   document.getElementById('calc-result').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function calcHouseLandByProfit(){
+  const years = checkHouseLandDates();
+  if (years === null) return;
+  const selfUse = document.getElementById('calc-selfuse').checked;
+
+  const target = parseFloat(document.getElementById('calc-target-profit').value) || 0;
+  const cost = parseFloat(document.getElementById('calc-cost-2').value) || 0;
+  const commRate = (parseFloat(document.getElementById('calc-commission-rate').value) || 0) / 100;
+
+  if (!document.getElementById('calc-target-profit').value) {
+    alert('請填寫屋主期望實拿利潤');
+    return;
+  }
+
+  let price, tax, rateLabel;
+
+  if (selfUse) {
+    // 先假設獲利在400萬免稅額之內試算
+    let p = (target + cost) / (1 - commRate);
+    let gain = p - cost;
+    if (gain <= 4000000) {
+      price = p;
+      tax = 0;
+      rateLabel = '自用優惠：400萬以下免稅';
+    } else {
+      // 超過400萬，套用「超過部分10%」公式重新反推
+      price = (target + cost * 0.9 - 4000000) / (0.9 - commRate);
+      gain = price - cost;
+      tax = Math.max(gain - 4000000, 0) * 0.10;
+      rateLabel = '自用優惠：400萬以下免稅，超過部分10%';
+    }
+  } else {
+    const info = houseLandRateInfo(years);
+    const rate = info.rate;
+    rateLabel = info.label;
+    price = (target + cost * (1 - rate)) / (1 - commRate - rate);
+    const gain = price - cost;
+    tax = gain * rate;
+  }
+
+  if (!isFinite(price) || price < 0) {
+    alert('目前輸入的條件無法反推出合理的銷售總價，請確認仲介費率與期望實拿金額');
+    return;
+  }
+
+  const commission = price * commRate;
+  const fmt = (n) => Math.round(n).toLocaleString('zh-TW');
+
+  document.getElementById('cp-price').textContent = fmt(price) + ' 元';
+  document.getElementById('cp-years').textContent = years.toFixed(2) + ' 年';
+  document.getElementById('cp-rate').textContent = rateLabel;
+  document.getElementById('cp-commission').textContent = fmt(commission) + ' 元';
+  document.getElementById('cp-tax').textContent = fmt(tax) + ' 元';
+  document.getElementById('cp-target').textContent = fmt(target) + ' 元';
+  document.getElementById('calc-profit-result').classList.add('show');
+  document.getElementById('calc-profit-result').scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 </script>
 
