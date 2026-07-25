@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://0913210557.github.io/yaci-realty/sitemap.xml
