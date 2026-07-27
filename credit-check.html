@@ -78,6 +78,12 @@
   .btn-solid{ background:var(--pine); color:#fff; border-color:var(--pine); }
   .btn-solid:hover{ background:var(--pine-dark); }
   .btn-outline{ background:transparent; border-color:var(--pine); color:var(--pine); }
+  .quiz-box button[type="submit"]{
+    display:flex; width:fit-content; margin:20px auto 0;
+    background:var(--brass); color:#fff;
+  }
+  .quiz-box button[type="submit"]:hover{ background:#8f6836; }
+  .cta-box{ text-align:center; margin-bottom:40px; }
   .btn-outline:hover{ background:var(--pine); color:var(--paper); }
   .btn-ghost{ background:var(--paper); color:var(--ink); border-color:var(--border); }
   .btn-block{ width:100%; }
@@ -698,7 +704,7 @@
     </section>
 
     <div class="disclaimer-box">
-      ⚠️ 這是一份「自我評估問卷」，<strong>不是</strong>財團法人金融聯合徵信中心（聯徵中心）的正式信用分數。正式信用分數與信用報告，需要本人親自向聯徵中心申請查詢（線上申請每份約NT$100）。此檢測結果僅供初步參考，實際貸款條件仍以銀行核貸審核為準。
+      ⚠️ 這是一份「自我評估問卷」，<strong>不是</strong>財團法人金融聯合徵信中心（聯徵中心）的正式信用分數。正式信用分數與信用報告，需要本人親自向聯徵中心申請查詢。此檢測結果僅供初步參考，實際貸款條件仍以銀行核貸審核為準。
     </div>
 
     <form class="quiz-box" id="creditForm">
@@ -766,7 +772,7 @@
       <div class="q-item">
         <h3><span class="qnum">8</span>是否為公司負責人，或屬於自營商／自由業？</h3>
         <label class="opt"><input type="radio" name="q8" value="3">不是，一般受僱上班族<span></span></label>
-        <label class="opt"><input type="radio" name="q8" value="2">是自營商／自由業，但收入與報稅資料穩定<span></span></label>
+        <label class="opt"><input type="radio" name="q8" value="2">是自營商／自由業<span></span></label>
         <label class="opt"><input type="radio" name="q8" value="1">是公司負責人，公司財務狀況健全<span></span></label>
         <label class="opt"><input type="radio" name="q8" value="0">是公司負責人，公司有欠稅、負債或訴訟等狀況<span></span></label>
       </div>
@@ -784,13 +790,16 @@
         <h4>可以怎麼調整</h4>
         <ul id="resultTips"></ul>
       </div>
+      <div class="result-tips" style="margin-top:14px; background:#EFEAE0; border:1px solid var(--brass-light);">
+        <h4>你的作答內容（為你整理你的作答內容，方便截圖傳給雅慈）</h4>
+        <ul id="resultAnswers"></ul>
+      </div>
     </div>
 
     <div class="cta-box">
-      <p>想知道自己實際的貸款條件，或想了解如何改善信用狀況？</p>
       <a href="https://line.me/ti/p/~yanachang" target="_blank" rel="noopener" class="btn btn-line">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.94 2 10.7c0 2.68 1.44 5.07 3.7 6.65-.16.6-1.02 3.62-1.06 3.85 0 0-.02.17.09.24a.3.3 0 0 0 .25.02c.33-.05 3.8-2.5 4.4-2.92.85.13 1.73.2 2.62.2 5.52 0 10-3.94 10-8.7S17.52 2 12 2z"/></svg>
-        加 LINE 好友，請雅慈幫我分析
+        加LINE好友，聯絡雅慈
       </a>
     </div>
   </div>
@@ -969,6 +978,22 @@
       const li = document.createElement('li');
       li.textContent = t;
       tipsEl.appendChild(li);
+    });
+
+    const answersEl = document.getElementById('resultAnswers');
+    answersEl.innerHTML = '';
+    document.querySelectorAll('.q-item').forEach(item => {
+      const qTitle = item.querySelector('h3').textContent.replace(/^\d+/, '').trim();
+      const radios = item.querySelectorAll('input[type="radio"]:checked');
+      let answerText = '';
+      if (radios.length) {
+        answerText = radios[0].parentElement.textContent.trim();
+      } else if (item.querySelector('#q3-debt')) {
+        answerText = '每月卡貸 ' + debt + ' 元／每月收入 ' + income + ' 元（比例約 ' + (ratio * 100).toFixed(0) + '%）';
+      }
+      const li = document.createElement('li');
+      li.textContent = qTitle + '：' + answerText;
+      answersEl.appendChild(li);
     });
 
     resultCard.classList.add('show');
