@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>信用評分自我檢測｜房產好夥伴雅慈</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F5F1E8; --cream-deep:#ECE4D2; --paper:#FBF9F4;
+    --ink:#2B2621; --ink-soft:#5C554A; --ink-faint:#8A8171;
+    --pine:#2F4B3C; --pine-dark:#203528; --brass:#A67C42; --brass-light:#C9A971;
+    --line:#06C755; --border:#DED2B7; --radius:14px;
+    --shadow:0 10px 30px -12px rgba(43,38,33,0.18);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{ background:var(--cream); color:var(--ink); font-family:'Noto Sans TC', sans-serif; line-height:1.7; }
+  h1,h2,h3{ font-family:'Noto Serif TC', serif; color:var(--ink); line-height:1.35; }
+  a{ color:inherit; }
+  .wrap{ max-width:640px; margin:0 auto; padding:0 20px; }
+
+  header.site{ padding:20px 0; border-bottom:1px solid var(--border); background:rgba(245,241,232,.92); text-align:center; }
+  .brand-zh{ font-family:'Noto Serif TC',serif; font-weight:900; font-size:22px; color:var(--pine-dark); }
+
+  .hero{ padding:32px 0 16px; text-align:center; }
+  .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-size:12px; letter-spacing:.14em; color:var(--pine); font-weight:700; text-transform:uppercase; margin-bottom:12px; }
+  .eyebrow .dot{ width:9px; height:9px; background:var(--brass); clip-path:polygon(50% 0%,100% 38%,100% 100%,0% 100%,0% 38%); }
+  h1{ font-size:24px; font-weight:900; margin-bottom:12px; }
+  .hero p{ color:var(--ink-soft); font-size:14.5px; }
+
+  .disclaimer-box{
+    background:#FBEAEA; border:1px solid #E3A9A9; color:#9C3B3B;
+    border-radius:12px; padding:14px 18px; font-size:13.5px; margin:20px 0; line-height:1.7;
+  }
+
+  .quiz-box{ background:var(--paper); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:24px; box-shadow:var(--shadow); }
+  .q-item{ margin-bottom:24px; padding-bottom:22px; border-bottom:1px solid var(--border); }
+  .q-item:last-child{ border-bottom:none; margin-bottom:0; padding-bottom:0; }
+  .q-item h3{ font-size:15.5px; margin-bottom:12px; color:var(--pine-dark); }
+  .q-item h3 .qnum{ display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:var(--pine); color:#fff; font-size:12px; font-family:'JetBrains Mono',monospace; margin-right:8px; }
+  .opt{ display:flex; align-items:flex-start; gap:10px; padding:10px 12px; border-radius:10px; cursor:pointer; margin-bottom:6px; border:1.5px solid transparent; }
+  .q-number-row{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px; }
+  .q-number-field label{ display:block; font-size:12.5px; font-weight:700; color:var(--ink-soft); margin-bottom:6px; }
+  .calc-input-unit{ display:flex; align-items:center; gap:8px; }
+  .calc-input-unit input{ flex:1; padding:11px 12px; border-radius:10px; border:1.5px solid var(--border); background:var(--cream); font-family:inherit; font-size:14.5px; color:var(--ink); }
+  .calc-input-unit .unit{ font-size:13px; color:var(--ink-faint); font-weight:700; flex-shrink:0; }
+  .q-ratio-hint{ font-size:13px; color:var(--ink-faint); margin-top:10px; }
+  .q-ratio-hint.calculated{ color:var(--pine); font-weight:700; }
+  .opt:hover{ background:var(--cream-deep); }
+  .opt input{ margin-top:3px; flex-shrink:0; }
+  .opt span{ font-size:14px; color:var(--ink-soft); }
+  .opt.selected{ background:var(--cream-deep); border-color:var(--brass-light); }
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px; width:100%;
+    padding:15px 22px; border-radius:999px; font-weight:700; font-size:16px;
+    border:1.5px solid transparent; cursor:pointer; transition:transform .15s ease, background .15s ease;
+    background:var(--pine); color:#fff;
+  }
+  .btn:hover{ background:var(--pine-dark); }
+  .btn:active{ transform:scale(.97); }
+  .btn-line{ background:var(--line); }
+  .btn-line:hover{ background:#05a648; }
+
+  .form-error{
+    display:none; background:#FBEAEA; border:1px solid #E3A9A9; color:#9C3B3B;
+    border-radius:10px; padding:12px 16px; font-size:14px; font-weight:700; margin-bottom:18px;
+  }
+  .form-error.show{ display:block; }
+
+  .result-card{ display:none; background:var(--paper); border:1px solid var(--border); border-radius:var(--radius); padding:28px; margin-bottom:24px; box-shadow:var(--shadow); }
+  .result-card.show{ display:block; }
+  .result-level{ text-align:center; padding:20px; border-radius:12px; margin-bottom:20px; }
+  .result-level .label{ font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; opacity:.85; margin-bottom:8px; }
+  .result-level .grade{ font-family:'Noto Serif TC',serif; font-weight:900; font-size:28px; }
+  .result-level.good{ background:#E7F3EA; color:var(--pine-dark); }
+  .result-level.mid{ background:#FCF3DC; color:#8A6412; }
+  .result-level.low{ background:#FBEAEA; color:#9C3B3B; }
+  .result-desc{ font-size:14.5px; color:var(--ink-soft); margin-bottom:16px; }
+  .result-tips{ background:var(--cream-deep); border-radius:12px; padding:16px 18px; }
+  .result-tips h4{ font-size:14.5px; margin-bottom:10px; color:var(--pine-dark); }
+  .result-tips ul{ padding-left:20px; }
+  .result-tips li{ font-size:13.5px; color:var(--ink-soft); margin-bottom:6px; line-height:1.6; }
+
+  .cta-box{ text-align:center; margin-bottom:40px; }
+  .cta-box p{ font-size:14px; color:var(--ink-soft); margin-bottom:14px; }
+
+  footer{ text-align:center; padding:20px 0 40px; font-size:12px; color:var(--ink-faint); }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="brand-zh">房產好夥伴雅慈</div>
+</header>
+
+<main>
+  <div class="wrap">
+    <section class="hero">
+      <p class="eyebrow"><span class="dot"></span>Self Check</p>
+      <h1>信用評分自我檢測</h1>
+      <p>申請房貸前，先了解自己的信用體質大概落在哪個等級，提早知道可以怎麼調整。</p>
+    </section>
+
+    <div class="disclaimer-box">
+      ⚠️ 這是一份「自我評估問卷」，<strong>不是</strong>財團法人金融聯合徵信中心（聯徵中心）的正式信用分數。正式信用分數與信用報告，需要本人親自向聯徵中心申請查詢。此檢測結果僅供初步參考，實際貸款條件仍以銀行核貸審核為準。
+    </div>
+
+    <form class="quiz-box" id="creditForm">
+      <div class="form-error" id="formError"></div>
+
+      <div class="q-item">
+        <h3><span class="qnum">1</span>近2年內，信用卡或貸款的繳款紀錄？</h3>
+        <label class="opt"><input type="radio" name="q1" value="3">從未遲繳，都準時繳款<span></span></label>
+        <label class="opt"><input type="radio" name="q1" value="1">偶爾遲繳1～2次<span></span></label>
+        <label class="opt"><input type="radio" name="q1" value="0">遲繳3次以上，或曾經逾期未繳<span></span></label>
+        <label class="opt"><input type="radio" name="q1" value="2">沒有信用卡也沒有貸款<span></span></label>
+      </div>
+
+      <div class="q-item">
+        <h3><span class="qnum">2</span>信用卡繳款狀況？</h3>
+        <label class="opt"><input type="radio" name="q2" value="3">每期都全額繳清<span></span></label>
+        <label class="opt"><input type="radio" name="q2" value="1">偶爾只繳最低應繳金額<span></span></label>
+        <label class="opt"><input type="radio" name="q2" value="0">經常只繳最低應繳金額<span></span></label>
+        <label class="opt"><input type="radio" name="q2" value="2">沒有信用卡<span></span></label>
+      </div>
+
+      <div class="q-item">
+        <h3><span class="qnum">3</span>每月信用卡與貸款支出，佔收入的比例？</h3>
+        <div class="q-number-row">
+          <div class="q-number-field">
+            <label for="q3-debt">每月卡貸應繳總金額</label>
+            <div class="calc-input-unit"><input type="number" id="q3-debt" min="0" placeholder="例如：8000"><span class="unit">元</span></div>
+          </div>
+          <div class="q-number-field">
+            <label for="q3-income">每月薪轉收入</label>
+            <div class="calc-input-unit"><input type="number" id="q3-income" min="0" placeholder="例如：45000"><span class="unit">元</span></div>
+          </div>
+        </div>
+        <p class="q-ratio-hint" id="q3Hint">填好上面兩格，會自動幫你算比例</p>
+      </div>
+
+      <div class="q-item">
+        <h3><span class="qnum">4</span>目前是否有信用卡以外的貸款（如信貸、學貸、車貸等）？</h3>
+        <label class="opt"><input type="radio" name="q4" value="3">沒有<span></span></label>
+        <label class="opt"><input type="radio" name="q4" value="1">有1筆<span></span></label>
+        <label class="opt"><input type="radio" name="q4" value="0">有2筆以上<span></span></label>
+      </div>
+
+      <div class="q-item">
+        <h3><span class="qnum">5</span>目前的工作與收入狀況？</h3>
+        <label class="opt"><input type="radio" name="q5" value="3">同一份工作滿2年以上，收入穩定<span></span></label>
+        <label class="opt"><input type="radio" name="q5" value="1">目前工作未滿2年，或收入偶有波動<span></span></label>
+        <label class="opt"><input type="radio" name="q5" value="0">頻繁更換工作，或目前無固定收入<span></span></label>
+      </div>
+
+      <div class="q-item">
+        <h3><span class="qnum">6</span>是否曾有退票、強制執行、拒絕往來戶等信用瑕疵紀錄？</h3>
+        <label class="opt"><input type="radio" name="q6" value="3">沒有<span></span></label>
+        <label class="opt"><input type="radio" name="q6" value="1">曾經有過，但已結案超過1年<span></span></label>
+        <label class="opt"><input type="radio" name="q6" value="0">有，且未滿1年或尚未結案<span></span></label>
+      </div>
+
+      <div class="q-item">
+        <h3><span class="qnum">7</span>是否曾擔任他人的連帶保證人？</h3>
+        <label class="opt"><input type="radio" name="q7" value="3">沒有<span></span></label>
+        <label class="opt"><input type="radio" name="q7" value="1">有，但對方繳款狀況正常<span></span></label>
+        <label class="opt"><input type="radio" name="q7" value="0">有，且對方曾遲繳或違約<span></span></label>
+      </div>
+
+      <div class="q-item">
+        <h3><span class="qnum">8</span>是否為公司負責人，或屬於自營商／自由業？</h3>
+        <label class="opt"><input type="radio" name="q8" value="3">不是，一般受僱上班族<span></span></label>
+        <label class="opt"><input type="radio" name="q8" value="2">是自營商／自由業<span></span></label>
+        <label class="opt"><input type="radio" name="q8" value="1">是公司負責人，公司財務狀況健全<span></span></label>
+        <label class="opt"><input type="radio" name="q8" value="0">是公司負責人，公司有欠稅、負債或訴訟等狀況<span></span></label>
+      </div>
+
+      <button type="submit" class="btn">開始檢測</button>
+    </form>
+
+    <div class="result-card" id="resultCard">
+      <div class="result-level" id="resultLevel">
+        <div class="label">自我檢測結果</div>
+        <div class="grade" id="resultGrade">-</div>
+      </div>
+      <p class="result-desc" id="resultDesc"></p>
+      <div class="result-tips">
+        <h4>可以怎麼調整</h4>
+        <ul id="resultTips"></ul>
+      </div>
+      <div class="result-tips" style="margin-top:14px; background:#EFEAE0; border:1px solid var(--brass-light);">
+        <h4>你的作答內容（為你整理你的作答內容，方便截圖傳給雅慈）</h4>
+        <ul id="resultAnswers"></ul>
+      </div>
+    </div>
+
+    <div class="cta-box">
+      <a href="https://line.me/ti/p/~yanachang" target="_blank" rel="noopener" class="btn btn-line">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.94 2 10.7c0 2.68 1.44 5.07 3.7 6.65-.16.6-1.02 3.62-1.06 3.85 0 0-.02.17.09.24a.3.3 0 0 0 .25.02c.33-.05 3.8-2.5 4.4-2.92.85.13 1.73.2 2.62.2 5.52 0 10-3.94 10-8.7S17.52 2 12 2z"/></svg>
+        加LINE好友，聯絡雅慈
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>房產好夥伴雅慈｜此工具僅供自我評估參考，不代表正式信用分數或貸款核准結果</p>
+</footer>
+
+<script>
+  document.querySelectorAll('.opt input').forEach(input => {
+    input.addEventListener('change', () => {
+      const name = input.name;
+      document.querySelectorAll(`input[name="${name}"]`).forEach(i => {
+        i.closest('.opt').classList.remove('selected');
+      });
+      input.closest('.opt').classList.add('selected');
+    });
+  });
+
+  function updateRatioHint(){
+    const debt = parseFloat(document.getElementById('q3-debt').value) || 0;
+    const income = parseFloat(document.getElementById('q3-income').value) || 0;
+    const hint = document.getElementById('q3Hint');
+    if (debt > 0 && income > 0) {
+      const pct = (debt / income * 100).toFixed(0);
+      hint.textContent = '目前比例約為 ' + pct + '%';
+      hint.classList.add('calculated');
+    } else {
+      hint.textContent = '填好上面兩格，會自動幫你算比例';
+      hint.classList.remove('calculated');
+    }
+  }
+  document.getElementById('q3-debt').addEventListener('input', updateRatioHint);
+  document.getElementById('q3-income').addEventListener('input', updateRatioHint);
+
+  document.getElementById('creditForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const errorBox = document.getElementById('formError');
+    const radioQuestions = ['q1','q2','q4','q5','q6','q7','q8'];
+    let total = 0;
+    let missing = false;
+
+    for (const q of radioQuestions) {
+      const selected = document.querySelector(`input[name="${q}"]:checked`);
+      if (!selected) { missing = true; break; }
+      total += parseInt(selected.value, 10);
+    }
+
+    const debt = parseFloat(document.getElementById('q3-debt').value);
+    const income = parseFloat(document.getElementById('q3-income').value);
+    if (missing || !debt || !income) {
+      errorBox.textContent = '請完成全部題目（含第3題的兩個金額欄位）再送出檢測';
+      errorBox.classList.add('show');
+      errorBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      return;
+    }
+    errorBox.classList.remove('show');
+
+    const ratio = debt / income;
+    let q3Score;
+    if (ratio < 1/3) q3Score = 3;
+    else if (ratio <= 1/2) q3Score = 1;
+    else q3Score = 0;
+    total += q3Score;
+
+    const maxScore = 24;
+    const resultCard = document.getElementById('resultCard');
+    const levelBox = document.getElementById('resultLevel');
+    const gradeEl = document.getElementById('resultGrade');
+    const descEl = document.getElementById('resultDesc');
+    const tipsEl = document.getElementById('resultTips');
+
+    levelBox.classList.remove('good', 'mid', 'low');
+    tipsEl.innerHTML = '';
+
+    let tips = [];
+    if (total >= 19) {
+      levelBox.classList.add('good');
+      gradeEl.textContent = '體質良好';
+      descEl.textContent = '整體信用狀況看起來相當穩健，申請房貸時通常條件會比較有利，但實際核貸仍以銀行審核為準。';
+      tips = ['維持準時繳款的好習慣', '申貸前避免臨時新辦信用卡或貸款', '可以開始準備收入證明、財力證明等文件'];
+    } else if (total >= 12) {
+      levelBox.classList.add('mid');
+      gradeEl.textContent = '普通，建議留意';
+      descEl.textContent = '有一些地方可能會影響銀行對你的評估，建議申貸前先調整一段時間，會更有利。';
+      tips = ['近期避免遲繳，養成全額繳清的習慣', '盡量減少只繳最低應繳金額的情形', '若卡片或貸款筆數較多，可考慮先結清或減少不常用的卡片', '申貸前3～6個月盡量維持穩定的收支狀況'];
+    } else {
+      levelBox.classList.add('low');
+      gradeEl.textContent = '建議先改善';
+      descEl.textContent = '目前的狀況可能會讓銀行申貸條件變得比較嚴格，建議先處理下面幾個項目，或直接找專業的人一起討論。';
+      tips = ['優先處理逾期未繳或信用瑕疵紀錄', '避免再增加新的負債', '穩定工作與收入來源，建立近期的良好紀錄', '若為公司負責人或自營商，建議提前準備近2年報稅資料', '建議直接諮詢貸款專員或雅慈，討論實際可行的申貸規劃'];
+    }
+
+    tips.forEach(t => {
+      const li = document.createElement('li');
+      li.textContent = t;
+      tipsEl.appendChild(li);
+    });
+
+    const answersEl = document.getElementById('resultAnswers');
+    answersEl.innerHTML = '';
+    document.querySelectorAll('.q-item').forEach(item => {
+      const qTitle = item.querySelector('h3').textContent.replace(/^\d+/, '').trim();
+      const radios = item.querySelectorAll('input[type="radio"]:checked');
+      let answerText = '';
+      if (radios.length) {
+        answerText = radios[0].closest('.opt').querySelector('span, label').textContent || radios[0].nextElementSibling.textContent;
+        answerText = radios[0].parentElement.textContent.trim();
+      } else if (item.querySelector('#q3-debt')) {
+        answerText = '每月卡貸 ' + debt + ' 元／每月收入 ' + income + ' 元（比例約 ' + (ratio * 100).toFixed(0) + '%）';
+      }
+      const li = document.createElement('li');
+      li.textContent = qTitle + '：' + answerText;
+      answersEl.appendChild(li);
+    });
+
+    resultCard.classList.add('show');
+    resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+</script>
+
+</body>
+</html>
