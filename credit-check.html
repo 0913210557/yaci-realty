@@ -511,6 +511,7 @@
   .q-number-field{ min-width:0; }
   .q-number-field label{ display:block; font-size:12.5px; font-weight:700; color:var(--ink-soft); margin-bottom:6px; }
   .q-ratio-hint{ font-size:13px; color:var(--ink-faint); margin-top:10px; }
+  .subnote{ font-size:12.5px; color:var(--ink-faint); margin-top:8px; }
   .q-ratio-hint.calculated{ color:var(--pine); font-weight:700; }
   .result-card{ display:none; background:var(--paper); border:1px solid var(--border); border-radius:var(--radius); padding:28px; margin-bottom:24px; box-shadow:var(--shadow); }
   .result-card.show{ display:block; }
@@ -632,6 +633,7 @@
   .q-number-field{ min-width:0; }
   .q-number-field label{ display:block; font-size:12.5px; font-weight:700; color:var(--ink-soft); margin-bottom:6px; }
   .q-ratio-hint{ font-size:13px; color:var(--ink-faint); margin-top:10px; }
+  .subnote{ font-size:12.5px; color:var(--ink-faint); margin-top:8px; }
   .q-ratio-hint.calculated{ color:var(--pine); font-weight:700; }
   .result-card{ display:none; background:var(--paper); border:1px solid var(--border); border-radius:var(--radius); padding:28px; margin-bottom:24px; box-shadow:var(--shadow); }
   .result-card.show{ display:block; }
@@ -732,14 +734,15 @@
         <h3><span class="qnum">3</span>每月信用卡與貸款支出，佔收入的比例？</h3>
         <div class="q-number-row">
           <div class="q-number-field">
-            <label for="q3-debt">每月卡貸應繳總金額</label>
+            <label for="q3-debt">每月信用卡與貸款要繳的金額</label>
             <div class="calc-input-unit"><input type="number" id="q3-debt" min="0" placeholder="例如：8000"><span class="unit">元</span></div>
           </div>
           <div class="q-number-field">
-            <label for="q3-income">每月薪轉收入</label>
+            <label for="q3-income">每月薪水／收入</label>
             <div class="calc-input-unit"><input type="number" id="q3-income" min="0" placeholder="例如：45000"><span class="unit">元</span></div>
           </div>
         </div>
+        <p class="subnote">是每月「要繳的金額」，不是卡費或貸款的總欠款；如果沒有信用卡或貸款，可以填0。</p>
         <p class="q-ratio-hint" id="q3Hint">填好上面兩格，會自動幫你算比例</p>
       </div>
 
@@ -752,9 +755,10 @@
 
       <div class="q-item">
         <h3><span class="qnum">5</span>目前的工作與收入狀況？</h3>
-        <label class="opt"><input type="radio" name="q5" value="3">同一份工作滿2年以上，收入穩定<span></span></label>
-        <label class="opt"><input type="radio" name="q5" value="1">目前工作未滿2年，或收入偶有波動<span></span></label>
-        <label class="opt"><input type="radio" name="q5" value="0">頻繁更換工作，或目前無固定收入<span></span></label>
+        <label class="opt"><input type="radio" name="q5" value="3">工作穩定，收入固定（正職上班族，不論年資長短）<span></span></label>
+        <label class="opt"><input type="radio" name="q5" value="2">工作年資久，但收入會波動（例如業務、接案、自營）<span></span></label>
+        <label class="opt"><input type="radio" name="q5" value="1">目前工作未滿1年，收入也不太穩定<span></span></label>
+        <label class="opt"><input type="radio" name="q5" value="0">目前沒有固定工作或收入來源<span></span></label>
       </div>
 
       <div class="q-item">
@@ -935,10 +939,12 @@
       total += parseInt(selected.value, 10);
     }
 
-    const debt = parseFloat(document.getElementById('q3-debt').value);
-    const income = parseFloat(document.getElementById('q3-income').value);
-    if (missing || !debt || !income) {
-      errorBox.textContent = '請完成全部題目（含第3題的兩個金額欄位）再送出檢測';
+    const debtRaw = document.getElementById('q3-debt').value;
+    const incomeRaw = document.getElementById('q3-income').value;
+    const debt = parseFloat(debtRaw);
+    const income = parseFloat(incomeRaw);
+    if (missing || debtRaw === '' || incomeRaw === '' || isNaN(debt) || isNaN(income) || income <= 0) {
+      errorBox.textContent = '請完成全部題目（第3題的每月卡貸金額可以填0，但每月收入需大於0）';
       errorBox.classList.add('show');
       errorBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       return;
