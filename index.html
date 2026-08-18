@@ -157,17 +157,25 @@
   .service-card{ background:var(--paper); border:1px solid var(--border); border-radius:var(--radius); padding:24px; }
   .service-card-link{ display:block; color:inherit; transition:transform .15s ease, box-shadow .15s ease; }
   .service-card-link:hover{ transform:translateY(-3px); box-shadow:var(--shadow); }
+  .kb-preview-grid{ display:grid; grid-template-columns:1fr; gap:20px; max-width:960px; margin:0 auto; }
   .kb-preview-card{
-    display:flex; gap:18px; align-items:center; background:var(--paper); border:1px solid var(--border);
-    border-radius:var(--radius); padding:18px; max-width:640px; margin:0 auto; color:inherit;
+    display:block; background:var(--paper); border:1px solid var(--border);
+    border-radius:var(--radius); overflow:hidden; color:inherit;
     transition:transform .15s ease, box-shadow .15s ease;
   }
   .kb-preview-card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); }
-  .kb-preview-card img{ width:96px; height:96px; object-fit:cover; border-radius:10px; flex-shrink:0; }
+  .kb-preview-card img{ width:100%; height:160px; object-fit:cover; display:block; }
+  .kb-preview-text{ padding:16px 18px; }
   .kb-preview-date{ font-size:12.5px; color:var(--brass); font-weight:700; font-family:'JetBrains Mono',monospace; margin-bottom:4px; }
   .kb-preview-text h3{ font-size:17px; margin-bottom:8px; }
-  .kb-preview-summary{ font-size:13.5px; color:var(--ink-soft); line-height:1.6; margin-bottom:8px; }
-  .kb-preview-more{ font-size:13px; font-weight:700; color:var(--pine); }
+  .kb-preview-summary{ font-size:13.5px; color:var(--ink-soft); line-height:1.6; margin-bottom:0; }
+  .kb-preview-more{ font-size:14px; font-weight:700; color:var(--pine); }
+  @media (min-width:600px){
+    .kb-preview-grid{ grid-template-columns:repeat(2,1fr); }
+  }
+  @media (min-width:900px){
+    .kb-preview-grid{ grid-template-columns:repeat(3,1fr); }
+  }
   .service-icon{ width:52px; height:52px; background:var(--pine); color:#fff; display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
   .service-card h3{ font-size:22px; margin-bottom:8px; }
   .service-card p{ color:var(--ink-soft); font-size:17.5px; }
@@ -621,15 +629,25 @@
         <p class="eyebrow"><span class="dot badge-home"></span>Knowledge</p>
         <h2>雅慈的房產知識庫</h2>
       </div>
-      <a href="knowledge.html" class="kb-preview-card reveal">
-        <img src="knowledge-2026-08-06.png" alt="自營商房貸很難貸嗎？">
-        <div class="kb-preview-text">
-          <p class="kb-preview-date">2026.08.06</p>
-          <h3>自營商房貸很難貸嗎？</h3>
-          <p class="kb-preview-summary">自營商在沒有401報表的情況下，銀行還是可以透過其他財力資料來評估，關鍵在於金流是否穩定、持續。</p>
-          <span class="kb-preview-more">看更多房產知識 →</span>
-        </div>
-      </a>
+      <div class="kb-preview-grid">
+        <a href="knowledge.html#article-2026-08-06" class="kb-preview-card reveal">
+          <img src="knowledge-2026-08-06.png" alt="自營商房貸很難貸嗎？">
+          <div class="kb-preview-text">
+            <p class="kb-preview-date">2026.08.06</p>
+            <h3>自營商房貸很難貸嗎？</h3>
+            <p class="kb-preview-summary">自營商在沒有401報表的情況下，銀行還是可以透過其他財力資料來評估，關鍵在於金流是否穩定、持續。</p>
+          </div>
+        </a>
+        <a href="knowledge.html#article-2026-08-05" class="kb-preview-card reveal">
+          <img src="knowledge-2026-08-05.jpg" alt="佔用水利地能買嗎？">
+          <div class="kb-preview-text">
+            <p class="kb-preview-date">2026.08.05</p>
+            <h3>佔用水利地能買嗎？</h3>
+            <p class="kb-preview-summary">房子有一部分蓋到不是自己的土地上，能不能買關鍵在貸款成數、佔用比例，以及佔用部分的結構。</p>
+          </div>
+        </a>
+      </div>
+      <p style="text-align:center; margin-top:20px;"><a href="knowledge.html" class="kb-preview-more">看更多房產知識 →</a></p>
     </div>
   </section>
 
