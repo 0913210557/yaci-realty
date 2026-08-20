@@ -419,6 +419,19 @@
   .profile-bio h3{ font-size:22px; margin-bottom:14px; }
   .profile-bio p{ font-size:14.5px; color:var(--ink-soft); margin-bottom:12px; text-align:left; }
   .info-card{ margin-bottom:36px; }
+  .testimonial-section{ margin-bottom:36px; }
+  .testimonial-heading{ font-size:19px; margin-bottom:16px; }
+  .testimonial-card{
+    display:flex; gap:18px; align-items:center; background:var(--paper); border:1px solid var(--border);
+    border-radius:var(--radius); padding:20px; box-shadow:var(--shadow);
+  }
+  .testimonial-thumb{ width:88px; height:88px; object-fit:cover; border-radius:10px; flex-shrink:0; }
+  .testimonial-quote{ font-size:15px; color:var(--ink); line-height:1.7; font-style:italic; margin-bottom:8px; }
+  .testimonial-meta{ font-size:12.5px; color:var(--ink-faint); }
+  @media (max-width:600px){
+    .testimonial-card{ flex-direction:column; align-items:flex-start; }
+    .testimonial-thumb{ width:100%; height:180px; }
+  }
   @media (min-width:768px){
     .profile-block{ flex-direction:row; align-items:flex-start; text-align:left; gap:36px; }
     .profile-photo{ flex-shrink:0; }
@@ -617,6 +630,7 @@
         <a href="tax-house-land-exemption.html">房地合一稅（400萬免稅額）</a>
       </div>
     </div>
+    <a href="knowledge.html">知識庫</a>
   </nav>
 </header>
 
@@ -638,6 +652,17 @@
           <p>我是張雅慈，於102年踏入房仲這行，最初的契機是對房子與房產相關知識充滿興趣。我自知不是最厲害的業務，但我是真心喜愛每一間房子。無論屋況好壞，每間房子都承載著不同的故事，也都有變得溫馨的潛力。</p>
           <p>從業至今，初心從未改變。我一直秉持著「用心經營、真誠服務」的態度，相信人與人之間是互相的，只要真心待人，終究會被真心回饋。即使偶爾遇到不如意的回應，至少我努力過了，不愧對自己的真心，這樣就夠了。</p>
           <p>雅慈努力幫每位客戶解決所有房產相關的問題，從不為了成交而成交。在這一行，許多客戶都成了我的朋友，每一位客戶的好評，都是我繼續前進的動力。希望能幫助每位客戶，順利、安心地完成買賣，找到屬於自己幸福的家。</p>
+        </div>
+      </div>
+
+      <div class="testimonial-section reveal">
+        <h3 class="testimonial-heading">客戶怎麼說</h3>
+        <div class="testimonial-card">
+          <img src="testimonial-01.png" alt="今天，終於簽下這間店面的租約" class="testimonial-thumb">
+          <div class="testimonial-text">
+            <p class="testimonial-quote">「服務，沒有分案件大小，沒有分買賣或租賃，也沒有分成交前後，只要你需要，雅慈，一直在。」</p>
+            <p class="testimonial-meta">— 從第一次聯絡屋主到正式簽約，花了一年時間促成的店面租約</p>
+          </div>
         </div>
       </div>
 
