@@ -422,14 +422,21 @@
   .testimonial-section{ margin-bottom:36px; }
   .testimonial-heading{ font-size:19px; margin-bottom:16px; }
   .testimonial-card{
-    display:flex; gap:18px; align-items:center; background:var(--paper); border:1px solid var(--border);
-    border-radius:var(--radius); padding:20px; box-shadow:var(--shadow);
+    background:var(--paper); border:1px solid var(--border);
+    border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow);
   }
+  .testimonial-head{ display:flex; gap:18px; align-items:center; padding:20px; cursor:pointer; }
+  .testimonial-head:hover{ background:var(--cream-deep); }
   .testimonial-thumb{ width:88px; height:88px; object-fit:cover; border-radius:10px; flex-shrink:0; }
   .testimonial-quote{ font-size:15px; color:var(--ink); line-height:1.7; font-style:italic; margin-bottom:8px; }
-  .testimonial-meta{ font-size:12.5px; color:var(--ink-faint); }
+  .testimonial-meta{ font-size:12.5px; color:var(--ink-faint); margin-bottom:10px; }
+  .testimonial-toggle{ font-size:13px; font-weight:700; color:var(--pine); background:none; border:none; padding:0; cursor:pointer; }
+  .testimonial-full{ border-top:1px solid var(--border); padding:20px; }
+  .testimonial-full-img{ width:100%; max-width:360px; display:block; margin:0 auto 20px; border-radius:12px; }
+  .testimonial-body p{ font-size:14.5px; color:var(--ink-soft); line-height:1.9; margin-bottom:14px; }
+  .testimonial-body p:last-child{ margin-bottom:0; }
   @media (max-width:600px){
-    .testimonial-card{ flex-direction:column; align-items:flex-start; }
+    .testimonial-head{ flex-direction:column; align-items:flex-start; }
     .testimonial-thumb{ width:100%; height:180px; }
   }
   @media (min-width:768px){
@@ -656,12 +663,35 @@
       </div>
 
       <div class="testimonial-section reveal">
-        <h3 class="testimonial-heading">客戶怎麼說</h3>
+        <h3 class="testimonial-heading">感謝客戶信任</h3>
         <div class="testimonial-card">
-          <img src="testimonial-01.png" alt="今天，終於簽下這間店面的租約" class="testimonial-thumb">
-          <div class="testimonial-text">
-            <p class="testimonial-quote">「服務，沒有分案件大小，沒有分買賣或租賃，也沒有分成交前後，只要你需要，雅慈，一直在。」</p>
-            <p class="testimonial-meta">— 從第一次聯絡屋主到正式簽約，花了一年時間促成的店面租約</p>
+          <div class="testimonial-head" onclick="toggleTestimonial('tm-01')">
+            <img src="testimonial-01.png" alt="今天，終於簽下這間店面的租約" class="testimonial-thumb">
+            <div class="testimonial-text">
+              <p class="testimonial-quote">「服務，沒有分案件大小，沒有分買賣或租賃，也沒有分成交前後，只要你需要，雅慈，一直在。」</p>
+              <p class="testimonial-meta">— 從第一次聯絡屋主到正式簽約，花了一年時間促成的店面租約</p>
+              <button type="button" class="testimonial-toggle">展開閱讀全文 ▾</button>
+            </div>
+          </div>
+          <div class="testimonial-full" id="tm-01" style="display:none;">
+            <img src="testimonial-01.png" alt="今天，終於簽下這間店面的租約" class="testimonial-full-img">
+            <div class="testimonial-body">
+              <p>今天，終於簽下這間店面的租約。</p>
+              <p>從第一次聯絡屋主，到今天正式簽約，前前後後，花了一年的時間。</p>
+              <p>我們平常還是以買賣案件為主，租賃案件很多時候，是客戶或身邊的人有需要，我們就多幫忙。這間店面，就是這樣開始的。</p>
+              <p>一開始，是我認識的住戶T小姐請我幫忙，替她的店面找租客。後來找到租客G公司行號，對方剛好又想再找一間店面，而且指定了L先生的店面。於是，我幫忙聯絡L先生詢問有無意願出租。</p>
+              <p>但當時L先生人在國外處理家裡的事情，等到他有空回覆時，G公司已經找到其他適合的店面了。</p>
+              <p>我也很直接地告訴L先生：「原本的租客已經租到其他地方了，但如果您還有出租的意願，我一樣可以幫您留意。」</p>
+              <p>L先生也很明確地跟我說：這間房子買來已經放了10年，沒有一定要租。如果要租，就要挑租客，也要篩選行業別。</p>
+              <p>所以，這間店面的條件其實不算容易。租金比附近高，對租客的行業也有要求。我找了大約10個月。</p>
+              <p>過程中，我有跟L先生說：「因為知道您的條件與期待，我可能不會一直頻繁回報、一直打擾您。但我會持續幫您找，也會幫您篩選適合的行業，直到找到合適的租客。」</p>
+              <p>很謝謝L先生這段時間給我的信任。沒有催我，也沒有給我壓力。他相信我有在做，而我也一直記得這件事情。</p>
+              <p>大約8個月後，終於找到一家連鎖品牌有意承租。我們一起分析租客的條件：有連鎖企業背景、穩定長租、對租金的接受度高、也看好這個店面的發展。因此，L先生願意暫停招租，繼續跟這個連鎖品牌談細節。</p>
+              <p>但事情並沒有因此馬上結束。因為連鎖企業的制度比較完整，從公司審核、租賃條件、合約內容，到社區管委會相關事項，每一個細節都需要一一確認。又花了大約4～5個月。一件一件溝通，一個一個問題處理。</p>
+              <p>直到今天，終於順利完成所有細節，也正式簽下租約。前後算起來，這一間店面，我大約花了一年的時間。</p>
+              <p>故事很長，過程也很長。但對我來說，促成任何一個案子，無論大小，都是一樣的初心。</p>
+              <p>服務，沒有分案件大小。沒有分買賣或租賃。也沒有分成交前後。只要你需要，雅慈，一直在。</p>
+            </div>
           </div>
         </div>
       </div>
@@ -792,6 +822,16 @@
         document.getElementById(btn.dataset.tab).classList.add('active');
       });
     });
+  }
+</script>
+
+<script>
+  function toggleTestimonial(id){
+    const full = document.getElementById(id);
+    const isOpen = full.style.display !== 'none';
+    full.style.display = isOpen ? 'none' : 'block';
+    const btn = full.previousElementSibling.querySelector('.testimonial-toggle');
+    if (btn) btn.textContent = isOpen ? '展開閱讀全文 ▾' : '收合 ▴';
   }
 </script>
 
