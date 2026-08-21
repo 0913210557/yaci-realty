@@ -925,6 +925,7 @@
   document.getElementById('qinganForm').addEventListener('submit', function(e){
     e.preventDefault();
     const errorBox = document.getElementById('formError');
+    const CITY_CAP = { taipei: 3500, newtaipei: 2500, other: 2000 };
 
     const age = parseFloat(document.getElementById('q-age').value);
     const years = parseFloat(document.getElementById('q-years').value);
