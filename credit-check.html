@@ -1020,6 +1020,7 @@
     }).catch(() => {});
     fetch('https://script.google.com/macros/s/AKfycbwixr-P2rc1eLsN5hBKXd3RwS-QatryAO6MwIumkp59H-Flv_n0ZNcPMAck1Y_BV2l9rQ/exec', {
       method: 'POST',
+      mode: 'no-cors',
       body: JSON.stringify({ source: '信用評分自我檢測', summary: summary })
     }).catch(() => {});
   });
