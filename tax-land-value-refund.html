@@ -617,6 +617,7 @@
         <a href="tax-house-land-exemption.html">房地合一稅（400萬免稅額）</a>
       </div>
     </div>
+    <a href="knowledge.html">知識庫</a>
   </nav>
 </header>
 
@@ -729,6 +730,17 @@ function calcLandRefund(){
   document.getElementById('calc-lvr-refund').textContent = fmt(refund) + ' 元';
   document.getElementById('calc-lvr-result').classList.add('show');
   document.getElementById('calc-lvr-result').scrollIntoView({behavior:'smooth', block:'nearest'});
+
+  const notifySummary = '土地增值稅重購退稅試算：' + eligible + '，預估可退' + fmt(refund) + '元';
+  fetch('https://ntfy.sh/yanachang-bobo-bubu', {
+    method: 'POST',
+    body: '有人剛用了土地增值稅重購退稅試算\n' + notifySummary
+  }).catch(() => {});
+  fetch('https://script.google.com/macros/s/AKfycbwRW2A5tVSeifx7V-EaZPXGF64iVMRhAwQrr17UIV1adVTfxf5T_JFRM_hsCfIok8f4eg/exec', {
+    method: 'POST',
+    mode: 'no-cors',
+    body: JSON.stringify({ source: '土地增值稅重購退稅試算', summary: notifySummary })
+  }).catch(() => {});
 }
 </script>
 
