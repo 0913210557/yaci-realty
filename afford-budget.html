@@ -617,6 +617,7 @@
         <a href="tax-house-land-exemption.html">房地合一稅（400萬免稅額）</a>
       </div>
     </div>
+    <a href="knowledge.html">知識庫</a>
   </nav>
 </header>
 
@@ -731,6 +732,17 @@ function calcAffordBudget(){
   document.getElementById('ab-total').textContent = fmt(totalPriceWan) + ' 萬';
   document.getElementById('ab-result').classList.add('show');
   document.getElementById('ab-result').scrollIntoView({behavior:'smooth', block:'nearest'});
+
+  const notifySummary = '購屋預算試算：可貸' + fmt(loanAmount) + '元，預估可購買總價' + fmt(totalPriceWan) + '萬';
+  fetch('https://ntfy.sh/yanachang-bobo-bubu', {
+    method: 'POST',
+    body: '有人剛用了購屋預算試算\n' + notifySummary
+  }).catch(() => {});
+  fetch('https://script.google.com/macros/s/AKfycbwRW2A5tVSeifx7V-EaZPXGF64iVMRhAwQrr17UIV1adVTfxf5T_JFRM_hsCfIok8f4eg/exec', {
+    method: 'POST',
+    mode: 'no-cors',
+    body: JSON.stringify({ source: '購屋預算試算', summary: notifySummary })
+  }).catch(() => {});
 }
 </script>
 
