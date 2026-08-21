@@ -701,6 +701,7 @@
         <a href="tax-house-land-exemption.html">房地合一稅（400萬免稅額）</a>
       </div>
     </div>
+    <a href="knowledge.html">知識庫</a>
   </nav>
 </header>
 <main id="top">
@@ -921,120 +922,6 @@
     });
   });
 
-  function updateRatioHint(){
-    const debt = parseFloat(document.getElementById('q3-debt').value) || 0;
-    const income = parseFloat(document.getElementById('q3-income').value) || 0;
-    const hint = document.getElementById('q3Hint');
-    if (debt > 0 && income > 0) {
-      const pct = (debt / income * 100).toFixed(0);
-      hint.textContent = '目前比例約為 ' + pct + '%';
-      hint.classList.add('calculated');
-    } else {
-      hint.textContent = '填好上面兩格，會自動幫你算比例';
-      hint.classList.remove('calculated');
-    }
-  }
-  document.getElementById('q3-debt').addEventListener('input', updateRatioHint);
-  document.getElementById('q3-income').addEventListener('input', updateRatioHint);
-
-  document.getElementById('creditForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    const errorBox = document.getElementById('formError');
-    const radioQuestions = ['q1','q2','q4','q5','q6','q7','q8'];
-    let total = 0;
-    let missing = false;
-
-    for (const q of radioQuestions) {
-      const selected = document.querySelector(`input[name="${q}"]:checked`);
-      if (!selected) { missing = true; break; }
-      total += parseInt(selected.value, 10);
-    }
-
-    const debt = parseFloat(document.getElementById('q3-debt').value);
-    const income = parseFloat(document.getElementById('q3-income').value);
-    if (missing || !debt || !income) {
-      errorBox.textContent = '請完成全部題目（含第3題的兩個金額欄位）再送出檢測';
-      errorBox.classList.add('show');
-      errorBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      return;
-    }
-    errorBox.classList.remove('show');
-
-    const ratio = debt / income;
-    let q3Score;
-    if (ratio < 1/3) q3Score = 3;
-    else if (ratio <= 1/2) q3Score = 1;
-    else q3Score = 0;
-    total += q3Score;
-
-    const maxScore = 24;
-    const resultCard = document.getElementById('resultCard');
-    const levelBox = document.getElementById('resultLevel');
-    const gradeEl = document.getElementById('resultGrade');
-    const descEl = document.getElementById('resultDesc');
-    const tipsEl = document.getElementById('resultTips');
-
-    levelBox.classList.remove('good', 'mid', 'low');
-    tipsEl.innerHTML = '';
-
-    let tips = [];
-    if (total >= 19) {
-      levelBox.classList.add('good');
-      gradeEl.textContent = '信用良好';
-      descEl.textContent = '整體信用狀況看起來相當穩健，申請房貸時通常條件會比較有利，但實際核貸仍以銀行審核為準。';
-      tips = ['維持準時繳款的好習慣', '申貸前避免臨時新辦信用卡或貸款', '可以開始準備收入證明、財力證明等文件'];
-    } else if (total >= 12) {
-      levelBox.classList.add('mid');
-      gradeEl.textContent = '普通，建議留意';
-      descEl.textContent = '有一些地方可能會影響銀行對你的評估，建議申貸前先調整一段時間，會更有利。';
-      tips = ['近期避免遲繳，養成全額繳清的習慣', '盡量減少只繳最低應繳金額的情形', '若卡片或貸款筆數較多，可考慮先結清或減少不常用的卡片', '申貸前3～6個月盡量維持穩定的收支狀況'];
-    } else {
-      levelBox.classList.add('low');
-      gradeEl.textContent = '建議先改善';
-      descEl.textContent = '目前的狀況可能會讓銀行申貸條件變得比較嚴格，建議先處理下面幾個項目，或直接找專業的人一起討論。';
-      tips = ['優先處理逾期未繳或信用瑕疵紀錄', '避免再增加新的負債', '穩定工作與收入來源，建立近期的良好紀錄', '若為公司負責人或自營商，建議提前準備近2年報稅資料', '建議直接諮詢貸款專員或雅慈，討論實際可行的申貸規劃'];
-    }
-
-    tips.forEach(t => {
-      const li = document.createElement('li');
-      li.textContent = t;
-      tipsEl.appendChild(li);
-    });
-
-    const answersEl = document.getElementById('resultAnswers');
-    answersEl.innerHTML = '';
-    document.querySelectorAll('.q-item').forEach(item => {
-      const qTitle = item.querySelector('h3').textContent.replace(/^\d+/, '').trim();
-      const radios = item.querySelectorAll('input[type="radio"]:checked');
-      let answerText = '';
-      if (radios.length) {
-        answerText = radios[0].parentElement.textContent.trim();
-      } else if (item.querySelector('#q3-debt')) {
-        answerText = '每月卡貸 ' + debt + ' 元／每月收入 ' + income + ' 元（比例約 ' + (ratio * 100).toFixed(0) + '%）';
-      }
-      const li = document.createElement('li');
-      li.textContent = qTitle + '：' + answerText;
-      answersEl.appendChild(li);
-    });
-
-    resultCard.classList.add('show');
-    resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-
-
-  document.querySelectorAll('.opt input').forEach(input => {
-    input.addEventListener('change', () => {
-      if (input.type === 'radio') {
-        document.querySelectorAll(`input[name="${input.name}"]`).forEach(i => {
-          i.closest('.opt').classList.remove('selected');
-        });
-      }
-      input.closest('.opt').classList.toggle('selected', input.checked);
-    });
-  });
-
-  const CITY_CAP = { taipei: 3500, newtaipei: 2500, other: 2000 };
-
   document.getElementById('qinganForm').addEventListener('submit', function(e){
     e.preventDefault();
     const errorBox = document.getElementById('formError');
@@ -1163,6 +1050,18 @@
 
     resultCard.classList.add('show');
     resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // 背景通知雅慈：ntfy + Google試算表紀錄（失敗也不影響使用者看結果）
+    const notifySummary = '新青安3.0自我檢測：' + gradeEl.textContent;
+    fetch('https://ntfy.sh/yanachang-bobo-bubu', {
+      method: 'POST',
+      body: '有人剛完成新青安3.0自我檢測\n結果：' + gradeEl.textContent
+    }).catch(() => {});
+    fetch('https://script.google.com/macros/s/AKfycbwRW2A5tVSeifx7V-EaZPXGF64iVMRhAwQrr17UIV1adVTfxf5T_JFRM_hsCfIok8f4eg/exec', {
+      method: 'POST',
+      mode: 'no-cors',
+      body: JSON.stringify({ source: '新青安3.0自我檢測', summary: notifySummary })
+    }).catch(() => {});
   });
 
 </script>
