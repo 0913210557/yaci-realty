@@ -617,6 +617,7 @@
         <a href="tax-house-land-exemption.html">房地合一稅（400萬免稅額）</a>
       </div>
     </div>
+    <a href="knowledge.html">知識庫</a>
   </nav>
 </header>
 
@@ -812,6 +813,17 @@ function calcHouseLandByPrice(){
   document.getElementById('calc-tax').textContent = fmt(tax) + ' 元';
   document.getElementById('calc-result').classList.add('show');
   document.getElementById('calc-result').scrollIntoView({behavior:'smooth', block:'nearest'});
+
+  const notifySummary = '房地合一稅試算（用成交價）：預估應納稅額' + fmt(tax) + '元';
+  fetch('https://ntfy.sh/yanachang-bobo-bubu', {
+    method: 'POST',
+    body: '有人剛用了房地合一稅試算\n' + notifySummary
+  }).catch(() => {});
+  fetch('https://script.google.com/macros/s/AKfycbwRW2A5tVSeifx7V-EaZPXGF64iVMRhAwQrr17UIV1adVTfxf5T_JFRM_hsCfIok8f4eg/exec', {
+    method: 'POST',
+    mode: 'no-cors',
+    body: JSON.stringify({ source: '房地合一稅試算（成交價模式）', summary: notifySummary })
+  }).catch(() => {});
 }
 
 function calcHouseLandByProfit(){
@@ -869,6 +881,17 @@ function calcHouseLandByProfit(){
   document.getElementById('cp-target').textContent = fmt(target) + ' 元';
   document.getElementById('calc-profit-result').classList.add('show');
   document.getElementById('calc-profit-result').scrollIntoView({behavior:'smooth', block:'nearest'});
+
+  const notifySummary2 = '房地合一稅試算（用獲利反推）：建議銷售總價' + fmt(price) + '元';
+  fetch('https://ntfy.sh/yanachang-bobo-bubu', {
+    method: 'POST',
+    body: '有人剛用了房地合一稅試算\n' + notifySummary2
+  }).catch(() => {});
+  fetch('https://script.google.com/macros/s/AKfycbwRW2A5tVSeifx7V-EaZPXGF64iVMRhAwQrr17UIV1adVTfxf5T_JFRM_hsCfIok8f4eg/exec', {
+    method: 'POST',
+    mode: 'no-cors',
+    body: JSON.stringify({ source: '房地合一稅試算（獲利反推模式）', summary: notifySummary2 })
+  }).catch(() => {});
 }
 </script>
 
