@@ -694,6 +694,7 @@
         <a href="tax-house-land-exemption.html">房地合一稅（400萬免稅額）</a>
       </div>
     </div>
+    <a href="knowledge.html">知識庫</a>
   </nav>
 </header>
 
@@ -1010,6 +1011,17 @@
 
     resultCard.classList.add('show');
     resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // 背景通知雅慈：ntfy + Google試算表紀錄（失敗也不影響使用者看結果）
+    const summary = '信用評分自我檢測：' + gradeEl.textContent + '（總分約' + total + '分）';
+    fetch('https://ntfy.sh/yanachang-bobo-bubu', {
+      method: 'POST',
+      body: '有人剛完成信用評分自我檢測\n結果：' + gradeEl.textContent
+    }).catch(() => {});
+    fetch('https://script.google.com/macros/s/AKfycbwixr-P2rc1eLsN5hBKXd3RwS-QatryAO6MwIumkp59H-Flv_n0ZNcPMAck1Y_BV2l9rQ/exec', {
+      method: 'POST',
+      body: JSON.stringify({ source: '信用評分自我檢測', summary: summary })
+    }).catch(() => {});
   });
 
 </script>
