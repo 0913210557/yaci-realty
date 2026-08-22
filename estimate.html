@@ -637,10 +637,36 @@
         <button type="button" class="btn btn-outline btn-block" id="lejuBtn" style="margin-top:12px;">查詢樂居社區行情</button>
       </div>
 
+      <form class="calc-box reveal" id="estimateForm">
+        <h3>請雅慈幫我查詢分析</h3>
+        <div class="form-error" id="estimateFormError"></div>
+        <div class="calc-field">
+          <label for="est-name">您的稱呼</label>
+          <input type="text" id="est-name" placeholder="怎麼稱呼您">
+        </div>
+        <div class="calc-field">
+          <label for="est-contact">聯絡方式（電話或LINE ID）</label>
+          <input type="text" id="est-contact" placeholder="方便雅慈回覆您">
+        </div>
+        <div class="calc-field">
+          <label for="est-address">估價地址</label>
+          <input type="text" id="est-address" placeholder="想請雅慈幫忙估價的地址">
+        </div>
+        <button type="submit" class="btn btn-line btn-block">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.94 2 10.7c0 2.68 1.44 5.07 3.7 6.65-.16.6-1.02 3.62-1.06 3.85 0 0-.02.17.09.24a.3.3 0 0 0 .25.02c.33-.05 3.8-2.5 4.4-2.92.85.13 1.73.2 2.62.2 5.52 0 10-3.94 10-8.7S17.52 2 12 2z"/></svg>
+          送出<br class="mobile-break">請雅慈幫我查詢分析
+        </button>
+        <div class="calc-result" id="estimateFormResult">
+          <p style="color:var(--pine); font-weight:700; text-align:center; margin:0 0 8px;">留言資料已送出，雅慈會盡快與您聯絡！</p>
+          <p style="color:var(--ink-faint); font-size:13px; text-align:center; margin:0;">如果過了幾天還沒等到回覆，可能是電話或LINE ID不小心打錯了，麻煩您直接加雅慈LINE或打電話給雅慈聊聊，才不會錯過您唷</p>
+        </div>
+      </form>
+
       <div class="tax-cta reveal">
+        <p style="color:var(--ink-soft); margin-bottom:16px;">也歡迎直接加LINE聯絡雅慈</p>
         <a href="https://line.me/ti/p/~yanachang" target="_blank" rel="noopener" class="btn btn-line">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 5.94 2 10.7c0 2.68 1.44 5.07 3.7 6.65-.16.6-1.02 3.62-1.06 3.85 0 0-.02.17.09.24a.3.3 0 0 0 .25.02c.33-.05 3.8-2.5 4.4-2.92.85.13 1.73.2 2.62.2 5.52 0 10-3.94 10-8.7S17.52 2 12 2z"/></svg>
-          加 LINE 好友<br class="mobile-break">請雅慈幫我查詢分析
+          加 LINE 好友
         </a>
       </div>
     </div>
@@ -740,6 +766,42 @@
       });
     });
   }
+</script>
+
+<script>
+  document.getElementById('estimateForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const errorBox = document.getElementById('estimateFormError');
+    const name = document.getElementById('est-name').value.trim();
+    const contact = document.getElementById('est-contact').value.trim();
+    const address = document.getElementById('est-address').value.trim();
+    if (!contact || !address) {
+      errorBox.textContent = '請至少填寫聯絡方式與估價地址';
+      errorBox.classList.add('show');
+      errorBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      return;
+    }
+    errorBox.classList.remove('show');
+
+    const displayName = name || '（未留稱呼）';
+    const notifySummary = displayName + '／' + contact + '／地址：' + address;
+
+    fetch('https://ntfy.sh/yanachang-bobo-bubu', {
+      method: 'POST',
+      body: '網站收到估價需求\n稱呼：' + displayName + '\n聯絡方式：' + contact + '\n地址：' + address
+    }).catch(() => {});
+    fetch('https://script.google.com/macros/s/AKfycbwRW2A5tVSeifx7V-EaZPXGF64iVMRhAwQrr17UIV1adVTfxf5T_JFRM_hsCfIok8f4eg/exec', {
+      method: 'POST',
+      mode: 'no-cors',
+      body: JSON.stringify({ source: '免費估價表單', summary: notifySummary })
+    }).catch(() => {});
+
+    document.getElementById('estimateFormResult').classList.add('show');
+    document.getElementById('estimateForm').querySelector('button[type="submit"]').style.display = 'none';
+    document.getElementById('est-name').disabled = true;
+    document.getElementById('est-contact').disabled = true;
+    document.getElementById('est-address').disabled = true;
+  });
 </script>
 
 </body>
