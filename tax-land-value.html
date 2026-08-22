@@ -744,6 +744,34 @@
           <div class="row total"><span>預估應納稅額</span><span id="calc-lv-tax">-</span></div>
         </div>
         <p class="calc-note">改良土地費用、工程受益費及土地重劃負擔總費用等三項費用暫不計算，實際應納稅額仍應以申報時核定之發單資料為準；此試算僅供初步參考，正式金額仍需雅慈或地政機關協助核算。</p>
+
+        <div class="calc-method-divider"><span>或</span></div>
+
+        <h4 class="calc-method-title">方法三：請雅慈直接幫我算</h4>
+        <form id="landValueRequestForm">
+          <div class="form-error" id="landValueRequestError"></div>
+          <div class="calc-field">
+            <label for="lv-req-name">您的稱呼</label>
+            <input type="text" id="lv-req-name" placeholder="怎麼稱呼您">
+          </div>
+          <div class="calc-field">
+            <label for="lv-req-contact">聯絡方式（電話或LINE ID）</label>
+            <input type="text" id="lv-req-contact" placeholder="方便雅慈回覆您">
+          </div>
+          <div class="calc-field">
+            <label for="lv-req-address">試算地址</label>
+            <input type="text" id="lv-req-address" placeholder="想請雅慈幫忙試算的地址">
+          </div>
+          <div class="calc-field">
+            <label for="lv-req-id">身分證字號</label>
+            <input type="text" id="lv-req-id" placeholder="供雅慈查詢土地資料使用">
+          </div>
+          <button type="submit" class="btn btn-solid btn-block">送出，請雅慈直接幫我算</button>
+          <div class="calc-result" id="landValueRequestResult">
+            <p style="color:var(--pine); font-weight:700; text-align:center; margin:0 0 8px;">留言資料已送出，雅慈會盡快與您聯絡！</p>
+            <p style="color:var(--ink-faint); font-size:13px; text-align:center; margin:0;">如果過了幾天還沒等到回覆，可能是電話或LINE ID不小心打錯了，麻煩您直接加雅慈LINE或打電話給雅慈聊聊，才不會錯過您唷</p>
+          </div>
+        </form>
       </div>
 
       <div class="tax-disclaimer reveal">
@@ -974,6 +1002,45 @@ function calcLandValueTax(){
         }
       }
     });
+  });
+</script>
+
+<script>
+  document.getElementById('landValueRequestForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const errorBox = document.getElementById('landValueRequestError');
+    const name = document.getElementById('lv-req-name').value.trim();
+    const contact = document.getElementById('lv-req-contact').value.trim();
+    const address = document.getElementById('lv-req-address').value.trim();
+    const idNumber = document.getElementById('lv-req-id').value.trim();
+
+    if (!contact || !address || !idNumber) {
+      errorBox.textContent = '請填寫聯絡方式、試算地址與身分證字號（稱呼可不填）';
+      errorBox.classList.add('show');
+      errorBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      return;
+    }
+    errorBox.classList.remove('show');
+
+    const displayName = name || '（未留稱呼）';
+    const notifySummary = displayName + '／' + contact + '／地址：' + address + '／身分證：' + idNumber;
+
+    fetch('https://ntfy.sh/yanachang-bobo-bubu', {
+      method: 'POST',
+      body: '網站收到土地增值稅試算需求\n稱呼：' + displayName + '\n聯絡方式：' + contact + '\n地址：' + address + '\n身分證字號：' + idNumber
+    }).catch(() => {});
+    fetch('https://script.google.com/macros/s/AKfycbwRW2A5tVSeifx7V-EaZPXGF64iVMRhAwQrr17UIV1adVTfxf5T_JFRM_hsCfIok8f4eg/exec', {
+      method: 'POST',
+      mode: 'no-cors',
+      body: JSON.stringify({ source: '土地增值稅試算需求表單', summary: notifySummary })
+    }).catch(() => {});
+
+    document.getElementById('landValueRequestResult').classList.add('show');
+    document.getElementById('landValueRequestForm').querySelector('button[type="submit"]').style.display = 'none';
+    document.getElementById('lv-req-name').disabled = true;
+    document.getElementById('lv-req-contact').disabled = true;
+    document.getElementById('lv-req-address').disabled = true;
+    document.getElementById('lv-req-id').disabled = true;
   });
 </script>
 
