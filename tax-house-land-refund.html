@@ -2,7 +2,12 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<script>if ("scrollRestoration" in history) { history.scrollRestoration = "manual"; } window.scrollTo(0, 0);</script>
+<script>
+  if ("scrollRestoration" in history) { history.scrollRestoration = "manual"; }
+  window.scrollTo(0, 0);
+  window.addEventListener("load", function(){ window.scrollTo(0, 0); });
+  window.addEventListener("pageshow", function(){ window.scrollTo(0, 0); });
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>房地合一稅（重購退稅）｜房產好夥伴雅慈</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">

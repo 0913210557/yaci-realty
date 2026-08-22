@@ -2,7 +2,12 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<script>if ("scrollRestoration" in history) { history.scrollRestoration = "manual"; } window.scrollTo(0, 0);</script>
+<script>
+  if ("scrollRestoration" in history) { history.scrollRestoration = "manual"; }
+  window.scrollTo(0, 0);
+  window.addEventListener("load", function(){ window.scrollTo(0, 0); });
+  window.addEventListener("pageshow", function(){ window.scrollTo(0, 0); });
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>房產好夥伴雅慈｜桃園．平鎮．中壢房仲｜買房賣房不動產仲介</title>
 <meta name="description" content="房產好夥伴雅慈，桃園在地房仲，服務桃園、平鎮、中壢、龍潭、楊梅等地區，提供買房、賣房、買屋、賣屋、不動產仲介服務。免費估價、買賣交易費用試算、土地增值稅與房地合一稅說明試算、購屋能力試算，桃園買房賣房找雅慈，用心經營，真誠服務。">
