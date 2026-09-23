@@ -176,7 +176,12 @@
   .kb-preview-date{ font-size:12.5px; color:var(--brass); font-weight:700; font-family:'JetBrains Mono',monospace; margin-bottom:4px; }
   .kb-preview-text h3{ font-size:17px; margin-bottom:8px; }
   .kb-preview-summary{ font-size:13.5px; color:var(--ink-soft); line-height:1.6; margin-bottom:0; }
-  .kb-preview-more{ font-size:14px; font-weight:700; color:var(--pine); }
+  .kb-preview-more{
+    display:inline-block; font-size:15px; font-weight:800; color:var(--pine);
+    border:2px solid var(--pine); border-radius:999px; padding:12px 30px;
+    transition:background .15s ease, color .15s ease, transform .15s ease;
+  }
+  .kb-preview-more:hover{ background:var(--pine); color:#fff; transform:translateY(-2px); }
   @media (min-width:600px){
     .kb-preview-grid{ grid-template-columns:repeat(2,1fr); }
   }
@@ -661,40 +666,8 @@
             <p class="kb-preview-summary">以前有些透天在辦理建物登記時，不同樓層是分開登記的，看謄本才能確認實際情況。</p>
           </div>
         </a>
-        <a href="knowledge.html#article-2026-09-15" class="kb-preview-card reveal">
-          <img src="knowledge-2026-09-15.jpg" alt="謄本上的金額，不是你當初實際貸款的金額！">
-          <div class="kb-preview-text">
-            <p class="kb-preview-date">2026.09.15</p>
-            <h3>謄本上的金額，不是你當初實際貸款的金額！</h3>
-            <p class="kb-preview-summary">謄本上的金額是銀行設定的最高限額，常見比例1.2倍，並不等於實際貸款金額。</p>
-          </div>
-        </a>
-        <a href="knowledge.html#article-2026-09-12" class="kb-preview-card reveal">
-          <img src="knowledge-2026-09-12.jpg" alt="新買的房子，為什麼稅費這麼高？">
-          <div class="kb-preview-text">
-            <p class="kb-preview-date">2026.09.12</p>
-            <h3>新買的房子，為什麼稅費這麼高？</h3>
-            <p class="kb-preview-summary">房屋稅2月底前、地價稅8月底前把戶籍遷進去，才能適用自住稅率。</p>
-          </div>
-        </a>
-        <a href="knowledge.html#article-2026-09-03" class="kb-preview-card reveal">
-          <img src="knowledge-2026-09-03.jpg" alt="買賣價差超過400萬，房地合一稅免稅額是不是就沒有了？">
-          <div class="kb-preview-text">
-            <p class="kb-preview-date">2026.09.03</p>
-            <h3>買賣價差超過400萬，房地合一稅免稅額是不是就沒有了？</h3>
-            <p class="kb-preview-summary">400萬免稅額，是看「課稅所得」，不是看「買賣價差」。</p>
-          </div>
-        </a>
-        <a href="knowledge.html#article-2026-09-02" class="kb-preview-card reveal">
-          <img src="knowledge-2026-09-02.jpg" alt="你知道公寓的權狀坪數，有可能主建包含梯間嗎？">
-          <div class="kb-preview-text">
-            <p class="kb-preview-date">2026.09.02</p>
-            <h3>你知道公寓的權狀坪數，有可能主建包含梯間嗎？</h3>
-            <p class="kb-preview-summary">有些舊公寓的權狀主建坪數裡，可能包含了部分梯間坪數，導致實際屋內空間比權狀坪數小。</p>
-          </div>
-        </a>
       </div>
-      <p style="text-align:center; margin-top:20px;"><a href="knowledge.html" class="kb-preview-more">看更多房產知識 →</a></p>
+      <p style="text-align:center; margin-top:28px;"><a href="knowledge.html" class="kb-preview-more">看更多房產知識 →</a></p>
     </div>
   </section>
 
